@@ -1,4 +1,4 @@
-package cristinasola.ejercicio05_linearlayout;
+package cristinasola.ejercicio06_relativelayout;
 
 import android.content.DialogInterface;
 import android.graphics.Typeface;
@@ -26,7 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         initView();
     }
-    private void initView(){
+
+    private void initView() {
         btnAceptar = (Button) findViewById(R.id.btnAceptar);
         btnCancelar = (Button) findViewById(R.id.btnCancelar);
         txtClave = (EditText) findViewById(R.id.txtClave);
@@ -66,9 +67,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
+
             public void afterTextChanged(Editable s) {
                 checkDatos();
                 checkVisibility(txtClave, lblClave);
@@ -80,8 +83,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         checkVisibility(txtClave, lblClave);
         checkVisibility(txtUsuario, lblUsuario);
     }
-    private void setColorSegunFoco(TextView lbl, boolean hasFocus){
-        if (hasFocus){
+
+    private void setColorSegunFoco(TextView lbl, boolean hasFocus) {
+        if (hasFocus) {
             //lbl.setTextColor(getResources().getColor(R.color.accent));
             lbl.setTypeface(Typeface.DEFAULT_BOLD);
         } else {
@@ -89,26 +93,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             lbl.setTypeface(Typeface.DEFAULT);
         }
     }
-    private void checkDatos(){
+
+    private void checkDatos() {
         btnAceptar.setEnabled(!TextUtils.isEmpty(txtUsuario.getText().toString()) && !TextUtils.isEmpty(txtClave.getText().toString()));
     }
-    private void checkVisibility(EditText txt, TextView lbl){
+
+    private void checkVisibility(EditText txt, TextView lbl) {
         if (TextUtils.isEmpty(txt.getText().toString()))
             lbl.setVisibility(View.INVISIBLE);
         else
             lbl.setVisibility(View.VISIBLE);
     }
-    public void onClick(View v){
+
+    public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnAceptar:
-                Toast.makeText(this,getString(R.string.conectandoUsuario)+txtUsuario.getText().toString()+getString(R.string.puntosSuspensivos), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.conectandoUsuario) + txtUsuario.getText().toString() + getString(R.string.puntosSuspensivos), Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btnCancelar:
                 resetViews();
                 break;
         }
     }
-    private void resetViews(){
+
+    private void resetViews() {
         txtUsuario.setText("");
         txtClave.setText("");
     }
