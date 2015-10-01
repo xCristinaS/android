@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Ejercicio01</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="nombre">nombre</string>
+    <string name="apellido">apellido</string>
+    <string name="nombreApe">Nombre, Apellido</string>
+    <string name="apeNombre">Apellido, Nombre</string>
+    <string name="sr">Sr.</string>
+</resources>

@@ -1,0 +1,71 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/titulo"
+        android:id="@+id/lblTitulo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/imgFoto"
+        android:scaleType="centerCrop"
+        android:layout_width="@dimen/anchuraImg"
+        android:layout_height="@dimen/alturaImg"
+        android:layout_below="@+id/lblTitulo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margenPeque" />
+    <TextView
+        android:id="@+id/lblEstaciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/estaciones"
+        android:layout_below="@+id/imgFoto"
+        android:layout_marginTop="@dimen/margenMayor"/>
+    <RadioGroup
+        android:id="@+id/grupoRB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lblEstaciones">
+        <RadioButton
+            android:id="@+id/primavera"
+            android:checked="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margenPeque"
+            android:text="@string/primavera"/>
+        <RadioButton
+            android:id="@+id/verano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margenPeque"
+            android:text="@string/verano"/>
+        <RadioButton
+            android:id="@+id/otonio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margenPeque"
+            android:text="@string/otonio"/>
+        <RadioButton
+            android:id="@+id/invierno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margenPeque"
+            android:text="@string/invierno"/>
+    </RadioGroup>
+    <Button
+        android:id="@+id/btnMeGusta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnMeGusta"
+        android:layout_below="@+id/grupoRB"
+        android:layout_toRightOf="@+id/grupoRB"
+        android:layout_toEndOf="@+id/grupoRB" />
+</RelativeLayout>

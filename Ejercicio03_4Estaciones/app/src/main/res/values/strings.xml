@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Ejercicio03_4Estaciones</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="titulo">Las cuatro estaciones.</string>
+    <string name="estaciones">Estaciones:</string>
+    <string name="primavera">Primavera</string>
+    <string name="verano">Verano</string>
+    <string name="otonio">Otoño</string>
+    <string name="invierno">Invierno</string>
+    <string name="btnMeGusta">Me gusta!</string>
+    <string name="meGustaPrim">Me gusta la primavera</string>
+    <string name="meGustaInv">Me gusta el invierno</string>
+    <string name="meGustaVer">Me gusta el verano</string>
+    <string name="meGustaOto">Me gusta el otoño</string>
+</resources>
