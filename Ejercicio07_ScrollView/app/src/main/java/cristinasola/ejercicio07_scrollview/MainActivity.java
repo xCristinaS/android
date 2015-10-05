@@ -2,36 +2,84 @@ package cristinasola.ejercicio07_scrollview;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
+    private EditText txtMensaje;
+    private ImageView btnEnviar;
+    private TextView lblTexto;
+    private ScrollView scvTexto;
+    private SimpleDateFormat formato;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
+        formato = new SimpleDateFormat("HH:mm:ss");
     }
+    private void initView(){
+        txtMensaje = (EditText)findViewById(R.id.txtMensaje);
+        btnEnviar = (ImageView)findViewById(R.id.btnEnviar);
+        lblTexto = (TextView)findViewById(R.id.lblTexto);
+        scvTexto = (ScrollView)findViewById(R.id.scvTexto);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        txtMensaje.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE)
+                    enviarMensaje(txtMensaje.getText().toString());
+                return false;
+            }
+        });
+        txtMensaje.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void afterTextChanged(Editable s) {
+                checkDatos();
+            }
+        });
+        btnEnviar.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                enviarMensaje(txtMensaje.getText().toString());
+            }
+        });
+        checkDatos();
+        hacerScroll(scvTexto, View.FOCUS_DOWN);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    private void checkDatos(){
+        btnEnviar.setEnabled(!TextUtils.isEmpty(txtMensaje.getText().toString()));
+    }
+    private void enviarMensaje(String mensaje){
+        if(!TextUtils.isEmpty(txtMensaje.getText().toString())){
+            String hora = formato.format(new Date());
+            lblTexto.append("["+hora+"] " + mensaje + "\n\n");
+            txtMensaje.setText("");
+            hacerScroll(scvTexto, View.FOCUS_DOWN);
         }
-
-        return super.onOptionsItemSelected(item);
+    }
+    private void hacerScroll(final ScrollView scv, final int focus){
+        scv.post(new Runnable() {
+            public void run() {
+                scv.fullScroll(focus);
+            }
+        });
     }
 }
