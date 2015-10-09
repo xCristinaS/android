@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <fraction name="anchura1">70%</fraction>
+    <fraction name="altura">31%</fraction>
+    <fraction name="anchura2">24%</fraction>
+    <fraction name="anchura3y4">47%</fraction>
+    <fraction name="anchura5">10%</fraction>
+    <fraction name="anchura6">84%</fraction>
+    <fraction name="margenes">2%</fraction>
+</resources>

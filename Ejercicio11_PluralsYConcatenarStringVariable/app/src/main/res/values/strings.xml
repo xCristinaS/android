@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Ejercicio11_PluralsYConcatenarStringVariable</string>
+    <string name="Suspensos">Suspensos</string>
+    <string name="ver">Ver</string>
+    <string name="alumnosSuspensos">Hay %1$d alumnos suspensos.</string>
+    <string name="unSuspenso">Hay %1$d alumno suspenso.</string>
+</resources>

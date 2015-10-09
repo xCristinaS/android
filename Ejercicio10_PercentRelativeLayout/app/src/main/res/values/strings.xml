@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Ejercicio10_PercentRelativeLayout</string>
+    <string name="anchura70">Anchura: 70%</string>
+    <string name="anchura24">Anchura: 24%</string>
+    <string name="anchura47">Anchura: 47%</string>
+    <string name="anchura10">Anchura: 10%</string>
+    <string name="anchura84">Anchura: 84%</string>
+    <string name="msgSnackbar">Se ha cambiado el color de fondo del sexto cuadro.</string>
+    <string name="deshacer">deshacer</string>
+</resources>
