@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ejercicio13_IntentLanzarActividad</string>
+    <string name="enviar">Enviar</string>
+    <string name="mostrarOtra">Mostrar En Otra</string>
+</resources>
