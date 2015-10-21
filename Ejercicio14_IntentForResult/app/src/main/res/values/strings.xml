@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Ejercicio14_IntentForResult</string>
+    <string name="escribeDNI">Escriba el DNI</string>
+    <string name="noDisponible">No disponible.</string>
+    <string name="obtener">Obtener</string>
+    <string name="dni">DNI</string>
+    <string name="nombre">Nombre</string>
+    <string name="edad">Edad</string>
+</resources>
