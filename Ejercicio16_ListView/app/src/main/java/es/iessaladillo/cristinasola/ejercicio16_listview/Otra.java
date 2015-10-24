@@ -14,5 +14,7 @@ public class Otra extends AppCompatActivity {
         setContentView(R.layout.activity_otra);
 
         lblNombre = (TextView) findViewById(R.id.lblNombre);
+        if (getIntent() != null)
+            lblNombre.setText(getIntent().getStringExtra(EXTRA_NOMBRE));
     }
 }

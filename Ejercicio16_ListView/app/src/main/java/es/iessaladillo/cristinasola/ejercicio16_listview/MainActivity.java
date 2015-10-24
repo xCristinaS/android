@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,21 +20,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lstAlumnos = (ListView)findViewById(R.id.lstAlumnos);
+        lstAlumnos = (ListView) findViewById(R.id.lstAlumnos);
         nombres.add("Pepe");
         nombres.add("Pedro");
         nombres.add("Lau");
         nombres.add("Cris");
         nombres.add("Manuel");
         nombres.add("alex");
-        adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, (List<String>) lstAlumnos);
+        adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, nombres);
         lstAlumnos.setAdapter(adaptador);
 
         lstAlumnos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String nombre;
-                nombre = (String) parent.getItemAtPosition(position);
+            public void onItemClick(AdapterView<?> lista, View view, int position, long id) {
+                Intent intento = new Intent(MainActivity.this, Otra.class);
+                intento.putExtra(Otra.EXTRA_NOMBRE, lista.getItemAtPosition(position).toString());
+                startActivity(intento);
             }
         });
     }
