@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ejercicio19_ListViewSeleccion</string>
+    <string name="pregunta">¿De que color es el caballo blanco de Santiago?</string>
+    <string name="comprobar">comprobar</string>
+</resources>

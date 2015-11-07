@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ejercicio21_PopUpMenu</string>
+    <string name="enviarMensaje">Enviar mensaje</string>
+    <string name="llamar">Llamar</string>
+</resources>

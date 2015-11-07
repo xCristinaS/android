@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <!-- otros valores showAsAction: never, ifRoom, withText -->
+    <item
+        android:title="@string/aprobar"
+        android:id="@+id/mnuAprobar"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_menu"
+        />
+    <item
+        android:title="@string/suspender"
+        android:id="@+id/mnuSuspender"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_menu"/>
+</menu>
