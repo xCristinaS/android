@@ -4,6 +4,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -41,5 +43,30 @@ public class MainActivity extends AppCompatActivity implements UnoFragment.Callb
             SecundariaActivity.start(MainActivity.this, mensaje);
         else
             cargarFragmento(mensaje, R.id.flHuecoSec);
+    }
+
+    // Para el menú.
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean r;
+        switch (item.getItemId()){
+            case R.id.mnuAct:
+                r = true;
+                break;
+            default:
+                r = super.onOptionsItemSelected(item);
+        }
+        return r;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
     }
 }

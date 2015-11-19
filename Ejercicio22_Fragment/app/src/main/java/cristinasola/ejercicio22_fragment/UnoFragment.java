@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -27,6 +29,7 @@ public class UnoFragment extends Fragment{
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        setHasOptionsMenu(true);
         super.onActivityCreated(savedInstanceState);
         String mensaje = getArguments().getString(CLAVE_MSG);
 
@@ -65,5 +68,12 @@ public class UnoFragment extends Fragment{
     public void onDetach() {
         super.onDetach();
         listener = null;
+    }
+
+    // Menu.
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Se infla el menú a partir del XML.
+        inflater.inflate(R.menu.fragment_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

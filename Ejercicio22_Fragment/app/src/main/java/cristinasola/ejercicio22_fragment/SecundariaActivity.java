@@ -19,6 +19,7 @@ public class SecundariaActivity extends AppCompatActivity implements UnoFragment
 
         gestor = getSupportFragmentManager();
         mensaje = getIntent().getStringExtra(EXTRA_MSG);
+        cargarFragmento(mensaje, R.id.flHuecoSec);
     }
 
     public static void start(Context contexto, String mensaje){
@@ -26,7 +27,6 @@ public class SecundariaActivity extends AppCompatActivity implements UnoFragment
         intento.putExtra(EXTRA_MSG, mensaje);
         contexto.startActivity(intento);
     }
-
 
     @Override
     public void meHanPulsado(String mensaje) {
@@ -38,7 +38,7 @@ public class SecundariaActivity extends AppCompatActivity implements UnoFragment
 
     private void cargarFragmento(String mensaje, int id){
         FragmentTransaction transaccion = gestor.beginTransaction();
-        transaccion.replace(R.id.flHuecoSec, UnoFragment.newInstance(mensaje));
+        transaccion.replace(id, UnoFragment.newInstance(mensaje));
         transaccion.commit();
     }
 }

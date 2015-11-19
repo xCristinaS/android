@@ -8,16 +8,22 @@
         android:text="Cambiar"
         android:id="@+id/btnCambiar"
         />
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_below="@id/btnCambiar"
-        android:id="@+id/flHueco"/>
-    <FrameLayout
-        android:id="@+id/flHuecoSec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/btnCambiar"
-        android:layout_toRightOf="@id/flHueco"/>
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btnCambiar"
+            android:layout_weight="1"
+            android:id="@+id/flHueco"/>
+        <FrameLayout
+            android:id="@+id/flHuecoSec"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_below="@id/btnCambiar"
+            android:layout_toRightOf="@id/flHueco"/>
+    </LinearLayout>
 </RelativeLayout>
