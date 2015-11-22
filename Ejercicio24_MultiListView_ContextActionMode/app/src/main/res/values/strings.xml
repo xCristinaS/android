@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Ejercicio24_MultiListView_ContextActionMode</string>
+    <string name="borrar">Borrar</string>
+    <string name="alumnosDe">" alumnos de "</string>
+    <string name="alumnosEliminados">" alumnos eliminados "</string>
+</resources>

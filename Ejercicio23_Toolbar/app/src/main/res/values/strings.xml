@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Ejercicio23_Toolbar</string>
+    <string name="borrar">borrar</string>
+    <string name="alumnosDe">" alumnos de "</string>
+    <string name="alumnosEliminados">" alumnos eliminados."</string>
+</resources>
