@@ -11,7 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Cristina on 06/12/2015.
@@ -19,6 +22,7 @@ import android.widget.TextView;
 public class FragmentoSecundario extends Fragment {
 
     TextView lblNombre, lblApellidosAl, lblTelefonoAl, lblDireccionAl, lblEmail;
+    ImageView imgFoto;
     private static Alumno alumno;
     private Callback_FragmentoSec listener;
 
@@ -41,6 +45,8 @@ public class FragmentoSecundario extends Fragment {
         lblTelefonoAl = (TextView)getView().findViewById(R.id.lblTelefonoAl);
         lblDireccionAl = (TextView)getView().findViewById(R.id.lblDireccionAl);
         lblEmail = (TextView)getView().findViewById(R.id.lblEmailAl);
+        imgFoto = (ImageView)getView().findViewById(R.id.imgFoto);
+        Picasso.with(getContext()).load("http://lorempixel.com/image_output/cats-q-c-200-200-3.jpg").into(imgFoto);
 
         actualizarDatos();
         super.onActivityCreated(savedInstanceState);
