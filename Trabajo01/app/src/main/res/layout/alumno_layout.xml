@@ -14,12 +14,23 @@
             android:layout_width="match_parent" android:layout_height="match_parent"
             android:background="@drawable/color_fondo_alumno">
 
+            <ImageView
+                android:id="@+id/imgFoto"
+                android:layout_width="@dimen/dimens70dp"
+                android:layout_height="@dimen/dimens70dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin8dp"
+                android:scaleType="centerCrop"/>
+
             <TextView
                 android:layout_marginTop="@dimen/margen15dp"
                 android:layout_marginLeft="@dimen/margen15dp"
                 android:id="@+id/lblNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="@string/nombre"/>
 
             <TextView
@@ -34,21 +45,22 @@
             <TextView
                 android:layout_marginTop="@dimen/margen15dp"
                 android:layout_marginLeft="@dimen/margen15dp"
-                android:id="@+id/lblApellidosAl"
+                android:id="@+id/lblTelefonoAl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/apellidos"
+                android:textColor="@color/colorPrimaryDark"
+                android:text="@string/telefono"
                 android:layout_below="@id/lblNombreAl"/>
 
             <TextView
                 android:layout_marginBottom="@dimen/margen15dp"
                 android:layout_marginTop="@dimen/margen15dp"
                 android:layout_marginLeft="@dimen/margen5dp"
-                android:id="@+id/lblApellidos"
+                android:id="@+id/lblTelefono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellidos: "
-                android:layout_toRightOf="@id/lblApellidosAl"
+                android:text="Telefono: "
+                android:layout_toRightOf="@id/lblTelefonoAl"
                 android:layout_below="@id/lblNombreAl"/>
         </RelativeLayout>
 </android.support.v7.widget.CardView>

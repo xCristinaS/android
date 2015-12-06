@@ -8,4 +8,7 @@
     <dimen name="margen200dp">200dp</dimen>
     <dimen name="margen30dp">30dp</dimen>
     <dimen name="margin10dp">10dp</dimen>
+    <dimen name="dimen50dp">50dp</dimen>
+    <dimen name="margin8dp">8dp</dimen>
+    <dimen name="dimens70dp">70dp</dimen>
 </resources>

@@ -1,11 +1,15 @@
 package cristinasola.trabajo01;
 
 import android.content.Context;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -23,19 +27,25 @@ public class PersonalAdapterLista extends ArrayAdapter<Alumno> {
 
         private static class ViewHolder {
             TextView lblNombre;
-            TextView lblApellidos;
+            TextView lblTelefono;
+            ImageView imgFoto;
 
             public ViewHolder(View itemView){
                 lblNombre = (TextView) itemView.findViewById(R.id.lblNombreAl);
-                lblApellidos = (TextView) itemView.findViewById(R.id.lblApellidos);
+                lblTelefono = (TextView) itemView.findViewById(R.id.lblTelefono);
+                imgFoto = (ImageView) itemView.findViewById(R.id.imgFoto);
             }
 
             public TextView getLblNombre(){
                 return lblNombre;
             }
 
-            public TextView getLblApellidos(){
-                return lblApellidos;
+            public TextView getLblTelefono(){
+                return lblTelefono;
+            }
+
+            public ImageView getImgFoto(){
+                return imgFoto;
             }
         }
 
@@ -55,7 +65,8 @@ public class PersonalAdapterLista extends ArrayAdapter<Alumno> {
 
     private void onBindViewHolder(ViewHolder holder, int position){
         holder.getLblNombre().setText(alumnos.get(position).getNombre());
-        holder.getLblApellidos().setText(alumnos.get(position).getApellidos());
+        holder.getLblTelefono().setText(alumnos.get(position).getTelefono());
+        Picasso.with(getContext()).load("http://lorempixel.com/image_output/cats-q-c-200-200-3.jpg").into(holder.getImgFoto());
     }
 
     public ArrayList<Alumno> getAlumnos(){
