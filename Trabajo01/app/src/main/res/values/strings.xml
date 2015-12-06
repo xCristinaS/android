@@ -5,4 +5,5 @@
     <string name="alumnosDe">" alumnos de "</string>
     <string name="borrar">borrar</string>
     <string name="alumnosEliminados">" alumnos eliminados."</string>
+    <string name="agregar">agregar</string>
 </resources>
