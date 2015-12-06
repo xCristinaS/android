@@ -5,13 +5,14 @@ package cristinasola.trabajo01;
  */
 public class Alumno {
 
-    private String nombre, telefono, apellidos, direccion;
+    private String nombre, telefono, apellidos, direccion, email;
 
-    public Alumno(String nombre, String telefono, String apellidos, String direccion){
+    public Alumno(String nombre, String apellidos, String telefono, String direccion, String email){
         this.nombre = nombre;
         this.telefono = telefono;
         this.apellidos = apellidos;
         this.direccion = direccion;
+        this.email = email;
     }
 
     public String getNombre(){
@@ -28,5 +29,9 @@ public class Alumno {
 
     public String getDireccion() {
         return direccion;
+    }
+
+    public String getEmail(){
+        return email;
     }
 }

@@ -26,4 +26,20 @@
         android:text="Teléfono: "
         android:padding="15px"/>
 
+    <TextView
+        android:id="@+id/lblDireccionAl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblTelefonoAl"
+        android:text="Dirección: "
+        android:padding="15px"/>
+
+    <TextView
+        android:id="@+id/lblEmailAl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblDireccionAl"
+        android:text="Email: "
+        android:padding="15px"/>
+
 </RelativeLayout>

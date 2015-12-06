@@ -1,15 +1,12 @@
 package cristinasola.trabajo01;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -17,7 +14,7 @@ import android.widget.TextView;
  */
 public class FragmentoSecundario extends Fragment {
 
-    TextView lblNombre, lblApellidosAl, lblTelefonoAl;
+    TextView lblNombre, lblApellidosAl, lblTelefonoAl, lblDireccionAl, lblEmail;
     private static Alumno alumno;
     @Nullable
     @Override
@@ -35,9 +32,14 @@ public class FragmentoSecundario extends Fragment {
         lblNombre = (TextView)getActivity().findViewById(R.id.lblNombreAl);
         lblApellidosAl = (TextView)getActivity().findViewById(R.id.lblApellidosAl);
         lblTelefonoAl = (TextView)getActivity().findViewById(R.id.lblTelefonoAl);
+        lblDireccionAl = (TextView)getActivity().findViewById(R.id.lblDireccionAl);
+        lblEmail = (TextView)getActivity().findViewById(R.id.lblEmailAl);
+
         lblNombre.setText(alumno.getNombre());
         lblApellidosAl.setText(alumno.getApellidos());
         lblTelefonoAl.setText(alumno.getTelefono());
+        lblDireccionAl.setText(alumno.getDireccion());
+        lblEmail.setText(alumno.getEmail());
         super.onActivityCreated(savedInstanceState);
     }
 

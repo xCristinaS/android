@@ -6,4 +6,13 @@
     <string name="borrar">borrar</string>
     <string name="alumnosEliminados">" alumnos eliminados."</string>
     <string name="agregar">agregar</string>
+    <string name="nombre">Nombre:</string>
+    <string name="apellidos">Apellidos:</string>
+    <string name="telefono">Teléfono:</string>
+    <string name="alumnos">Alumnos</string>
+    <string name="agregarNuevoAlumno">Agregar nuevo alumno</string>
+    <string name="aceptar">aceptar</string>
+    <string name="direccion">Dirección:</string>
+    <string name="email">Email:</string>
+    <string name="editar">editar</string>
 </resources>
