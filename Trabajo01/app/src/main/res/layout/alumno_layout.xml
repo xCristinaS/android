@@ -1,42 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@drawable/color_fondo_alumno">
 
-    <TextView
-        android:layout_marginTop="@dimen/margen15dp"
-        android:layout_marginLeft="@dimen/margen15dp"
-        android:id="@+id/lblNombre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nombre"/>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="@dimen/margin30dp"
+    card_view:cardElevation="@dimen/margin30dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardPreventCornerOverlap="false">
 
-    <TextView
-        android:layout_marginTop="@dimen/margen15dp"
-        android:layout_marginLeft="@dimen/margen5dp"
-        android:id="@+id/lblNombreAl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Baldomero "
-        android:layout_toRightOf="@id/lblNombre"/>
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent" android:layout_height="match_parent"
+            android:background="@drawable/color_fondo_alumno">
 
-    <TextView
-        android:layout_marginTop="@dimen/margen15dp"
-        android:layout_marginLeft="@dimen/margen15dp"
-        android:id="@+id/lblApellidosAl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/apellidos"
-        android:layout_below="@id/lblNombreAl"/>
+            <TextView
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen15dp"
+                android:id="@+id/lblNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nombre"/>
 
-    <TextView
-        android:layout_marginBottom="@dimen/margen15dp"
-        android:layout_marginTop="@dimen/margen15dp"
-        android:layout_marginLeft="@dimen/margen5dp"
-        android:id="@+id/lblApellidos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Apellidos: "
-        android:layout_toRightOf="@id/lblApellidosAl"
-        android:layout_below="@id/lblNombreAl"/>
-</RelativeLayout>
+            <TextView
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen5dp"
+                android:id="@+id/lblNombreAl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Baldomero "
+                android:layout_toRightOf="@id/lblNombre"/>
+
+            <TextView
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen15dp"
+                android:id="@+id/lblApellidosAl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/apellidos"
+                android:layout_below="@id/lblNombreAl"/>
+
+            <TextView
+                android:layout_marginBottom="@dimen/margen15dp"
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen5dp"
+                android:id="@+id/lblApellidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apellidos: "
+                android:layout_toRightOf="@id/lblApellidosAl"
+                android:layout_below="@id/lblNombreAl"/>
+        </RelativeLayout>
+</android.support.v7.widget.CardView>
