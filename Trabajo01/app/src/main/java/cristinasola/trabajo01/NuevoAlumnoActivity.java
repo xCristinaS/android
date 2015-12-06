@@ -11,12 +11,21 @@ import android.view.MenuItem;
 
 public class NuevoAlumnoActivity extends AppCompatActivity {
 
+    private static final String INDICE_ALUMNO = "indiceAlumno";
     TextInputLayout tilNombre, tilApellidos, tilTelefono, tilDireccion, tilEmail;
+    Alumno alumno = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_alumno);
 
+        Intent intentEntrante = getIntent();
+        if (intentEntrante.hasExtra(INDICE_ALUMNO)) {
+            alumno = BddAlumnos.seleccionarAlumno(intentEntrante.getIntExtra(INDICE_ALUMNO, -1));
+            setTitle(getString(R.string.modificarAlumno));
+        } else
+            setTitle(R.string.agregarNuevoAlumno);
         initViews();
     }
 
@@ -26,6 +35,13 @@ public class NuevoAlumnoActivity extends AppCompatActivity {
         tilTelefono = (TextInputLayout) findViewById(R.id.tilTelefono);
         tilDireccion = (TextInputLayout) findViewById(R.id.tilDireccion);
         tilEmail = (TextInputLayout) findViewById(R.id.tilEmail);
+        if (alumno != null){
+            tilNombre.getEditText().setText(alumno.getNombre());
+            tilApellidos.getEditText().setText(alumno.getApellidos());
+            tilTelefono.getEditText().setText(alumno.getTelefono());
+            tilDireccion.getEditText().setText(alumno.getDireccion());
+            tilEmail.getEditText().setText(alumno.getEmail());
+        }
     }
 
     @Override
@@ -36,20 +52,16 @@ public class NuevoAlumnoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean r; String nombre = "", apellidos = "", telefono = "", direccion = "", email = "";
+        boolean r; String nombre, apellidos, telefono, direccion, email;
         switch (item.getItemId()){
             case R.id.aceptar:
-                if (!TextUtils.isEmpty(tilNombre.getEditText().getText()))
-                    nombre = tilNombre.getEditText().getText().toString();
-                if (!TextUtils.isEmpty(tilApellidos.getEditText().getText()))
-                    apellidos = tilApellidos.getEditText().getText().toString();
-                if (!TextUtils.isEmpty(tilTelefono.getEditText().getText()))
-                    telefono = tilTelefono.getEditText().getText().toString();
-                if (!TextUtils.isEmpty(tilDireccion.getEditText().getText()))
-                    direccion = tilDireccion.getEditText().getText().toString();
-                if (!TextUtils.isEmpty(tilEmail.getEditText().getText()))
-                    email = tilEmail.getEditText().getText().toString();
-                BddAlumnos.agregarAlumno(new Alumno(nombre, apellidos, telefono, direccion, email));
+                nombre = tilNombre.getEditText().getText().toString();
+                apellidos = tilApellidos.getEditText().getText().toString();
+                telefono = tilTelefono.getEditText().getText().toString();
+                direccion = tilDireccion.getEditText().getText().toString();
+                email = tilEmail.getEditText().getText().toString();
+                if (alumno == null)
+                    BddAlumnos.agregarAlumno(new Alumno(nombre, apellidos, telefono, direccion, email));
                 finish();
                 r = true;
                 break;
@@ -64,8 +76,10 @@ public class NuevoAlumnoActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    public static void startForResult(Activity a, int requestCode){
+    public static void startForResult(Activity a, int requestCode, int numAlumno){
         Intent intento = new Intent(a, NuevoAlumnoActivity.class);
+        if (numAlumno != -1)
+            intento.putExtra(INDICE_ALUMNO, numAlumno);
         a.startActivityForResult(intento, requestCode);
     }
 

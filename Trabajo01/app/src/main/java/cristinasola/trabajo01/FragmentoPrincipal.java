@@ -40,7 +40,7 @@ public class FragmentoPrincipal extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        adaptador = new PersonalAdapterLista(getActivity(), BddAlumnos.alumnos);
+        adaptador = new PersonalAdapterLista(getActivity(), BddAlumnos.getAlumnos());
         lstLista = (ListView) getActivity().findViewById(R.id.lstLista);
         lstLista.setAdapter(adaptador);
 

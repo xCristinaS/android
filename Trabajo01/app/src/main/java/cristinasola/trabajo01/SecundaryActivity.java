@@ -29,29 +29,4 @@ public class SecundaryActivity extends AppCompatActivity {
         transaccion.replace(id, FragmentoSecundario.newInstance(intento.getIntExtra(EXTRA_ID_ALUMNO, 0)));
         transaccion.commit();
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_fragmento_secundario_detalles, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        boolean r;
-        switch (item.getItemId()){
-            case R.id.editar:
-
-                r = true;
-                break;
-            default:
-                r = super.onOptionsItemSelected(item);
-        }
-        return r;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        return super.onPrepareOptionsMenu(menu);
-    }
 }

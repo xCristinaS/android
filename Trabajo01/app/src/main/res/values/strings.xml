@@ -15,4 +15,5 @@
     <string name="direccion">Dirección:</string>
     <string name="email">Email:</string>
     <string name="editar">editar</string>
+    <string name="modificarAlumno">Modificar alumno</string>
 </resources>

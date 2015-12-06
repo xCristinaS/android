@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class BddAlumnos {
 
-    public static ArrayList<Alumno> alumnos = new ArrayList<>();
+    private static ArrayList<Alumno> alumnos = new ArrayList<>();
 
     public static void agregarAlumno(Alumno alumno){
         alumnos.add(alumno);
@@ -19,5 +19,13 @@ public class BddAlumnos {
 
     public static Alumno seleccionarAlumno(int id){
         return alumnos.get(id);
+    }
+
+    public static int indiceAlumno(Alumno alumno){
+        return alumnos.indexOf(alumno);
+    }
+
+    public static ArrayList<Alumno> getAlumnos(){
+        return alumnos;
     }
 }
