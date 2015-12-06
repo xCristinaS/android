@@ -2,6 +2,7 @@ package cristinasola.trabajo01;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,13 +17,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Cristina on 06/12/2015.
  */
 public class FragmentoSecundario extends Fragment {
 
     TextView lblNombre, lblApellidosAl, lblTelefonoAl, lblDireccionAl, lblEmail;
-    ImageView imgFoto;
+    CircleImageView imgFoto;
     private static Alumno alumno;
     private Callback_FragmentoSec listener;
 
@@ -45,7 +48,7 @@ public class FragmentoSecundario extends Fragment {
         lblTelefonoAl = (TextView)getView().findViewById(R.id.lblTelefonoAl);
         lblDireccionAl = (TextView)getView().findViewById(R.id.lblDireccionAl);
         lblEmail = (TextView)getView().findViewById(R.id.lblEmailAl);
-        imgFoto = (ImageView)getView().findViewById(R.id.imgFoto);
+        imgFoto = (CircleImageView)getView().findViewById(R.id.imgFoto);
         Picasso.with(getContext()).load("http://lorempixel.com/image_output/cats-q-c-200-200-3.jpg").into(imgFoto);
 
         actualizarDatos();

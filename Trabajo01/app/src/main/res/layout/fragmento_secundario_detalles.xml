@@ -1,141 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/cvFoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margen15dp"
-        android:layout_marginTop="@dimen/margen15dp"
-        android:layout_marginRight="@dimen/margen15dp">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:id="@+id/imgFoto"
-                android:layout_width="@dimen/margen200dp"
-                android:layout_height="@dimen/margen200dp"
-                android:layout_marginTop="@dimen/margin10dp"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/margin10dp"/>
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:layout_below="@id/cvFoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margen30dp"
-        android:layout_marginLeft="@dimen/margen15dp"
-        android:layout_marginRight="@dimen/margen15dp">
+        android:layout_marginRight="@dimen/margen15dp"
+        android:layout_marginTop="@dimen/margen15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:layout_marginLeft="@dimen/margen15dp"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgFoto"
+                android:layout_width="@dimen/dimens250dp"
+                android:layout_height="@dimen/dimens250dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/margin10dp"
                 android:layout_marginTop="@dimen/margen15dp"
+                app:civ_border_color="#C2185B"
+                app:civ_border_width="3dp"/>
+
+            <TextView
                 android:id="@+id/lblNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="@string/nombre"/>
-
-            <TextView
-                android:layout_marginTop="@dimen/margen15dp"
-                android:layout_marginLeft="@dimen/margen5dp"
-                android:id="@+id/lblNombreAl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre: "
-                android:layout_toRightOf="@id/lblNombre"/>
-
-            <TextView
+                android:layout_below="@id/imgFoto"
                 android:layout_marginLeft="@dimen/margen15dp"
                 android:layout_marginTop="@dimen/margen15dp"
+                android:text="@string/nombre"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/lblNombreAl"
+                android:layout_width="wrap_content"
+                android:layout_below="@id/imgFoto"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margen5dp"
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_toRightOf="@id/lblNombre"
+                android:text="Nombre: " />
+
+            <TextView
                 android:id="@+id/lblApellidos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimaryDark"
+                android:layout_below="@id/lblNombreAl"
+                android:layout_marginLeft="@dimen/margen15dp"
+                android:layout_marginTop="@dimen/margen15dp"
                 android:text="@string/apellidos"
-                android:layout_below="@id/lblNombreAl"/>
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
-                android:layout_marginTop="@dimen/margen15dp"
-                android:layout_marginLeft="@dimen/margen5dp"
                 android:id="@+id/lblApellidosAl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellidos: "
                 android:layout_below="@id/lblNombreAl"
-                android:layout_toRightOf="@id/lblApellidos"/>
+                android:layout_marginLeft="@dimen/margen5dp"
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_toRightOf="@id/lblApellidos"
+                android:text="Apellidos: " />
 
             <TextView
                 android:id="@+id/lblTelefono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblApellidosAl"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="@string/telefono"
                 android:layout_marginLeft="@dimen/margen15dp"
-                android:layout_marginTop="@dimen/margen15dp"/>
+                android:layout_marginTop="@dimen/margen15dp"
+                android:text="@string/telefono"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:id="@+id/lblTelefonoAl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblApellidosAl"
-                android:text="Teléfono: "
-                android:layout_marginTop="@dimen/margen15dp"
                 android:layout_marginLeft="@dimen/margen5dp"
-                android:layout_toRightOf="@id/lblTelefono"/>
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_toRightOf="@id/lblTelefono"
+                android:text="Teléfono: " />
 
             <TextView
                 android:id="@+id/lblDireccion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblTelefonoAl"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="@string/direccion"
                 android:layout_marginLeft="@dimen/margen15dp"
-                android:layout_marginTop="@dimen/margen15dp"/>
+                android:layout_marginTop="@dimen/margen15dp"
+                android:text="@string/direccion"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:id="@+id/lblDireccionAl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblTelefonoAl"
-                android:text="Dirección: "
-                android:layout_toRightOf="@id/lblDireccion"
+                android:layout_marginLeft="@dimen/margen5dp"
                 android:layout_marginTop="@dimen/margen15dp"
-                android:layout_marginLeft="@dimen/margen5dp"/>
+                android:layout_toRightOf="@id/lblDireccion"
+                android:text="Dirección: " />
 
             <TextView
                 android:id="@+id/lblEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblDireccionAl"
-                android:textColor="@color/colorPrimaryDark"
-                android:text="@string/email"
                 android:layout_marginLeft="@dimen/margen15dp"
-                android:layout_marginTop="@dimen/margen15dp"/>
+                android:layout_marginTop="@dimen/margen15dp"
+                android:text="@string/email"
+                android:textColor="@color/colorPrimaryDark" />
 
             <TextView
                 android:id="@+id/lblEmailAl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lblDireccionAl"
-                android:text="Email: "
-                android:layout_toRightOf="@id/lblEmail"
-                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_marginBottom="@dimen/margen15dp"
                 android:layout_marginLeft="@dimen/margen5dp"
-                android:layout_marginBottom="@dimen/margen15dp"/>
-            </RelativeLayout>
+                android:layout_marginTop="@dimen/margen15dp"
+                android:layout_toRightOf="@id/lblEmail"
+                android:text="Email: " />
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
