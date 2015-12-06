@@ -2,6 +2,7 @@ package cristinasola.trabajo01;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ public class SecundaryActivity extends AppCompatActivity implements FragmentoSec
     private static final String FRAGMENTO_2_TAG = "tag";
     public static String EXTRA_ID_ALUMNO = "idAlumno";
     public static final int RESULTADO_FRAGMENT_SEC = 2;
-    android.support.v4.app.FragmentManager gestor;
+    FragmentManager gestor;
     Intent intento;
 
     @Override

@@ -4,17 +4,39 @@
     android:background="@drawable/color_fondo_alumno">
 
     <TextView
-        android:padding="15px"
+        android:layout_marginTop="@dimen/margen15dp"
+        android:layout_marginLeft="@dimen/margen15dp"
+        android:id="@+id/lblNombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nombre"/>
+
+    <TextView
+        android:layout_marginTop="@dimen/margen15dp"
+        android:layout_marginLeft="@dimen/margen5dp"
         android:id="@+id/lblNombreAl"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre: "/>
+        android:text="Baldomero "
+        android:layout_toRightOf="@id/lblNombre"/>
 
     <TextView
-        android:padding="15px"
+        android:layout_marginTop="@dimen/margen15dp"
+        android:layout_marginLeft="@dimen/margen15dp"
+        android:id="@+id/lblApellidosAl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/apellidos"
+        android:layout_below="@id/lblNombreAl"/>
+
+    <TextView
+        android:layout_marginBottom="@dimen/margen15dp"
+        android:layout_marginTop="@dimen/margen15dp"
+        android:layout_marginLeft="@dimen/margen5dp"
         android:id="@+id/lblApellidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Apellidos: "
+        android:layout_toRightOf="@id/lblApellidosAl"
         android:layout_below="@id/lblNombreAl"/>
 </RelativeLayout>

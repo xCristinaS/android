@@ -1,8 +1,6 @@
 package cristinasola.trabajo01;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -25,9 +23,9 @@ import java.util.ArrayList;
  */
 public class FragmentoPrincipal extends Fragment {
 
-    private static final int RESULTADO = 4;
     ListView lstLista;
     PersonalAdapterLista adaptador;
+    private Callback_Principal listener;
 
     @Nullable
     @Override
@@ -42,13 +40,13 @@ public class FragmentoPrincipal extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         adaptador = new PersonalAdapterLista(getActivity(), BddAlumnos.getAlumnos());
-        lstLista = (ListView) getActivity().findViewById(R.id.lstLista);
+        lstLista = (ListView) getView().findViewById(R.id.lstLista);
         lstLista.setAdapter(adaptador);
 
         lstLista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                SecundaryActivity.startForResult(getActivity(), RESULTADO, position);
+                listener.cargarFragmentoDetalles(position);
             }
         });
 
@@ -97,11 +95,13 @@ public class FragmentoPrincipal extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
+        listener = (Callback_Principal) activity;
         super.onAttach(activity);
     }
 
     @Override
     public void onDetach() {
+        listener = null;
         super.onDetach();
     }
 
@@ -126,4 +126,8 @@ public class FragmentoPrincipal extends Fragment {
         // Se retorna el resultado.
         return datos;
     }
+
+        public interface Callback_Principal {
+            public void cargarFragmentoDetalles(int posicion);
+        }
 }

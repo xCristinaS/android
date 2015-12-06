@@ -1,30 +1,42 @@
 package cristinasola.trabajo01;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentoPrincipal.Callback_Principal, FragmentoSecundario.Callback_FragmentoSec {
 
     private static final int RESULTADO_MAIN = 1;
     private static final String FRAGMENTO_PRINCIPAL = "principal";
-    android.support.v4.app.FragmentManager gestor;
+    private static final String FRAGMENTO_SECUNDARIO = "secundario";
+    public static final int RESULTADO_FRAGMENT_SEC = 2;
+    private static final int RESULTADO = 4;
+    FragmentManager gestor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        BddAlumnos.agregarAlumno(new Alumno("pepe", "pepito", "123", "calle", "email@e.com"));
+
         gestor = getSupportFragmentManager();
-        cargarFragmento(R.id.flHuecoPrincipal);
+        cargarFragmentoPrincipal();
     }
 
-    private void cargarFragmento(int id){
+    private void cargarFragmentoPrincipal(){
         FragmentTransaction transaccion = gestor.beginTransaction();
-        transaccion.replace(id, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
+        transaccion.replace(R.id.flHuecoPrincipal, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
+        transaccion.commit();
+    }
+
+    private void cargarFragmentoSecundario(int idAlumno){
+        FragmentTransaction transaccion = gestor.beginTransaction();
+        transaccion.replace(R.id.flHuecoSecundario, FragmentoSecundario.newInstance(idAlumno), FRAGMENTO_SECUNDARIO);
         transaccion.commit();
     }
 
@@ -56,9 +68,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            if (requestCode == RESULTADO_FRAGMENT_SEC && data.hasExtra(SecundaryActivity.EXTRA_ID_ALUMNO)){
+                FragmentoSecundario fragmento = (FragmentoSecundario) getSupportFragmentManager().findFragmentByTag(FRAGMENTO_SECUNDARIO);
+                fragmento.actualizarDatos();
+            }
             FragmentoPrincipal fragmento = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
             fragmento.adaptador.notifyDataSetChanged();
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void cargarFragmentoDetalles(int posicion) {
+        if (findViewById(R.id.flHuecoSecundario) != null)
+            cargarFragmentoSecundario(posicion);
+        else
+            SecundaryActivity.startForResult(this, RESULTADO, posicion);
+    }
+
+    @Override
+    public void editarAlumno(int idAlumno) {
+        NuevoAlumnoActivity.startForResult(this, RESULTADO_FRAGMENT_SEC, idAlumno);
     }
 }

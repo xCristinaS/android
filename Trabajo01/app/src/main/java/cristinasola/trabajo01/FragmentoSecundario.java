@@ -36,11 +36,11 @@ public class FragmentoSecundario extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        lblNombre = (TextView)getActivity().findViewById(R.id.lblNombreAl);
-        lblApellidosAl = (TextView)getActivity().findViewById(R.id.lblApellidosAl);
-        lblTelefonoAl = (TextView)getActivity().findViewById(R.id.lblTelefonoAl);
-        lblDireccionAl = (TextView)getActivity().findViewById(R.id.lblDireccionAl);
-        lblEmail = (TextView)getActivity().findViewById(R.id.lblEmailAl);
+        lblNombre = (TextView)getView().findViewById(R.id.lblNombreAl);
+        lblApellidosAl = (TextView)getView().findViewById(R.id.lblApellidosAl);
+        lblTelefonoAl = (TextView)getView().findViewById(R.id.lblTelefonoAl);
+        lblDireccionAl = (TextView)getView().findViewById(R.id.lblDireccionAl);
+        lblEmail = (TextView)getView().findViewById(R.id.lblEmailAl);
 
         actualizarDatos();
         super.onActivityCreated(savedInstanceState);
