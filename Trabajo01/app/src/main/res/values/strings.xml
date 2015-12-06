@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Trabajo01</string>
+    <string name="listaAlumnos">Lista de alumnos</string>
+    <string name="detalles">Detalles</string>
+    <string name="alumnosDe">" alumnos de "</string>
+    <string name="borrar">borrar</string>
+    <string name="alumnosEliminados">" alumnos eliminados."</string>
 </resources>
