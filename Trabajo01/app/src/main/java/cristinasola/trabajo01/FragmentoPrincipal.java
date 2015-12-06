@@ -25,6 +25,7 @@ import java.util.ArrayList;
  */
 public class FragmentoPrincipal extends Fragment {
 
+    private static final int RESULTADO = 4;
     ListView lstLista;
     PersonalAdapterLista adaptador;
 
@@ -47,9 +48,7 @@ public class FragmentoPrincipal extends Fragment {
         lstLista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intento = new Intent(getActivity(), SecundaryActivity.class);
-                intento.putExtra(SecundaryActivity.EXTRA_ID_ALUMNO, position);
-                startActivity(intento);
+                SecundaryActivity.startForResult(getActivity(), RESULTADO, position);
             }
         });
 

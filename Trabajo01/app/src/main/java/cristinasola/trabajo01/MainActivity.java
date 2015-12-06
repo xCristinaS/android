@@ -18,9 +18,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BddAlumnos.agregarAlumno(new Alumno("Pepito", "Perez", "1111", "direccion1", "pepe@gmail.com"));
-        BddAlumnos.agregarAlumno(new Alumno("Juanito","Jimenez", "2222", "direccion2", "juan@gmail.com"));
-
         gestor = getSupportFragmentManager();
         cargarFragmento(R.id.flHuecoPrincipal);
     }
@@ -58,11 +55,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK)
-            if (requestCode == RESULTADO_MAIN) {
-                FragmentoPrincipal fragmento = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
-                fragmento.adaptador.notifyDataSetChanged();
-            }
+        if (resultCode == RESULT_OK) {
+            FragmentoPrincipal fragmento = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
+            fragmento.adaptador.notifyDataSetChanged();
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 }

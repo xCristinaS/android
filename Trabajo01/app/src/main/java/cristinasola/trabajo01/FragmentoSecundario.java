@@ -18,9 +18,10 @@ import android.widget.TextView;
  */
 public class FragmentoSecundario extends Fragment {
 
-    private static final int RESULTADO_FRAGMENT_SEC = 2;
     TextView lblNombre, lblApellidosAl, lblTelefonoAl, lblDireccionAl, lblEmail;
     private static Alumno alumno;
+    private Callback_FragmentoSec listener;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,12 +42,16 @@ public class FragmentoSecundario extends Fragment {
         lblDireccionAl = (TextView)getActivity().findViewById(R.id.lblDireccionAl);
         lblEmail = (TextView)getActivity().findViewById(R.id.lblEmailAl);
 
+        actualizarDatos();
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    public void actualizarDatos(){
         lblNombre.setText(alumno.getNombre());
         lblApellidosAl.setText(alumno.getApellidos());
         lblTelefonoAl.setText(alumno.getTelefono());
         lblDireccionAl.setText(alumno.getDireccion());
         lblEmail.setText(alumno.getEmail());
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -60,7 +65,7 @@ public class FragmentoSecundario extends Fragment {
         boolean r;
         switch (item.getItemId()){
             case R.id.editar:
-                NuevoAlumnoActivity.startForResult(getActivity(), RESULTADO_FRAGMENT_SEC, BddAlumnos.indiceAlumno(alumno));
+                listener.editarAlumno(BddAlumnos.indiceAlumno(alumno));
                 r = true;
                 break;
             default:
@@ -71,11 +76,17 @@ public class FragmentoSecundario extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
+        listener = (Callback_FragmentoSec) activity;
         super.onAttach(activity);
     }
 
     @Override
     public void onDetach() {
+        listener = null;
         super.onDetach();
     }
+
+        public interface Callback_FragmentoSec {
+            public void editarAlumno(int idAlumno);
+        }
 }

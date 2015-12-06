@@ -62,6 +62,13 @@ public class NuevoAlumnoActivity extends AppCompatActivity {
                 email = tilEmail.getEditText().getText().toString();
                 if (alumno == null)
                     BddAlumnos.agregarAlumno(new Alumno(nombre, apellidos, telefono, direccion, email));
+                else {
+                    alumno.setNombre(nombre);
+                    alumno.setApellidos(apellidos);
+                    alumno.setDireccion(direccion);
+                    alumno.setEmail(email);
+                    alumno.setTelefono(telefono);
+                }
                 finish();
                 r = true;
                 break;
@@ -86,6 +93,7 @@ public class NuevoAlumnoActivity extends AppCompatActivity {
     @Override
     public void finish() {
         Intent intento = new Intent();
+        intento.putExtra(SecundaryActivity.EXTRA_ID_ALUMNO, BddAlumnos.indiceAlumno(alumno));
         setResult(RESULT_OK, intento);
         super.finish();
     }
