@@ -8,10 +8,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class NuevoAlumnoActivity extends AppCompatActivity {
 
     private static final String INDICE_ALUMNO = "indiceAlumno";
     TextInputLayout tilNombre, tilApellidos, tilTelefono, tilDireccion, tilEmail;
+    CircleImageView imgFoto;
     Alumno alumno = null;
 
     @Override
@@ -34,6 +39,8 @@ public class NuevoAlumnoActivity extends AppCompatActivity {
         tilTelefono = (TextInputLayout) findViewById(R.id.tilTelefono);
         tilDireccion = (TextInputLayout) findViewById(R.id.tilDireccion);
         tilEmail = (TextInputLayout) findViewById(R.id.tilEmail);
+        imgFoto = (CircleImageView) findViewById(R.id.imgFoto);
+        Picasso.with(this).load("http://lorempixel.com/image_output/cats-q-c-200-200-3.jpg").into(imgFoto);
         if (alumno != null){
             tilNombre.getEditText().setText(alumno.getNombre());
             tilApellidos.getEditText().setText(alumno.getApellidos());

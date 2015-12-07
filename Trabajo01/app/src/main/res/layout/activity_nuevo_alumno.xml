@@ -1,89 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="cristinasola.trabajo01.NuevoAlumnoActivity">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilNombre"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margen15dp"
-        android:layout_marginTop="@dimen/margen15dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <EditText
-            android:id="@+id/txtNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/nombre"
-            android:inputType="textPersonName">
-            <requestFocus/>
-        </EditText>
-    </android.support.design.widget.TextInputLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgFoto"
+            android:layout_width="@dimen/dimens250dp"
+            android:layout_height="@dimen/dimens250dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/margin10dp"
+            android:layout_marginTop="@dimen/margen15dp"
+            app:civ_border_color="#C2185B"
+            app:civ_border_width="3dp" />
+    </RelativeLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilApellidos"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margen15dp"
-        android:layout_below="@id/tilNombre">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_below="@id/imgFoto">
 
-        <EditText
-            android:id="@+id/txtApellidos"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/apellidos"
-            android:inputType="textPersonName">
-        </EditText>
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilTelefono"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margen15dp"
-        android:layout_below="@id/tilApellidos">
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/tools"
+                android:id="@+id/cv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margen15dp"
+                card_view:cardCornerRadius="@dimen/margin30dp"
+                card_view:cardElevation="@dimen/margin30dp"
+                card_view:cardPreventCornerOverlap="false"
+                card_view:cardUseCompatPadding="true">
 
-        <EditText
-            android:id="@+id/txtTelefono"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/telefono"
-            android:inputType="phone">
-        </EditText>
-    </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margen15dp"
+                    android:layout_marginRight="@dimen/margen15dp"
+                    android:layout_marginTop="@dimen/margen5dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilDireccion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margen15dp"
-        android:layout_below="@id/tilTelefono">
+                    <EditText
+                        android:id="@+id/txtNombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/nombre"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/colorPrimaryDark">
 
-        <EditText
-            android:id="@+id/txtDireccion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/direccion"
-            android:inputType="text">
-        </EditText>
-    </android.support.design.widget.TextInputLayout>
+                        <requestFocus />
+                    </EditText>
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margen15dp"
-        android:layout_below="@id/tilDireccion">
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/tools"
+                android:id="@+id/cv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv1"
+                android:layout_marginBottom="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen15dp"
+                android:layout_marginRight="@dimen/margen15dp"
+                card_view:cardCornerRadius="@dimen/margin30dp"
+                card_view:cardElevation="@dimen/margin30dp"
+                card_view:cardPreventCornerOverlap="false"
+                card_view:cardUseCompatPadding="true">
 
-        <EditText
-            android:id="@+id/txtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress">
-        </EditText>
-    </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilApellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margen15dp"
+                    android:layout_marginRight="@dimen/margen15dp"
+                    android:layout_marginTop="@dimen/margen5dp">
 
-</RelativeLayout>
+                    <EditText
+                        android:id="@+id/txtApellidos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/apellidos"
+                        android:inputType="textPersonName"
+                        android:textColor="@color/colorPrimaryDark" />
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/tools"
+                android:id="@+id/cv3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv2"
+                android:layout_marginBottom="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen15dp"
+                android:layout_marginRight="@dimen/margen15dp"
+                card_view:cardCornerRadius="@dimen/margin30dp"
+                card_view:cardElevation="@dimen/margin30dp"
+                card_view:cardPreventCornerOverlap="false"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margen15dp"
+                    android:layout_marginRight="@dimen/margen15dp"
+                    android:layout_marginTop="@dimen/margen5dp">
+
+                    <EditText
+                        android:id="@+id/txtTelefono"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/telefono"
+                        android:inputType="phone"
+                        android:maxLength="9"
+                        android:textColor="@color/colorPrimaryDark" />
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/tools"
+                android:id="@+id/cv4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv3"
+                android:layout_marginBottom="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen15dp"
+                android:layout_marginRight="@dimen/margen15dp"
+                card_view:cardCornerRadius="@dimen/margin30dp"
+                card_view:cardElevation="@dimen/margin30dp"
+                card_view:cardPreventCornerOverlap="false"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margen15dp"
+                    android:layout_marginRight="@dimen/margen15dp"
+                    android:layout_marginTop="@dimen/margen5dp">
+
+                    <EditText
+                        android:id="@+id/txtDireccion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/direccion"
+                        android:inputType="text"
+                        android:textColor="@color/colorPrimaryDark" />
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/tools"
+                android:id="@+id/cv5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cv4"
+                android:layout_marginBottom="@dimen/margen15dp"
+                android:layout_marginLeft="@dimen/margen15dp"
+                android:layout_marginRight="@dimen/margen15dp"
+                card_view:cardCornerRadius="@dimen/margin30dp"
+                card_view:cardElevation="@dimen/margin30dp"
+                card_view:cardPreventCornerOverlap="false"
+                card_view:cardUseCompatPadding="true">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margen15dp"
+                    android:layout_marginRight="@dimen/margen15dp"
+                    android:layout_marginTop="@dimen/margen5dp">
+
+                    <EditText
+                        android:id="@+id/txtEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/colorPrimaryDark" />
+                </android.support.design.widget.TextInputLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>
