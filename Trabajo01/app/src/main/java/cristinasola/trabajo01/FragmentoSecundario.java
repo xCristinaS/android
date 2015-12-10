@@ -1,8 +1,6 @@
 package cristinasola.trabajo01;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -95,7 +92,7 @@ public class FragmentoSecundario extends Fragment {
         super.onDetach();
     }
 
-        public interface Callback_FragmentoSec {
+    public interface Callback_FragmentoSec {
             public void editarAlumno(int idAlumno);
         }
 }

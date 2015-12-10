@@ -43,7 +43,7 @@ public class SecundaryActivity extends AppCompatActivity implements FragmentoSec
 
     @Override
     public void editarAlumno(int idAlumno) {
-        NuevoAlumnoActivity.startForResult(this, RESULTADO_FRAGMENT_SEC, idAlumno);
+        CrearModificarActivity.startForResult(this, RESULTADO_FRAGMENT_SEC, idAlumno);
     }
 
     public static void startForResult(Activity a, int requestCode, int posicion){

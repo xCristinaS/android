@@ -20,7 +20,7 @@
         <activity
             android:name=".SecundaryActivity"
             android:label="@string/detalles" />
-        <activity android:name=".NuevoAlumnoActivity"
+        <activity android:name=".CrearModificarActivity"
             android:label="@string/agregarNuevoAlumno"></activity>
     </application>
 

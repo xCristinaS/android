@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity implements FragmentoPrincipa
 
         gestor = getSupportFragmentManager();
         cargarFragmentoPrincipal();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+            eliminarFragmento(FRAGMENTO_SECUNDARIO);
     }
 
     private void cargarFragmentoPrincipal(){
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements FragmentoPrincipa
         boolean r;
         switch (item.getItemId()){
             case R.id.agregar:
-                NuevoAlumnoActivity.startForResult(this, RESULTADO_MAIN, -1);
+                CrearModificarActivity.startForResult(this, RESULTADO_MAIN, -1);
                 r = true;
                 break;
             default:
@@ -89,6 +91,15 @@ public class MainActivity extends AppCompatActivity implements FragmentoPrincipa
 
     @Override
     public void editarAlumno(int idAlumno) {
-        NuevoAlumnoActivity.startForResult(this, RESULTADO_FRAGMENT_SEC, idAlumno);
+        CrearModificarActivity.startForResult(this, RESULTADO_FRAGMENT_SEC, idAlumno);
+    }
+
+    public void eliminarFragmento(String tagFragment){
+        if (gestor.findFragmentByTag(tagFragment) != null)
+            gestor.beginTransaction().remove(gestor.findFragmentByTag(tagFragment)).commit();
+    }
+
+    public void listaAlumnosVacia(){
+        eliminarFragmento(FRAGMENTO_SECUNDARIO);
     }
 }

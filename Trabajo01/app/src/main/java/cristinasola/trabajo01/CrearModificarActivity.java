@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class NuevoAlumnoActivity extends AppCompatActivity {
+public class CrearModificarActivity extends AppCompatActivity {
 
     private static final String INDICE_ALUMNO = "indiceAlumno";
     TextInputLayout tilNombre, tilApellidos, tilTelefono, tilDireccion, tilEmail;
@@ -90,7 +90,7 @@ public class NuevoAlumnoActivity extends AppCompatActivity {
     }
 
     public static void startForResult(Activity a, int requestCode, int numAlumno){
-        Intent intento = new Intent(a, NuevoAlumnoActivity.class);
+        Intent intento = new Intent(a, CrearModificarActivity.class);
         if (numAlumno != -1)
             intento.putExtra(INDICE_ALUMNO, numAlumno);
         a.startActivityForResult(intento, requestCode);

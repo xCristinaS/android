@@ -83,7 +83,8 @@ public class FragmentoPrincipal extends Fragment {
                         }
                         // Se notifica al adaptador que ha habido cambios.
                         ((PersonalAdapterLista)lstLista.getAdapter()).notifyDataSetChanged();
-                        Toast.makeText(getActivity().getApplicationContext(), elems.size() + getString(R.string.alumnosEliminados), Toast.LENGTH_LONG).show();
+                        if (BddAlumnos.getAlumnos().size() == 0)
+                            listener.listaAlumnosVacia();
                         break;
                 }
                 return false;
@@ -129,5 +130,6 @@ public class FragmentoPrincipal extends Fragment {
 
         public interface Callback_Principal {
             public void cargarFragmentoDetalles(int posicion);
+            public void listaAlumnosVacia();
         }
 }
