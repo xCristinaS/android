@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity implements FragmentoPrincipa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BddAlumnos.agregarAlumno(new Alumno("pepe", "pepito", "123", "calle", "email@e.com"));
-
         gestor = getSupportFragmentManager();
         cargarFragmentoPrincipal();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
