@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
     PersonalAdapterLista adaptador;
     CardView cvSinopsis;
     TextView lblSinopsis, lblTituloSinopsis;
+    ImageView imgCerrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
     private void initViews(){
         cvSinopsis = (CardView) findViewById(R.id.cvSinopsis);
         lblSinopsis = (TextView) findViewById(R.id.lblSinopsis);
+        imgCerrar = (ImageView) findViewById(R.id.imgCerrar);
         lblTituloSinopsis = (TextView) findViewById(R.id.lblTituloSinopsis);
         adaptador = new PersonalAdapterLista(this, Coleccion.getLibros());
         lstLibros = (ListView) findViewById(R.id.lstLibros);
@@ -82,6 +85,12 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
             }
         });
 
+        imgCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cvSinopsis.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void cargarSinopsisLibroSeleccionado(int position){
