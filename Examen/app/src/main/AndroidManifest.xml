@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NuevoLibroActivity"></activity>
+        <activity android:name=".NuevoLibroActivity"
+            android:label="@string/agregarLibro"></activity>
     </application>
 
 </manifest>
