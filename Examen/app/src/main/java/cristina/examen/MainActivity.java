@@ -1,5 +1,6 @@
 package cristina.examen;
 
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -12,10 +13,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements MyDialogFragmentEliminar.DialogListenerBorrar {
 
     ListView lstLibros;
     PersonalAdapterLista adaptador;
@@ -72,16 +74,8 @@ public class MainActivity extends AppCompatActivity {
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.borrar:
-                        ArrayList<Libro> elems = getElementosSeleccionados(lstLibros, true);
-                        // Se eliminan del adaptador.
-                        for (Libro elemento : elems) {
-                            ((PersonalAdapterLista) lstLibros.getAdapter()).getLibros().remove(elemento);
-                        }
-                        // Se notifica al adaptador que ha habido cambios.
-                        ((PersonalAdapterLista) lstLibros.getAdapter()).notifyDataSetChanged();
-
-                        //if (BddAlumnos.getAlumnos().size() == 0)
-                          //  listener.listaAlumnosVacia();
+                        MyDialogFragmentEliminar dialogo = new MyDialogFragmentEliminar();
+                        dialogo.show(getSupportFragmentManager(), "dialogo");
                         break;
                 }
                 return false;
@@ -95,6 +89,23 @@ public class MainActivity extends AppCompatActivity {
         lblSinopsis.setText(libroSeleccionado.getSinopsis());
         lblTituloSinopsis.setText(libroSeleccionado.getTitulo());
         cvSinopsis.setVisibility(View.VISIBLE);
+    }
+
+    public void onPositiveButtonClick(DialogFragment dialog) {
+        if (dialog instanceof MyDialogFragmentEliminar){
+            ArrayList<Libro> elems = getElementosSeleccionados(lstLibros, true);
+            // Se eliminan del adaptador.
+            for (Libro elemento : elems) {
+                ((PersonalAdapterLista) lstLibros.getAdapter()).getLibros().remove(elemento);
+            }
+            // Se notifica al adaptador que ha habido cambios.
+            ((PersonalAdapterLista) lstLibros.getAdapter()).notifyDataSetChanged();
+        }
+        Toast.makeText(MainActivity.this, "Se han eliminado los elementos seleccionados.", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onNegativeButtonClick(DialogFragment dialog) {
+        Toast.makeText(MainActivity.this, "Se ha cancelado la operación.", Toast.LENGTH_SHORT).show();
     }
 
     private ArrayList<Libro> getElementosSeleccionados(ListView lista, boolean desmarcar){
@@ -115,7 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 datos.add((Libro) lista.getItemAtPosition(selec.keyAt(i)));
             }
         }
-        // Se retorna el resultado.
         return datos;
     }
 }
