@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Examen</string>
     <string name="misLibrosFav">Mis libros favoritos</string>
+    <string name="de">" de "</string>
 </resources>
