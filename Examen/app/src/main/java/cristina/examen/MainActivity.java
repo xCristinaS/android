@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
 
             @Override
             public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+                ocultarSinopsis();
                 mode.setTitle(lstLibros.getCheckedItemCount() + getString(R.string.de) + lstLibros.getCount());
             }
 
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
         imgCerrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cvSinopsis.setVisibility(View.GONE);
+                ocultarSinopsis();
             }
         });
     }
@@ -136,5 +137,9 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
             }
         }
         return datos;
+    }
+
+    private void ocultarSinopsis() {
+        cvSinopsis.setVisibility(View.GONE);
     }
 }
