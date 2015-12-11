@@ -26,7 +26,6 @@
             android:id="@+id/imgLibro"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="@dimen/dimens10dp"
             android:layout_weight="30"
             android:background="@drawable/libro"
             android:scaleType="centerCrop" />
@@ -34,6 +33,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/dimens10dp"
             android:layout_weight="70">
 
             <RelativeLayout
@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/titulo"
                         android:inputType="text"
-                        android:maxLength="20">
+                        android:maxLength="25">
 
                         <requestFocus />
                     </EditText>
@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/autor"
                         android:inputType="textPersonName"
-                        android:maxLength="20">
+                        android:maxLength="25">
 
                     </EditText>
                 </android.support.design.widget.TextInputLayout>

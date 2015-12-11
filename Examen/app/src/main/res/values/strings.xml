@@ -10,4 +10,5 @@
     <string name="urlPortada">URL de portada</string>
     <string name="sinopsis">Sinopsis</string>
     <string name="guardar">guardar</string>
+    <string name="tituloRelleno">El campo título no puede estar vacío.</string>
 </resources>

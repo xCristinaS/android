@@ -6,8 +6,12 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 public class NuevoLibroActivity extends AppCompatActivity {
 
@@ -26,12 +30,20 @@ public class NuevoLibroActivity extends AppCompatActivity {
     }
 
     private void initViews(){
-        imgLibro = (ImageView) findViewById(R.id.imgPortada);
+        imgLibro = (ImageView) findViewById(R.id.imgLibro);
         txtTitulo = (EditText) findViewById(R.id.txtTitulo);
         txtAutor = (EditText) findViewById(R.id.txtAutor);
         txtAnioPub = (EditText) findViewById(R.id.txtAnioPub);
         txtUrlPortada = (EditText) findViewById(R.id.txtUrlPortada);
         txtSinopsis = (EditText) findViewById(R.id.txtSinopsis);
+
+        txtUrlPortada.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus && !TextUtils.isEmpty(txtUrlPortada.getText().toString()))
+                    Picasso.with(txtUrlPortada.getContext()).load(txtUrlPortada.getText().toString()).into(imgLibro);
+            }
+        });
     }
 
     @Override
@@ -57,11 +69,14 @@ public class NuevoLibroActivity extends AppCompatActivity {
         String sinopsis = txtSinopsis.getText().toString();
         String anioPub = txtAnioPub.getText().toString();
         String url;
-        if (!TextUtils.isEmpty(txtUrlPortada.getText()))
-            url = txtUrlPortada.getText().toString();
-        else
-            url = "";
-        Coleccion.agregarLibro(new Libro(titulo, autor, anioPub, sinopsis, url));
-        finish();
+        if (!TextUtils.isEmpty(titulo)) {
+            if (!TextUtils.isEmpty(txtUrlPortada.getText()))
+                url = txtUrlPortada.getText().toString();
+            else
+                url = "";
+            Coleccion.agregarLibro(new Libro(titulo, autor, anioPub, sinopsis, url));
+            finish();
+        } else
+            Toast.makeText(this, R.string.tituloRelleno, Toast.LENGTH_SHORT).show();
     }
 }

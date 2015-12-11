@@ -8,6 +8,7 @@
         android:layout_width="@dimen/dimens60dp"
         android:layout_height="@dimen/dimens80dp"
         android:layout_margin="@dimen/dimens10dp"
+        android:scaleType="centerCrop"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"/>
 
