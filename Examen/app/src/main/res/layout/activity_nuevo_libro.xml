@@ -26,116 +26,119 @@
             android:id="@+id/imgLibro"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="@dimen/dimens10dp"
             android:layout_weight="30"
             android:background="@drawable/libro"
-            android:layout_margin="@dimen/dimens10dp"
-            android:scaleType="centerCrop"/>
+            android:scaleType="centerCrop" />
 
-        <RelativeLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="70">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilTitulo"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimens10dp"
-                android:layout_marginRight="@dimen/dimens10dp"
-                android:layout_marginTop="@dimen/dimens10dp">
+                android:layout_height="match_parent">
 
-                <EditText
-                    android:id="@+id/txtTitulo"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/titulo"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/colorPrimaryDark">
+                    android:layout_marginLeft="@dimen/dimens10dp"
+                    android:layout_marginRight="@dimen/dimens10dp"
+                    android:layout_marginTop="@dimen/dimens10dp">
 
-                    <requestFocus />
-                </EditText>
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/txtTitulo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/titulo"
+                        android:inputType="text"
+                        android:maxLength="20">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilAutor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tilTitulo"
-                android:layout_marginLeft="@dimen/dimens10dp"
-                android:layout_marginRight="@dimen/dimens10dp"
-                android:layout_marginTop="@dimen/dimens10dp">
+                        <requestFocus />
+                    </EditText>
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/txtAutor"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilAutor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/autor"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/colorPrimaryDark">
+                    android:layout_below="@id/tilTitulo"
+                    android:layout_marginLeft="@dimen/dimens10dp"
+                    android:layout_marginRight="@dimen/dimens10dp"
+                    android:layout_marginTop="@dimen/dimens10dp">
 
-                </EditText>
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/txtAutor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/autor"
+                        android:inputType="textPersonName"
+                        android:maxLength="20">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilAnioPub"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tilAutor"
-                android:layout_marginLeft="@dimen/dimens10dp"
-                android:layout_marginRight="@dimen/dimens10dp"
-                android:layout_marginTop="@dimen/dimens10dp">
+                    </EditText>
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/txtAnioPub"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilAnioPub"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/anioPublicacion"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/colorPrimaryDark">
+                    android:layout_below="@id/tilAutor"
+                    android:layout_marginLeft="@dimen/dimens10dp"
+                    android:layout_marginRight="@dimen/dimens10dp"
+                    android:layout_marginTop="@dimen/dimens10dp">
 
-                </EditText>
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/txtAnioPub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/anioPublicacion"
+                        android:inputType="number"
+                        android:maxLength="4">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilUrlPortada"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tilAnioPub"
-                android:layout_marginLeft="@dimen/dimens10dp"
-                android:layout_marginRight="@dimen/dimens10dp"
-                android:layout_marginTop="@dimen/dimens10dp">
+                    </EditText>
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/txtUrlPortada"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilUrlPortada"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/urlPortada"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/colorPrimaryDark">
+                    android:layout_below="@id/tilAnioPub"
+                    android:layout_marginLeft="@dimen/dimens10dp"
+                    android:layout_marginRight="@dimen/dimens10dp"
+                    android:layout_marginTop="@dimen/dimens10dp">
 
-                </EditText>
-            </android.support.design.widget.TextInputLayout>
+                    <EditText
+                        android:id="@+id/txtUrlPortada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/urlPortada"
+                        android:inputType="textUri">
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/tilSinopsis"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tilUrlPortada"
-                android:layout_marginLeft="@dimen/dimens10dp"
-                android:layout_marginRight="@dimen/dimens10dp"
-                android:layout_marginTop="@dimen/dimens10dp">
+                    </EditText>
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
-                    android:id="@+id/txtSinopsis"
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/tilSinopsis"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/sinopsis"
-                    android:inputType="textPersonName"
-                    android:textColor="@color/colorPrimaryDark">
+                    android:layout_below="@id/tilUrlPortada"
+                    android:layout_marginLeft="@dimen/dimens10dp"
+                    android:layout_marginRight="@dimen/dimens10dp"
+                    android:layout_marginTop="@dimen/dimens10dp">
 
-                </EditText>
-            </android.support.design.widget.TextInputLayout>
-        </RelativeLayout>
+                    <EditText
+                        android:id="@+id/txtSinopsis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/sinopsis"
+                        android:inputType="textMultiLine">
+
+                    </EditText>
+                </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
+        </ScrollView>
     </LinearLayout>
 
 </RelativeLayout>

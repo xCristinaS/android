@@ -9,4 +9,5 @@
     <string name="anioPublicacion">Año de publicación</string>
     <string name="urlPortada">URL de portada</string>
     <string name="sinopsis">Sinopsis</string>
+    <string name="guardar">guardar</string>
 </resources>

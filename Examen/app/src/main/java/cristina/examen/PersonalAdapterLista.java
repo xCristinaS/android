@@ -67,10 +67,14 @@ public class PersonalAdapterLista extends ArrayAdapter<Libro> {
     }
 
     private void onBindViewHolder(ViewHolder holder, int position){
+        String url = libros.get(position).getUrlPortada();
         holder.getLblTitulo().setText(libros.get(position).getTitulo());
         holder.getLblAutor().setText(libros.get(position).getAutor());
         holder.getLblAnioPub().setText(libros.get(position).getAnioPublicacion());
-        Picasso.with(getContext()).load(libros.get(position).getUrlPortada()).into(holder.getImgPortada());
+        if (url.equals(""))
+            Picasso.with(getContext()).load(R.drawable.libro).into(holder.getImgPortada());
+        else
+            Picasso.with(getContext()).load(url).into(holder.getImgPortada());
     }
 
     public ArrayList<Libro> getLibros(){
