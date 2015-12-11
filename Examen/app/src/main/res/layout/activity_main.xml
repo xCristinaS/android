@@ -3,16 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
     tools:context="cristina.examen.MainActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_alignParentTop="true"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <ListView
         android:id="@+id/lstLibros"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/cvSinopsis"
-        android:layout_alignParentTop="true" />
+        android:layout_below="@id/toolbar" />
 
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/tools"
         android:id="@+id/cvSinopsis"
@@ -22,7 +33,8 @@
         android:layout_marginLeft="@dimen/dimens10dp"
         android:layout_marginRight="@dimen/dimens10dp"
         android:visibility="gone"
-        card_view:cardCornerRadius="@dimen/dimens20dp">
+        card_view:cardCornerRadius="@dimen/dimens20dp"
+        android:paddingBottom="@dimen/dimens20dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -1,9 +1,11 @@
 package cristina.examen;
 
+import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -25,12 +27,14 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
     CardView cvSinopsis;
     TextView lblSinopsis, lblTituloSinopsis;
     ImageView imgCerrar;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         initViews();
     }
 
@@ -141,5 +145,28 @@ public class MainActivity extends AppCompatActivity  implements MyDialogFragment
 
     private void ocultarSinopsis() {
         cvSinopsis.setVisibility(View.GONE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.agregar:
+                startActivity(new Intent(this, NuevoLibroActivity.class));
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adaptador.notifyDataSetChanged();
     }
 }
