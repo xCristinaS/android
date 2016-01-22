@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Ejercicio35_Preferences</string>
+    <string name="action_settings">Settings</string>
+    <string name="sincronizacion">sincronización</string>
+</resources>

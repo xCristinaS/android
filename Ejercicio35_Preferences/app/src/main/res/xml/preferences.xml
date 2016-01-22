@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/sincronizacion">
+        <CheckBoxPreference
+            android:key="prefSincronizar"
+            android:title="sincronizar"
+            android:summary="textito de abajo."
+            android:defaultValue="true" />
+        <ListPreference
+            android:dependency="prefSincronizar"
+            android:key="prefTipoConexion"
+            android:title="conexion"
+            android:dialogTitle="tipo de conexion"
+            android:entries="@array/opciones"
+            android:entryValues="@array/opciones"
+            android:defaultValue="opcion 1" />
+    </PreferenceCategory>
+</PreferenceScreen>
