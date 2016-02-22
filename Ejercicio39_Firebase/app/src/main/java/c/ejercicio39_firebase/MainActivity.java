@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -27,7 +28,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements MyAdaptador.OnItemClickListener{
 
     private static final String DIR_MYBDD = "https://myfirebase01.firebaseio.com/mensajes/";
     EditText txtMensaje;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     String idMensaje = "-KA9TrDOOhAVutjXpo5i";
     ArrayList<Mensaje> datos = new ArrayList<>();
     RecyclerView lstMensajes;
-    FirebaseRecyclerAdapter mAdapter;
+    MyAdaptador mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,17 +61,18 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onItemClick(Mensaje mensaje, String key, int position) {
+        Toast.makeText(this,mensaje.getMensaje() + " " + key,Toast.LENGTH_SHORT).show();
+    }
+
     private void initViews() {
         txtMensaje = (EditText) findViewById(R.id.txtMensaje);
         lstMensajes = (RecyclerView) findViewById(R.id.lstMensajes);
         lstMensajes.setLayoutManager(new LinearLayoutManager(this));
         myFirebase = new Firebase(DIR_MYBDD);
-        mAdapter = new FirebaseRecyclerAdapter<Mensaje, MyViewHolder>(Mensaje.class, R.layout.mensaje_layout, MyViewHolder.class, myFirebase.orderByChild("mensaje")) {
-            @Override
-            protected void populateViewHolder(MyViewHolder myViewHolder, Mensaje mensaje, int i) {
-                myViewHolder.lblMensaje.setText(mensaje.getMensaje());
-            }
-        };
+        mAdapter = new MyAdaptador(myFirebase.orderByChild("mensaje"));
+        mAdapter.setOnItemClickListener(this);
         lstMensajes.setAdapter(mAdapter);
 
         // Se crea el helper.
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         itemTouchHelper.attachToRecyclerView(lstMensajes);
+
         /*
         myFirebase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -162,14 +165,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView lblMensaje;
-
-        public MyViewHolder(View itemView) {
-            super(itemView);
-            lblMensaje = (TextView) itemView.findViewById(R.id.lblMensaje);
-        }
     }
 }
