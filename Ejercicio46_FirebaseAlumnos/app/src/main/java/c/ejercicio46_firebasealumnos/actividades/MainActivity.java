@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements AdaptadorAlumnos.
     public static final String ARBOL_ALUMNOS = "alumnos/";
     public static final String ARBOL_NOTAS = "notas/";
     public static final String ARBOL_GRUPOS_ALUMNO = "grupoAlumno/";
+    public static final String ARBOL_GRUPOS = "grupos/";
 
     private RecyclerView lstAlumnos;
     private AdaptadorAlumnos adaptador;

@@ -6,36 +6,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.firebase.client.Query;
-import com.firebase.ui.FirebaseRecyclerAdapter;
+import java.util.ArrayList;
+import java.util.List;
 
 import c.ejercicio46_firebasealumnos.R;
 import c.ejercicio46_firebasealumnos.modelo_datos.Grupo;
-import c.ejercicio46_firebasealumnos.modelo_datos.GrupoAlumno;
 
 /**
  * Created by Cristina on 22/02/2016.
  */
-public class AdaptadorGrupos extends FirebaseRecyclerAdapter<GrupoAlumno, AdaptadorGrupos.ViewHolder> {
+public class AdaptadorGrupos extends RecyclerView.Adapter<AdaptadorGrupos.ViewHolder>{
 
+    private ArrayList<Grupo> data = new ArrayList<>();
 
-    public AdaptadorGrupos(Query ref){
-        this(GrupoAlumno.class, R.layout.grupo_item, ViewHolder.class, ref);
+    public AdaptadorGrupos(){
+
     }
 
-    public AdaptadorGrupos(Class<GrupoAlumno> modelClass, int modelLayout, Class<ViewHolder> viewHolderClass, Query ref) {
-        super(modelClass, modelLayout, viewHolderClass, ref);
+    public AdaptadorGrupos(ArrayList<Grupo> data){
+        this.data = data;
     }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.alumno_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.grupo_item, parent, false));
     }
 
     @Override
-    protected void populateViewHolder(ViewHolder viewHolder, GrupoAlumno grupoAlumno, int i) {
-        viewHolder.onBind(grupoAlumno);
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.onBind(data.get(position));
     }
+
+    public void addItem(Grupo grupo) {
+        data.add(grupo);
+        notifyItemInserted(data.size() - 1);
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -46,8 +56,8 @@ public class AdaptadorGrupos extends FirebaseRecyclerAdapter<GrupoAlumno, Adapta
             lblDescripcion = (TextView) itemView.findViewById(R.id.lblDescripcion);
         }
 
-        public void onBind(GrupoAlumno grupoAlumno){
-            lblDescripcion.setText("Grupo: " + grupoAlumno.getGrupo().getDescripcion());
+        public void onBind(Grupo grupo){
+            lblDescripcion.setText("Grupo: " + grupo.getDescripcion());
         }
     }
 }
