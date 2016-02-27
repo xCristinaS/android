@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -22,12 +23,16 @@ import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 import c.trabajo_fct.fragments.AlumnoFragment;
 import c.trabajo_fct.fragments.EmpresaFragment;
+import c.trabajo_fct.fragments.FragmentoPrincipal;
 import c.trabajo_fct.fragments.VisitaFragment;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentoPrincipal.Callback_Principal {
+
+    private static final String FRAGMENTO_PRINCIPAL = "principal";
 
     private PaginasAdapter mAdaptador;
     private TabLayout tabLayout;
+    private FragmentManager gestor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        gestor = getSupportFragmentManager();
         initViews();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -53,11 +59,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        cargarFragmentoPrincipal();
     }
 
     private void initViews() {
-        tabLayout = (TabLayout) findViewById(R.id.tabL);
+        /*tabLayout = (TabLayout) findViewById(R.id.tabL);
         setupViewPager();
+        */
+    }
+
+    private void cargarFragmentoPrincipal(){
+        FragmentTransaction transaccion = gestor.beginTransaction();
+        transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
+        transaccion.commit();
     }
 
     private void setupViewPager() {

@@ -59,6 +59,9 @@ public class EmpresaFragment extends Fragment {
         gestor.insertEmpresa(new Empresa("empresa6", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
         gestor.insertEmpresa(new Empresa("empresa7", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
         gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
     }
 
     @Override

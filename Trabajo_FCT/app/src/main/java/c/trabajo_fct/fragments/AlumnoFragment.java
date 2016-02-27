@@ -60,6 +60,9 @@ public class AlumnoFragment extends Fragment {
         gestor.insertAlumno(new Alumno("lolo", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
         gestor.insertAlumno(new Alumno("jose", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
         gestor.insertAlumno(new Alumno("maria", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("maria", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("maria", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("maria", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
         gestor.insertAlumno(new Alumno("sara", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
     }
 
