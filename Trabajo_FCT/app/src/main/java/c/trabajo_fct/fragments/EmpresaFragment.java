@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.bdd.DAO;
@@ -45,9 +46,11 @@ public class EmpresaFragment extends Fragment {
 
         lstEmpresas = (RecyclerView) getView().findViewById(R.id.lstEmpresas);
         adaptador = new EmpresasAdapter(gestor.selectAllEmpresa());
+        adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayEmpresas));
         lstEmpresas.setAdapter(adaptador);
         lstEmpresas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstEmpresas.setItemAnimator(new DefaultItemAnimator());
+        lstEmpresas.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         super.onActivityCreated(savedInstanceState);
     }
 

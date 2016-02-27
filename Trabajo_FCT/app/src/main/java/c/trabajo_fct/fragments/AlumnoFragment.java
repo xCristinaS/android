@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.AlumnosAdapter;
 import c.trabajo_fct.bdd.DAO;
@@ -46,9 +47,11 @@ public class AlumnoFragment extends Fragment {
 
         lstAlumnos = (RecyclerView) getView().findViewById(R.id.lstAlumnos);
         adaptador = new AlumnosAdapter(gestor.selectAllAlumnos());
+        adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayAlumnos));
         lstAlumnos.setAdapter(adaptador);
         lstAlumnos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstAlumnos.setItemAnimator(new DefaultItemAnimator());
+        lstAlumnos.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
         super.onActivityCreated(savedInstanceState);
     }
 
