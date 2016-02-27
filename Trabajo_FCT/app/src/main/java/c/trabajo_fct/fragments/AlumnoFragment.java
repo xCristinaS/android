@@ -14,7 +14,9 @@ import java.util.ArrayList;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.AlumnosAdapter;
+import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.modelos.Alumno;
+import c.trabajo_fct.modelos.Empresa;
 
 /**
  * Created by Cristina on 27/02/2016.
@@ -23,6 +25,7 @@ public class AlumnoFragment extends Fragment {
 
     private RecyclerView lstAlumnos;
     private AlumnosAdapter adaptador;
+    private DAO gestor;
 
     public AlumnoFragment() {}
 
@@ -41,16 +44,26 @@ public class AlumnoFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        gestor = new DAO(getContext());
+        //insertPrimerosAlumnos();
+
         lstAlumnos = (RecyclerView) getView().findViewById(R.id.lstAlumnos);
-        ArrayList<Alumno> lista = new ArrayList<>();
-        lista.add(new Alumno());
-        lista.get(0).setNombre("Manolito");
-        lista.get(0).setFoto(getResources().getString(R.string.default_alumno_img));
-        adaptador = new AlumnosAdapter(lista);
+        adaptador = new AlumnosAdapter(gestor.selectAllAlumnos());
         lstAlumnos.setAdapter(adaptador);
         lstAlumnos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstAlumnos.setItemAnimator(new DefaultItemAnimator());
         super.onActivityCreated(savedInstanceState);
+    }
+
+    private void insertPrimerosAlumnos() {
+        gestor.insertEmpresa(new Empresa("empresa1", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertAlumno(new Alumno("Pepe", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("manuel", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("alex", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("lolo", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("jose", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("maria", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
+        gestor.insertAlumno(new Alumno("sara", "calle san jose", "956690654", "2DAM", 19, getResources().getString(R.string.default_alumno_img), 1));
     }
 
     @Override

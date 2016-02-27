@@ -2,22 +2,28 @@ package c.trabajo_fct.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.adapters.AlumnosAdapter;
+import c.trabajo_fct.adapters.EmpresasAdapter;
+import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.modelos.Alumno;
+import c.trabajo_fct.modelos.Empresa;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
 public class EmpresaFragment extends Fragment {
 
-    private static final String ARG_NUMERO_PAGINA = "numero_pagina";
-    private static final String STATE_TEXTO = "state_texto";
-
-    private TextView lblTexto;
+    private RecyclerView lstEmpresas;
+    private EmpresasAdapter adaptador;
+    private DAO gestor;
 
     public EmpresaFragment() {}
 
@@ -36,17 +42,25 @@ public class EmpresaFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        // Se escribe el texto adecuado.
-        if (savedInstanceState != null) {
-            //mTexto = savedInstanceState.getString(STATE_TEXTO);
-        } else {
-            //mTexto = getString(R.string.numero_pagina, getArguments().getInt(ARG_NUMERO_PAGINA));
-        }
-        if (getView() != null) {
-            //lblTexto = (TextView) getView().findViewById(R.id.prueba);
-        }
+        gestor = new DAO(getContext());
+        //insertEmpresas();
 
+        lstEmpresas = (RecyclerView) getView().findViewById(R.id.lstEmpresas);
+        adaptador = new EmpresasAdapter(gestor.selectAllEmpresa());
+        lstEmpresas.setAdapter(adaptador);
+        lstEmpresas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        lstEmpresas.setItemAnimator(new DefaultItemAnimator());
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    private void insertEmpresas() {
+        gestor.insertEmpresa(new Empresa("empresa2", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa3", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa4", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa5", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa6", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa7", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
+        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
     }
 
     @Override

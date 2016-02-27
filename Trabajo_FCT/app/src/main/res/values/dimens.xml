@@ -6,10 +6,10 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="margin_bottom_before_list">8dp</dimen>
+    <dimen name="margin_top_bottom_before_list">8dp</dimen>
     <dimen name="margin_left_item_list">16dp</dimen>
     <dimen name="img_width">65dp</dimen>
     <dimen name="img_height">65dp</dimen>
-    <dimen name="padding_img">8dp</dimen>
+    <dimen name="margin_top_img">8dp</dimen>
     <dimen name="tamanio_nombres_alumnos">16sp</dimen>
 </resources>

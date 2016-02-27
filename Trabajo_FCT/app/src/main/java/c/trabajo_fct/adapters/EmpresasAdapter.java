@@ -11,29 +11,29 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import c.trabajo_fct.R;
-import c.trabajo_fct.modelos.Alumno;
+import c.trabajo_fct.modelos.Empresa;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHolder> {
+public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHolder> {
 
     public interface OnItemClick{
         public void onItemClick(int numCancion);
     }
 
-    private  ArrayList<Alumno> alumnos;
+    private ArrayList<Empresa> empresas;
     private OnItemClick listener;
     private int selectedElement = -1;
 
-    public AlumnosAdapter(ArrayList<Alumno> alumnos){
-        this.alumnos = alumnos;
+    public EmpresasAdapter(ArrayList<Empresa> empresas){
+        this.empresas = empresas;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_alumno, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_empresa, parent, false));
     }
 
     @Override
@@ -45,12 +45,12 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
                 holder.itemView.setActivated(false);
         }
         */
-        holder.onBind(alumnos.get(position));
+        holder.onBind(empresas.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return alumnos.size();
+        return empresas.size();
     }
 
     public void setOnItemClickListener(OnItemClick listener){
@@ -59,23 +59,23 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView lblNombreAlumno;
-        private CircleImageView imgAlumno;
+        private TextView lblNombreEmpresa;
+        private CircleImageView imgLogoEmpresa;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            lblNombreAlumno = (TextView) itemView.findViewById(R.id.lblNombreAlumno);
-            imgAlumno = (CircleImageView) itemView.findViewById(R.id.imgAlumno);
+            lblNombreEmpresa = (TextView) itemView.findViewById(R.id.lblNombreEmpresa);
+            imgLogoEmpresa = (CircleImageView) itemView.findViewById(R.id.imgLogoEmpresa);
             // listener.onItemClick(getAdapterPosition(itemView)); // para hacerlo aqui.
         }
 
-        public void onBind(final Alumno alumno){
-            lblNombreAlumno.setText(alumno.getNombre());
-            Picasso.with(imgAlumno.getContext()).load(alumno.getFoto()).into(imgAlumno);
+        public void onBind(final Empresa empresa){
+            lblNombreEmpresa.setText(empresa.getNombre());
+            Picasso.with(imgLogoEmpresa.getContext()).load(empresa.getFoto()).into(imgLogoEmpresa);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //listener.onItemClick(alumnos.indexOf(c));
+                    //listener.onItemClick(empresas.indexOf(c));
                 }
             });
         }

@@ -13,7 +13,7 @@ public class Alumno implements Parcelable {
 
     public Alumno(){}
 
-    public Alumno(String nombre, String direccion, String telefono, String curso, int edad, String foto, int profesor, int empresa){
+    public Alumno(String nombre, String direccion, String telefono, String curso, int edad, String foto, int empresa){
         id = -1;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -24,7 +24,7 @@ public class Alumno implements Parcelable {
         this.empresa = empresa;
     }
 
-    public Alumno(int id, String nombre, String direccion, String telefono, String curso, int edad, String foto, int profesor, int empresa){
+    public Alumno(int id, String nombre, String direccion, String telefono, String curso, int edad, String foto, int empresa){
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
