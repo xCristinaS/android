@@ -8,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.AlumnosAdapter;
@@ -39,7 +36,7 @@ public class AlumnoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.alumno_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_alumno, container, false);
     }
 
     @Override

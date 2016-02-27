@@ -10,10 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import c.trabajo_fct.R;
-import c.trabajo_fct.adapters.AlumnosAdapter;
 import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.bdd.DAO;
-import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 
 /**
@@ -37,7 +35,7 @@ public class EmpresaFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.empresa_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_empresa, container, false);
     }
 
     @Override
