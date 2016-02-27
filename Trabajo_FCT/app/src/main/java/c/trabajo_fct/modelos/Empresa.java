@@ -1,9 +1,7 @@
-package c.trabajo_fct.clases_modelo;
+package c.trabajo_fct.modelos;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import c.trabajo_fct.clases_bdd.BddContract;
 
 /**
  * Created by Cristina on 27/02/2016.

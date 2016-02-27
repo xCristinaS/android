@@ -1,7 +1,6 @@
 package c.trabajo_fct.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,27 +12,26 @@ import c.trabajo_fct.R;
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class PaginaFragment extends Fragment {
+public class VisitaFragment extends Fragment {
 
     private static final String ARG_NUMERO_PAGINA = "numero_pagina";
     private static final String STATE_TEXTO = "state_texto";
 
     private TextView lblTexto;
 
-    public PaginaFragment() {}
+    public VisitaFragment() {}
 
     // Retorna el fragmento configurado. Recibe el número de página.
-    public static PaginaFragment newInstance(int numeroPagina) {
-        PaginaFragment fragment = new PaginaFragment();
+    public static VisitaFragment newInstance() {
+        VisitaFragment fragment = new VisitaFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_NUMERO_PAGINA, numeroPagina);
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.content_main, container, false);
+        return inflater.inflate(R.layout.visita_fragment, container, false);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class PaginaFragment extends Fragment {
             //mTexto = getString(R.string.numero_pagina, getArguments().getInt(ARG_NUMERO_PAGINA));
         }
         if (getView() != null) {
-            lblTexto = (TextView) getView().findViewById(R.id.prueba);
+            //lblTexto = (TextView) getView().findViewById(R.id.prueba);
         }
 
     }

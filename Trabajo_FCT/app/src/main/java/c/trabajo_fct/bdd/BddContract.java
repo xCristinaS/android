@@ -1,4 +1,4 @@
-package c.trabajo_fct.clases_bdd;
+package c.trabajo_fct.bdd;
 
 import android.provider.BaseColumns;
 

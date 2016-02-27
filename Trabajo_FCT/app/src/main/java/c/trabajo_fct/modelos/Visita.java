@@ -1,4 +1,4 @@
-package c.trabajo_fct.clases_modelo;
+package c.trabajo_fct.modelos;
 
 import android.os.Parcel;
 import android.os.Parcelable;

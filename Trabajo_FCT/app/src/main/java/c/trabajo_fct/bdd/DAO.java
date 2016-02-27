@@ -1,4 +1,4 @@
-package c.trabajo_fct.clases_bdd;
+package c.trabajo_fct.bdd;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.Date;
 
-import c.trabajo_fct.clases_modelo.Alumno;
-import c.trabajo_fct.clases_modelo.Empresa;
-import c.trabajo_fct.clases_modelo.Profesor;
-import c.trabajo_fct.clases_modelo.Visita;
+import c.trabajo_fct.modelos.Alumno;
+import c.trabajo_fct.modelos.Empresa;
+import c.trabajo_fct.modelos.Profesor;
+import c.trabajo_fct.modelos.Visita;
 
 /**
  * Created by Cristina on 01/02/2016.

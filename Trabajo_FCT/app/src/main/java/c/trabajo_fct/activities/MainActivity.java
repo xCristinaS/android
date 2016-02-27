@@ -2,7 +2,6 @@ package c.trabajo_fct.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,12 +20,14 @@ import java.util.ArrayList;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
-import c.trabajo_fct.fragments.PaginaFragment;
+import c.trabajo_fct.fragments.AlumnoFragment;
+import c.trabajo_fct.fragments.EmpresaFragment;
+import c.trabajo_fct.fragments.VisitaFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private PaginasAdapter mAdaptador;
-    TabLayout tabLayout;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    
+
     public class PaginasAdapter extends CachedFragmentPagerAdapter {
 
         private final ArrayList<String> mTitulos;
@@ -161,7 +162,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         @Override
         public Fragment getItem(int position) {
-            return PaginaFragment.newInstance(position + 1);
+            switch (position) {
+                case 0:
+                    return AlumnoFragment.newInstance();
+                case 1:
+                    return EmpresaFragment.newInstance();
+                case 2:
+                    return VisitaFragment.newInstance();
+                default:
+                    return null;
+            }
         }
 
         @Override

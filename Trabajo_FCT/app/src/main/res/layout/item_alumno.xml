@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/margin_bottom_before_list">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAlumno"
+        android:layout_marginLeft="@dimen/margin_left_item_list"
+        android:layout_width="@dimen/img_width"
+        android:layout_height="@dimen/img_height"
+        android:paddingTop="@dimen/padding_img"
+        android:scaleType="centerCrop"/>
+    
+    <TextView
+        android:id="@+id/lblNombreAlumno"
+        android:layout_toRightOf="@id/imgAlumno"
+        android:layout_marginLeft="@dimen/margin_left_item_list"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/tamanio_nombres_alumnos"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

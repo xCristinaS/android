@@ -12,9 +12,8 @@
     tools:context=".activities.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <TextView
-        android:id="@+id/prueba"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/lstAlumnos"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fragmento" />
+        android:layout_height="wrap_content" />
 </RelativeLayout>
