@@ -10,7 +10,6 @@ import java.util.Date;
 
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
-import c.trabajo_fct.modelos.Profesor;
 import c.trabajo_fct.modelos.Visita;
 
 /**
@@ -41,7 +40,6 @@ public class DAO {
         valores.put(BddContract.Alumno.TELEFONO, alumno.getTelefono());
         valores.put(BddContract.Alumno.DIRECCION, alumno.getDireccion());
         valores.put(BddContract.Alumno.EDAD, alumno.getEdad());
-        valores.put(BddContract.Alumno.PROFESOR, alumno.getProfesor());
         valores.put(BddContract.Alumno.EMPRESA, alumno.getEmpresa());
         long resultado = bd.insert(BddContract.Alumno.TABLA, null, valores);
         helper.close();
@@ -64,7 +62,6 @@ public class DAO {
         valores.put(BddContract.Alumno.TELEFONO, alumno.getTelefono());
         valores.put(BddContract.Alumno.DIRECCION, alumno.getDireccion());
         valores.put(BddContract.Alumno.EDAD, alumno.getEdad());
-        valores.put(BddContract.Alumno.PROFESOR, alumno.getProfesor());
         valores.put(BddContract.Alumno.EMPRESA, alumno.getEmpresa());
         long resultado = bd.update(BddContract.Alumno.TABLA, valores, BddContract.Alumno.ID + " = " + alumno.getId(), null);
         helper.close();
@@ -111,7 +108,6 @@ public class DAO {
         alumno.setTelefono(cursorAlumno.getString(cursorAlumno.getColumnIndexOrThrow(BddContract.Alumno.TELEFONO)));
         alumno.setDireccion(cursorAlumno.getString(cursorAlumno.getColumnIndexOrThrow(BddContract.Alumno.DIRECCION)));
         alumno.setEdad(cursorAlumno.getInt(cursorAlumno.getColumnIndexOrThrow(BddContract.Alumno.EDAD)));
-        alumno.setProfesor(cursorAlumno.getInt(cursorAlumno.getColumnIndexOrThrow(BddContract.Alumno.PROFESOR)));
         alumno.setEmpresa(cursorAlumno.getInt(cursorAlumno.getColumnIndexOrThrow(BddContract.Alumno.EMPRESA)));
         return alumno;
     }
@@ -188,76 +184,9 @@ public class DAO {
         return empresa;
     }
 
-    public long insertProfesor(Profesor profesor) {
-        SQLiteDatabase bd = helper.getWritableDatabase();
-        ContentValues valores = new ContentValues();
-        valores.put(BddContract.Profesor.NOMBRE, profesor.getNombre());
-        valores.put(BddContract.Profesor.CONTRA, profesor.getContra());
-        long resultado = bd.insert(BddContract.Profesor.TABLA, null, valores);
-        helper.close();
-        return resultado;
-    }
-
-    public boolean deleteProfesor(int id) {
-        SQLiteDatabase bd = helper.getWritableDatabase();
-        long resultado = bd.delete(BddContract.Profesor.TABLA, BddContract.Profesor.ID + " = " + id, null);
-        helper.close();
-        return resultado > 0;
-    }
-
-    public boolean updateProfesor(Profesor profesor) {
-        SQLiteDatabase bd = helper.getWritableDatabase();
-        ContentValues valores = new ContentValues();
-        valores.put(BddContract.Profesor.NOMBRE, profesor.getNombre());
-        valores.put(BddContract.Profesor.CONTRA, profesor.getContra());
-        long resultado = bd.update(BddContract.Profesor.TABLA, valores, BddContract.Profesor.ID + " = " + profesor.getId(), null);
-        helper.close();
-        return resultado > 0;
-    }
-
-    public Profesor selectProfesor(int id) {
-        SQLiteDatabase bd = helper.getWritableDatabase();
-        Cursor cursor = bd.query(true, BddContract.Profesor.TABLA, BddContract.Profesor.TODOS, BddContract.Profesor.ID + " = " + id, null, null, null, null, null);
-        Profesor profesor = null;
-        if (cursor != null) {
-            cursor.moveToFirst();
-            profesor = cursorToProfesor(cursor);
-        }
-        helper.close();
-        return profesor;
-    }
-
-    public Cursor queryAllProfesor(SQLiteDatabase bd) {
-        return  bd.query(BddContract.Profesor.TABLA, BddContract.Profesor.TODOS, null, null, null, null, BddContract.Profesor.NOMBRE);
-    }
-
-    public ArrayList<Profesor> selectAllProfesor() {
-        SQLiteDatabase bd = helper.getWritableDatabase();
-        ArrayList<Profesor> lista = new ArrayList<>();
-        Cursor cursor = queryAllProfesor(bd);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            Profesor profesor = cursorToProfesor(cursor);
-            lista.add(profesor);
-            cursor.moveToNext();
-        }
-        cursor.close();
-        helper.close();
-        return lista;
-    }
-
-    public Profesor cursorToProfesor(Cursor cursorProfesor) {
-        Profesor profesor = new Profesor();
-        profesor.setId(cursorProfesor.getInt(cursorProfesor.getColumnIndexOrThrow(BddContract.Profesor.ID)));
-        profesor.setNombre(cursorProfesor.getString(cursorProfesor.getColumnIndexOrThrow(BddContract.Empresa.NOMBRE)));
-        profesor.setContra(cursorProfesor.getString(cursorProfesor.getColumnIndexOrThrow(BddContract.Profesor.CONTRA)));
-        return profesor;
-    }
-
     public long insertVisita(Visita visita) {
         SQLiteDatabase bd = helper.getWritableDatabase();
         ContentValues valores = new ContentValues();
-        valores.put(BddContract.Visitas.ID_PROFESOR, visita.getIdProfesor());
         valores.put(BddContract.Visitas.ID_ALUMNO, visita.getIdAlumno());
         valores.put(BddContract.Visitas.FECHA, visita.getFecha().getTime());
         valores.put(BddContract.Visitas.COMENTARIO, visita.getComentario());
@@ -266,9 +195,9 @@ public class DAO {
         return resultado;
     }
 
-    public boolean deleteVisita(int idProfesor, int idAlumno, Date fecha) {
+    public boolean deleteVisita(int idAlumno, Date fecha) {
         SQLiteDatabase bd = helper.getWritableDatabase();
-        long resultado = bd.delete(BddContract.Visitas.TABLA, String.format("%s = %d, and %s = %d and %s = %d", BddContract.Visitas.ID_PROFESOR, idProfesor, BddContract.Visitas.ID_ALUMNO, idAlumno,
+        long resultado = bd.delete(BddContract.Visitas.TABLA, String.format("%s = %d and %s = %d",BddContract.Visitas.ID_ALUMNO, idAlumno,
                 BddContract.Visitas.FECHA, fecha.getTime()), null);
         helper.close();
         return resultado > 0;
@@ -277,19 +206,18 @@ public class DAO {
     public boolean updateVisita(Visita visita) {
         SQLiteDatabase bd = helper.getWritableDatabase();
         ContentValues valores = new ContentValues();
-        valores.put(BddContract.Visitas.ID_PROFESOR, visita.getIdProfesor());
         valores.put(BddContract.Visitas.ID_ALUMNO, visita.getIdAlumno());
         valores.put(BddContract.Visitas.FECHA, visita.getFecha().getTime());
         valores.put(BddContract.Visitas.COMENTARIO, visita.getComentario());
-        long resultado = bd.update(BddContract.Visitas.TABLA, valores, String.format("%s = %d, and %s = %d and %s = %d", BddContract.Visitas.ID_PROFESOR, visita.getIdProfesor(), BddContract.Visitas.ID_ALUMNO,
-                visita.getIdAlumno(), BddContract.Visitas.FECHA, visita.getFecha().getTime()), null);
+        long resultado = bd.update(BddContract.Visitas.TABLA, valores, String.format("%s = %d and %s = %d", BddContract.Visitas.ID_ALUMNO, visita.getIdAlumno(), BddContract.Visitas.FECHA,
+                visita.getFecha().getTime()), null);
         helper.close();
         return resultado > 0;
     }
 
-    public Visita selectVisita(int idProfesor, int idAlumno, Date fecha) {
+    public Visita selectVisita(int idAlumno, Date fecha) {
         SQLiteDatabase bd = helper.getWritableDatabase();
-        Cursor cursor = bd.query(true, BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("%s = %d, and %s = %d and %s = %d", BddContract.Visitas.ID_PROFESOR, idProfesor, BddContract.Visitas.ID_ALUMNO,
+        Cursor cursor = bd.query(true, BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("and %s = %d and %s = %d",BddContract.Visitas.ID_ALUMNO,
                 idAlumno, BddContract.Visitas.FECHA, fecha.getTime()), null, null, null, null, null);
         Visita visita = null;
         if (cursor != null) {
@@ -321,7 +249,6 @@ public class DAO {
 
     public Visita cursorToVisita(Cursor cursorVisitas) {
         Visita visita = new Visita();
-        visita.setIdProfesor(cursorVisitas.getInt(cursorVisitas.getColumnIndexOrThrow(BddContract.Visitas.ID_PROFESOR)));
         visita.setIdAlumno(cursorVisitas.getInt(cursorVisitas.getColumnIndexOrThrow(BddContract.Visitas.ID_ALUMNO)));
         visita.setFecha(new Date(cursorVisitas.getLong(cursorVisitas.getColumnIndexOrThrow(BddContract.Visitas.FECHA))));
         visita.setComentario(cursorVisitas.getString(cursorVisitas.getColumnIndexOrThrow(BddContract.Visitas.COMENTARIO)));

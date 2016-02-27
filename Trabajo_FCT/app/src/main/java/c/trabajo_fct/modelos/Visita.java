@@ -10,25 +10,16 @@ import java.util.Date;
  */
 public class Visita implements Parcelable {
 
-    private int idProfesor, idAlumno;
+    private int idAlumno;
     private Date fecha;
     private String comentario;
 
     public Visita(){}
 
     public Visita(int idProfesor, int idAlumno, Date fecha, String comentario) {
-        this.idProfesor = idProfesor;
         this.idAlumno = idAlumno;
         this.fecha = fecha;
         this.comentario = comentario;
-    }
-
-    public int getIdProfesor() {
-        return idProfesor;
-    }
-
-    public void setIdProfesor(int idProfesor) {
-        this.idProfesor = idProfesor;
     }
 
     public int getIdAlumno() {
@@ -62,14 +53,12 @@ public class Visita implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.idProfesor);
         dest.writeInt(this.idAlumno);
         dest.writeLong(fecha != null ? fecha.getTime() : -1);
         dest.writeString(this.comentario);
     }
 
     protected Visita(Parcel in) {
-        this.idProfesor = in.readInt();
         this.idAlumno = in.readInt();
         long tmpFecha = in.readLong();
         this.fecha = tmpFecha == -1 ? null : new Date(tmpFecha);

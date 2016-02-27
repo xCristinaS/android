@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 public class Alumno implements Parcelable {
 
-    private int id, edad, profesor, empresa;
+    private int id, edad, empresa;
     private String nombre, direccion, telefono, curso, foto;
 
     public Alumno(){}
@@ -21,7 +21,6 @@ public class Alumno implements Parcelable {
         this.curso = curso;
         this.edad = edad;
         this.foto = foto;
-        this.profesor = profesor;
         this.empresa = empresa;
     }
 
@@ -33,7 +32,6 @@ public class Alumno implements Parcelable {
         this.curso = curso;
         this.edad = edad;
         this.foto = foto;
-        this.profesor = profesor;
         this.empresa = empresa;
     }
 
@@ -51,14 +49,6 @@ public class Alumno implements Parcelable {
 
     public void setEdad(int edad) {
         this.edad = edad;
-    }
-
-    public int getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(int profesor) {
-        this.profesor = profesor;
     }
 
     public String getNombre() {
@@ -120,7 +110,6 @@ public class Alumno implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
         dest.writeInt(this.edad);
-        dest.writeInt(this.profesor);
         dest.writeInt(this.empresa);
         dest.writeString(this.nombre);
         dest.writeString(this.direccion);
@@ -132,7 +121,6 @@ public class Alumno implements Parcelable {
     protected Alumno(Parcel in) {
         this.id = in.readInt();
         this.edad = in.readInt();
-        this.profesor = in.readInt();
         this.empresa = in.readInt();
         this.nombre = in.readString();
         this.direccion = in.readString();
