@@ -271,15 +271,14 @@ public class DAO {
         return result;
     }
 
-    public ArrayList<String> selectAllNombreEmpresas(){
-        ArrayList<String> result = new ArrayList<>();
+    public int selectIDEmpresa(String nombre){
+        int result = -1;
         SQLiteDatabase bd = helper.getWritableDatabase();
-        String[] campos ={BddContract.Empresa.NOMBRE};
-        Cursor cursor = bd.query(true, BddContract.Empresa.TABLA, campos, "", null, null, null, BddContract.Empresa.NOMBRE, null);
+        String[] campos ={BddContract.Empresa.ID};
+        Cursor cursor = bd.query(true, BddContract.Empresa.TABLA, campos, String.format("%s = '%s'",BddContract.Empresa.NOMBRE, nombre), null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
-            while (!cursor.isAfterLast())
-                result.add(cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.NOMBRE)));
+            result = cursor.getInt(cursor.getColumnIndexOrThrow(BddContract.Empresa.ID));
         }
         cursor.close();
         helper.close();

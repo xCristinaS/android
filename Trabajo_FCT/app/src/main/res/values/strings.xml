@@ -16,4 +16,5 @@
     <string name="telefono">Teléfono:</string>
     <string name="edad">Edad:</string>
     <string name="curso">Curso:</string>
+    <string name="aceptar">Aceptar</string>
 </resources>

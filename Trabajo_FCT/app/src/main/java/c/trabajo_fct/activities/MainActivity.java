@@ -1,7 +1,6 @@
 package c.trabajo_fct.activities;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,9 +18,10 @@ import android.view.MenuItem;
 import c.trabajo_fct.R;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
 import c.trabajo_fct.fragments.FragmentoNuevoAlumno;
+import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentoPrincipal.Callback_Principal, FragmentoNuevoAlumno.Callback_MainActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity {
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
     public static final String FRAGMENTO_NUEVO_ALUMNO = "nuevo alumno";
@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         configFab();
     }
 
-    @Override
     public void cargarFragmentoPrincipal() {
         FragmentTransaction transaccion = gestor.beginTransaction();
         if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) == null)

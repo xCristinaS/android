@@ -1,9 +1,6 @@
 package c.trabajo_fct.fragments;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -13,15 +10,12 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
+import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 
 /**
@@ -29,12 +23,7 @@ import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
  */
 public class FragmentoPrincipal extends Fragment {
 
-    public interface Callback_Principal {
-        public void setFabImage(int id);
-        public void cargarFragmentoSecundario(String id_fragmento);
-    }
-
-    private Callback_Principal listener;
+    private Callback_MainActivity listener;
     private PaginasAdapter mAdaptador;
     private ViewPager viewPager;
 
@@ -62,7 +51,7 @@ public class FragmentoPrincipal extends Fragment {
 
     @Override
     public void onAttach(Context context) {
-        listener = (Callback_Principal) context;
+        listener = (Callback_MainActivity) context;
         super.onAttach(context);
     }
 

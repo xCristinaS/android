@@ -17,7 +17,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             BddContract.Alumno.DIRECCION, BddContract.Alumno.TELEFONO, BddContract.Alumno.CURSO, BddContract.Alumno.EDAD, BddContract.Alumno.FOTO, BddContract.Alumno.EMPRESA, BddContract.Alumno.EMPRESA,
             BddContract.Empresa.TABLA, BddContract.Empresa.ID);
 
-    private static final String SQL_CREATE_TABLE_EMPRESA = String.format("create table %s (%s integer primary key autoincrement, %s varchar (50) not null, %s varchar (300) not null, %s varchar(9) not null,\n" +
+    private static final String SQL_CREATE_TABLE_EMPRESA = String.format("create table %s (%s integer primary key autoincrement, %s varchar (50) unique not null, %s varchar (300) not null, %s varchar(9) not null,\n" +
             "%s varchar(200));", BddContract.Empresa.TABLA, BddContract.Empresa.ID, BddContract.Empresa.NOMBRE, BddContract.Empresa.DIRECCION, BddContract.Empresa.TELEFONO, BddContract.Alumno.FOTO);
 
     private static final String SQL_CREATE_TABLE_VISITAS = String.format("create table %s (%s integer, %s date, %s varchar (500), Foreign key (%s) References %s (%s) ON DELETE CASCADE ON UPDATE CASCADE, Primary key (%s, %s));",

@@ -14,6 +14,7 @@ import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.modelos.Empresa;
 
@@ -22,7 +23,7 @@ import c.trabajo_fct.modelos.Empresa;
  */
 public class EmpresaFragment extends Fragment implements GestionFabDesdeFragmento {
 
-    private FragmentoPrincipal.Callback_Principal listener;
+    private Callback_MainActivity listener;
     private RecyclerView lstEmpresas;
     private EmpresasAdapter adaptador;
     private DAO gestor;
@@ -45,7 +46,7 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         gestor = new DAO(getContext());
-        //insertEmpresas();
+        insertEmpresas();
 
         lstEmpresas = (RecyclerView) getView().findViewById(R.id.lstEmpresas);
         adaptador = new EmpresasAdapter(gestor.selectAllEmpresa());
@@ -60,14 +61,6 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
     private void insertEmpresas() {
         gestor.insertEmpresa(new Empresa("empresa2", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
         gestor.insertEmpresa(new Empresa("empresa3", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa4", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa5", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa6", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa7", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa18", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
     }
 
     @Override
@@ -90,12 +83,12 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
             listener.setFabImage(R.drawable.ic_store);
     }
 
-    public void setListener(FragmentoPrincipal.Callback_Principal listener) {
+    public void setListener(Callback_MainActivity listener) {
         this.listener = listener;
     }
 
     @Override
-    public FragmentoPrincipal.Callback_Principal getListener() {
+    public Callback_MainActivity getListener() {
         return listener;
     }
 

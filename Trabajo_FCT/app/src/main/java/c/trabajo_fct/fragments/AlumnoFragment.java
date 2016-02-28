@@ -15,6 +15,7 @@ import c.trabajo_fct.R;
 import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.AlumnosAdapter;
 import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
@@ -24,7 +25,7 @@ import c.trabajo_fct.modelos.Empresa;
  */
 public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento {
 
-    private FragmentoPrincipal.Callback_Principal listener;
+    private Callback_MainActivity listener;
     private RecyclerView lstAlumnos;
     private AlumnosAdapter adaptador;
     private DAO gestor;
@@ -103,12 +104,12 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
             listener.setFabImage(R.drawable.ic_person_add);
     }
 
-    public void setListener(FragmentoPrincipal.Callback_Principal listener) {
+    public void setListener(Callback_MainActivity listener) {
         this.listener = listener;
     }
 
     @Override
-    public FragmentoPrincipal.Callback_Principal getListener() {
+    public Callback_MainActivity getListener() {
         return listener;
     }
 

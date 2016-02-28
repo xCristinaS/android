@@ -16,6 +16,7 @@ import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.VisitasAdapter;
 import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.modelos.Visita;
 
@@ -24,7 +25,7 @@ import c.trabajo_fct.modelos.Visita;
  */
 public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento {
 
-    private FragmentoPrincipal.Callback_Principal listener;
+    private Callback_MainActivity listener;
     private RecyclerView lstVisitas;
     private VisitasAdapter adaptador;
     private DAO gestor;
@@ -86,12 +87,12 @@ public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento
             listener.setFabImage(R.drawable.ic_event);
     }
 
-    public void setListener(FragmentoPrincipal.Callback_Principal listener) {
+    public void setListener(Callback_MainActivity listener) {
         this.listener = listener;
     }
 
     @Override
-    public FragmentoPrincipal.Callback_Principal getListener() {
+    public Callback_MainActivity getListener() {
         return listener;
     }
 
