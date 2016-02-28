@@ -43,13 +43,6 @@ public class FragmentoPrincipal extends Fragment {
     }
 
     @Override
-    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        listener = (Callback_Principal) getActivity();
-        setupViewPager();
-        super.onViewStateRestored(savedInstanceState);
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setRetainInstance(true);
         super.onCreate(savedInstanceState);
