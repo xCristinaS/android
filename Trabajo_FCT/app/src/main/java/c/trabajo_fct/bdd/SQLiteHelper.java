@@ -20,7 +20,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_EMPRESA = String.format("create table %s (%s integer primary key autoincrement, %s varchar (50) not null, %s varchar (300) not null, %s varchar(9) not null,\n" +
             "%s varchar(200));", BddContract.Empresa.TABLA, BddContract.Empresa.ID, BddContract.Empresa.NOMBRE, BddContract.Empresa.DIRECCION, BddContract.Empresa.TELEFONO, BddContract.Alumno.FOTO);
 
-    private static final String SQL_CREATE_TABLE_VISITAS = String.format("create table %s (%s integer, %s date, %s varchar (500), Foreign key (%s) References %s (%s), Primary key (%s, %s));",
+    private static final String SQL_CREATE_TABLE_VISITAS = String.format("create table %s (%s integer, %s date, %s varchar (500), Foreign key (%s) References %s (%s) ON DELETE CASCADE ON UPDATE CASCADE, Primary key (%s, %s));",
             BddContract.Visitas.TABLA, BddContract.Visitas.ID_ALUMNO, BddContract.Visitas.FECHA, BddContract.Visitas.COMENTARIO, BddContract.Visitas.ID_ALUMNO, BddContract.Alumno.TABLA,
             BddContract.Alumno.ID, BddContract.Visitas.ID_ALUMNO, BddContract.Visitas.FECHA);
 

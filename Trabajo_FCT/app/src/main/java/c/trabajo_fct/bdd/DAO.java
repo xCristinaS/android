@@ -151,6 +151,7 @@ public class DAO {
             cursor.moveToFirst();
             empresa = cursorToEmpresa(cursor);
         }
+        cursor.close();
         helper.close();
         return empresa;
     }
@@ -197,7 +198,7 @@ public class DAO {
 
     public boolean deleteVisita(int idAlumno, Date fecha) {
         SQLiteDatabase bd = helper.getWritableDatabase();
-        long resultado = bd.delete(BddContract.Visitas.TABLA, String.format("%s = %d and %s = %d",BddContract.Visitas.ID_ALUMNO, idAlumno,
+        long resultado = bd.delete(BddContract.Visitas.TABLA, String.format("%s = %d and %s = %d", BddContract.Visitas.ID_ALUMNO, idAlumno,
                 BddContract.Visitas.FECHA, fecha.getTime()), null);
         helper.close();
         return resultado > 0;
@@ -217,19 +218,20 @@ public class DAO {
 
     public Visita selectVisita(int idAlumno, Date fecha) {
         SQLiteDatabase bd = helper.getWritableDatabase();
-        Cursor cursor = bd.query(true, BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("and %s = %d and %s = %d",BddContract.Visitas.ID_ALUMNO,
+        Cursor cursor = bd.query(true, BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("%s = %d and %s = %d",BddContract.Visitas.ID_ALUMNO,
                 idAlumno, BddContract.Visitas.FECHA, fecha.getTime()), null, null, null, null, null);
         Visita visita = null;
         if (cursor != null) {
             cursor.moveToFirst();
             visita = cursorToVisita(cursor);
         }
+        cursor.close();
         helper.close();
         return visita;
     }
 
     public Cursor queryAllVisitas(SQLiteDatabase bd) {
-        return  bd.query(BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, null, null, null, null, BddContract.Visitas.FECHA + "Desc");
+        return  bd.query(BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, null, null, null, null, BddContract.Visitas.FECHA + " Desc");
     }
 
     public ArrayList<Visita> selectAllVisitas() {
@@ -253,5 +255,19 @@ public class DAO {
         visita.setFecha(new Date(cursorVisitas.getLong(cursorVisitas.getColumnIndexOrThrow(BddContract.Visitas.FECHA))));
         visita.setComentario(cursorVisitas.getString(cursorVisitas.getColumnIndexOrThrow(BddContract.Visitas.COMENTARIO)));
         return visita;
+    }
+
+    public String selectNombreAlumno(int idAlumno){
+        String result = "";
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        String[] campos ={BddContract.Alumno.NOMBRE};
+        Cursor cursor = bd.query(true, BddContract.Alumno.TABLA, campos, String.format("%s = %d",BddContract.Alumno.ID, idAlumno), null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Alumno.NOMBRE));
+        }
+        cursor.close();
+        helper.close();
+        return result;
     }
 }

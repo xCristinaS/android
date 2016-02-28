@@ -16,7 +16,7 @@ public class Visita implements Parcelable {
 
     public Visita(){}
 
-    public Visita(int idProfesor, int idAlumno, Date fecha, String comentario) {
+    public Visita(int idAlumno, Date fecha, String comentario) {
         this.idAlumno = idAlumno;
         this.fecha = fecha;
         this.comentario = comentario;

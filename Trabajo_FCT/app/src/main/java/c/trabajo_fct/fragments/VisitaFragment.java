@@ -2,22 +2,30 @@ package c.trabajo_fct.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import java.util.Date;
+
+import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
+import c.trabajo_fct.adapters.VisitasAdapter;
+import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.modelos.Empresa;
+import c.trabajo_fct.modelos.Visita;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
 public class VisitaFragment extends Fragment {
 
-    private static final String ARG_NUMERO_PAGINA = "numero_pagina";
-    private static final String STATE_TEXTO = "state_texto";
-
-    private TextView lblTexto;
+    private RecyclerView lstVisitas;
+    private VisitasAdapter adaptador;
+    private DAO gestor;
 
     public VisitaFragment() {}
 
@@ -36,17 +44,23 @@ public class VisitaFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        // Se escribe el texto adecuado.
-        if (savedInstanceState != null) {
-            //mTexto = savedInstanceState.getString(STATE_TEXTO);
-        } else {
-            //mTexto = getString(R.string.numero_pagina, getArguments().getInt(ARG_NUMERO_PAGINA));
-        }
-        if (getView() != null) {
-            //lblTexto = (TextView) getView().findViewById(R.id.prueba);
-        }
+        gestor = new DAO(getContext());
+        //insertarVisitas();
 
+        lstVisitas = (RecyclerView) getView().findViewById(R.id.lstVisitas);
+        adaptador = new VisitasAdapter(gestor.selectAllVisitas());
+        adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayVisitas));
+        lstVisitas.setAdapter(adaptador);
+        lstVisitas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        lstVisitas.setItemAnimator(new DefaultItemAnimator());
+        lstVisitas.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    private void insertarVisitas() {
+        for (int i = 0; i < 10; i++) {
+            gestor.insertVisita(new Visita(1, new Date(1522154 + 55555 * i), ""));
+        }
     }
 
     @Override

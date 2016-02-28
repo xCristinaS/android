@@ -9,4 +9,5 @@
     <string name="default_empresa_img">https://image.freepik.com/free-icon/set-of-buildings-in-a-city_318-41262.png</string>
     <string name="no_hay_alumnos">No hay alumnos</string>
     <string name="no_hay_empresas">No hay empresas</string>
+    <string name="no_hay_visitas">No hay visitas programadas</string>
 </resources>
