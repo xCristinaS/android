@@ -25,7 +25,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
     public static final String FRAGMENTO_NUEVO_ALUMNO = "nuevo alumno";
+
     private static final String RECUPERAR = "rec";
+    private static final int CARGAR_F_NUEVO_ALUMNO = 10;
 
     private Toolbar toolbar;
     private FragmentManager gestor;
@@ -39,7 +41,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         initViews();
-        cargarFragmentoPrincipal();
+        if (savedInstanceState != null && savedInstanceState.getInt(RECUPERAR) == CARGAR_F_NUEVO_ALUMNO)
+            cargarFragmentoSecundario(FRAGMENTO_NUEVO_ALUMNO);
+        else
+            cargarFragmentoPrincipal();
     }
 
     private void initViews() {
@@ -53,8 +58,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaccion = gestor.beginTransaction();
         if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) == null)
             transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
-        else
-            transaccion.replace(R.id.flHueco, gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL), FRAGMENTO_PRINCIPAL);
         transaccion.commit();
     }
 
@@ -65,9 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case FRAGMENTO_NUEVO_ALUMNO:
                 if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null)
                     transaccion.replace(R.id.flHueco, FragmentoNuevoAlumno.newInstance(), FRAGMENTO_NUEVO_ALUMNO);
-                else
-                    transaccion.replace(R.id.flHueco, gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO), FRAGMENTO_NUEVO_ALUMNO);
-                transaccion.addToBackStack("a");
+                transaccion.addToBackStack(FRAGMENTO_NUEVO_ALUMNO);
                 break;
         }
         transaccion.commit();
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+
         }
     }
 
@@ -153,4 +155,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setImageResource(id);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) != null)
+            outState.putInt(RECUPERAR, CARGAR_F_NUEVO_ALUMNO);
+        super.onSaveInstanceState(outState);
+    }
 }

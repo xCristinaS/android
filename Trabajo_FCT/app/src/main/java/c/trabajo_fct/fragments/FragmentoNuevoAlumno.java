@@ -32,12 +32,6 @@ public class FragmentoNuevoAlumno extends Fragment {
         return new FragmentoNuevoAlumno();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        setRetainInstance(true);
-        super.onCreate(savedInstanceState);
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
