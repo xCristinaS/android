@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) != null) {
+                if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null) {
                     FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
                     FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
                     ViewPager viewPager = fragmentoP.getViewPager();

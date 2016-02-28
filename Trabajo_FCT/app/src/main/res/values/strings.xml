@@ -11,4 +11,8 @@
     <string name="no_hay_empresas">No hay empresas</string>
     <string name="no_hay_visitas">No hay visitas programadas</string>
     <string name="foto_alumno">Foto alumno</string>
+    <string name="nombre">Nombre:</string>
+    <string name="direccion">Dirección:</string>
+    <string name="telefono">Teléfono:</string>
+    <string name="edad">Edad:</string>
 </resources>

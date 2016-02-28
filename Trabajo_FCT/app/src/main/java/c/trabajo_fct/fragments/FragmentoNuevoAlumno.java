@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -51,6 +52,8 @@ public class FragmentoNuevoAlumno extends Fragment {
 
         ImageView imgCabecera = (ImageView)getView().findViewById(R.id.imgCabecera);
         Picasso.with(getContext()).load(R.string.default_alumno_img).into(imgCabecera);
+
+        EditText txtNombre = (EditText) getView().findViewById(R.id.txtNombre);
     }
 
     @Override

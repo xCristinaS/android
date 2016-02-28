@@ -15,4 +15,12 @@
     <dimen name="tamanio_fecha_visita">12sp</dimen>
     <dimen name="empty_drawablePadding">10dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="ancho_icono">50dp</dimen>
+    <dimen name="alto_icono">50dp</dimen>
+    <dimen name="margen_sup_icono">12dp</dimen>
+    <dimen name="margen_pos_icono">12dp</dimen>
+    <dimen name="margen_izq_icono">12dp</dimen>
+    <dimen name="margen_izq_txt">16dp</dimen>
+    <dimen name="margen_der_txt">16dp</dimen>
+    <dimen name="margen_top_txt">15dp</dimen>
 </resources>
