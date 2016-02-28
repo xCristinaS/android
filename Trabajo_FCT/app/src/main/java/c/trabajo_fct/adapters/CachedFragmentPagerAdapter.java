@@ -50,5 +50,4 @@ public abstract class CachedFragmentPagerAdapter extends FragmentPagerAdapter {
             return null;
         }
     }
-
 }

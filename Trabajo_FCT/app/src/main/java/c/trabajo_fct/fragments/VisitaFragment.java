@@ -29,19 +29,14 @@ public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento
     private VisitasAdapter adaptador;
     private DAO gestor;
 
-    public VisitaFragment() {}
+    public VisitaFragment() {
+    }
 
     public static VisitaFragment newInstance() {
         VisitaFragment fragment = new VisitaFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        setRetainInstance(true);
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -79,7 +74,10 @@ public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento
 
     @Override
     public void onFabPressed() {
-        Toast.makeText(getContext(), "desde Visita", Toast.LENGTH_SHORT).show();
+        if (listener != null)
+            Toast.makeText(getContext(), "desde Visita", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }
 
     @Override

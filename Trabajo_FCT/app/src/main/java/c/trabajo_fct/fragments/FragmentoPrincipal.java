@@ -2,6 +2,7 @@ package c.trabajo_fct.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -42,6 +44,7 @@ public class FragmentoPrincipal extends Fragment {
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        listener = (Callback_Principal) getActivity();
         setupViewPager();
         super.onViewStateRestored(savedInstanceState);
     }
@@ -83,7 +86,7 @@ public class FragmentoPrincipal extends Fragment {
         titulosPaginas.add("Alumnos");
         titulosPaginas.add("Empresas");
         titulosPaginas.add("Visitas");
-        mAdaptador = new PaginasAdapter(getActivity().getSupportFragmentManager(), titulosPaginas);
+        mAdaptador = new PaginasAdapter(getChildFragmentManager(), titulosPaginas);
         viewPager.setAdapter(mAdaptador);
         viewPager.setOffscreenPageLimit(2);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

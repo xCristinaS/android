@@ -28,25 +28,35 @@ public class FragmentoNuevoAlumno extends Fragment {
     private Callback_MainActivity listener;
     private Toolbar toolbar;
 
+    public static FragmentoNuevoAlumno newInstance(){
+        return new FragmentoNuevoAlumno();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragmento_nuevo_alumno, container, false);
     }
 
-    public static FragmentoNuevoAlumno newInstance(){
-        return new FragmentoNuevoAlumno();
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        initViews();
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    private void initViews(){
         toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
         ((Toolbar) getActivity().findViewById(R.id.toolbar)).setVisibility(View.GONE);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         ImageView imgCabecera = (ImageView)getView().findViewById(R.id.imgCabecera);
         Picasso.with(getContext()).load(R.string.default_alumno_img).into(imgCabecera);
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override

@@ -27,19 +27,14 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
     private EmpresasAdapter adaptador;
     private DAO gestor;
 
-    public EmpresaFragment() {}
+    public EmpresaFragment() {
+    }
 
     public static EmpresaFragment newInstance() {
         EmpresaFragment fragment = new EmpresaFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        setRetainInstance(true);
-        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -83,7 +78,10 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
 
     @Override
     public void onFabPressed() {
-        Toast.makeText(getContext(), "desde empresa", Toast.LENGTH_SHORT).show();
+        if (listener != null)
+            Toast.makeText(getContext(), "desde empresa", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }
 
     @Override

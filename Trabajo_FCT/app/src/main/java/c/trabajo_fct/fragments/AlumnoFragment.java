@@ -40,18 +40,23 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        setRetainInstance(true);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_alumno, container, false);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        initViews();
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        initViews();
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    public void initViews(){
         gestor = new DAO(getContext());
         //insertPrimerosAlumnos();
 
@@ -62,7 +67,6 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
         lstAlumnos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstAlumnos.setItemAnimator(new DefaultItemAnimator());
         lstAlumnos.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        super.onActivityCreated(savedInstanceState);
     }
 
     private void insertPrimerosAlumnos() {
@@ -87,7 +91,10 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
 
     @Override
     public void onFabPressed() {
-        listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NUEVO_ALUMNO);
+        if (listener != null)
+            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NUEVO_ALUMNO);
+        else
+            Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package c.trabajo_fct.activities;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
     public static final String FRAGMENTO_NUEVO_ALUMNO = "nuevo alumno";
+    private static final String RECUPERAR = "rec";
 
     private Toolbar toolbar;
     private FragmentManager gestor;
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void cargarFragmentoPrincipal(){
+    public void cargarFragmentoPrincipal() {
         FragmentTransaction transaccion = gestor.beginTransaction();
         if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) == null)
             transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     transaccion.replace(R.id.flHueco, FragmentoNuevoAlumno.newInstance(), FRAGMENTO_NUEVO_ALUMNO);
                 else
                     transaccion.replace(R.id.flHueco, gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO), FRAGMENTO_NUEVO_ALUMNO);
-                transaccion.addToBackStack("asa");
+                transaccion.addToBackStack("a");
                 break;
         }
         transaccion.commit();
@@ -86,12 +88,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) != null){
+                if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) != null) {
                     FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
                     FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
                     ViewPager viewPager = fragmentoP.getViewPager();
                     if (adaptador != null && viewPager != null)
-                        ((GestionFabDesdeFragmento)adaptador.getFragment(viewPager.getCurrentItem())).onFabPressed();
+                        ((GestionFabDesdeFragmento) adaptador.getFragment(viewPager.getCurrentItem())).onFabPressed();
                 }
             }
         });
