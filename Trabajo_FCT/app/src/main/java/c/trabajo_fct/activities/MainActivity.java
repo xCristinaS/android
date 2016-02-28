@@ -1,6 +1,5 @@
 package c.trabajo_fct.activities;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
@@ -18,11 +17,13 @@ import android.view.MenuItem;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
+import c.trabajo_fct.fragments.FragmentoNuevoAlumno;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentoPrincipal.Callback_Principal {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentoPrincipal.Callback_Principal, FragmentoNuevoAlumno.Callback_MainActivity {
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
+    public static final String FRAGMENTO_NUEVO_ALUMNO = "nuevo alumno";
 
     private Toolbar toolbar;
     private FragmentManager gestor;
@@ -45,12 +46,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         configFab();
     }
 
-    private void cargarFragmentoPrincipal(){
+    @Override
+    public void cargarFragmentoPrincipal(){
         FragmentTransaction transaccion = gestor.beginTransaction();
         if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) == null)
             transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
         else
             transaccion.replace(R.id.flHueco, gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL), FRAGMENTO_PRINCIPAL);
+        transaccion.commit();
+    }
+
+    @Override
+    public void cargarFragmentoSecundario(String id_fragmento) {
+        FragmentTransaction transaccion = gestor.beginTransaction();
+        switch (id_fragmento) {
+            case FRAGMENTO_NUEVO_ALUMNO:
+                if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null)
+                    transaccion.replace(R.id.flHueco, FragmentoNuevoAlumno.newInstance(), FRAGMENTO_NUEVO_ALUMNO);
+                else
+                    transaccion.replace(R.id.flHueco, gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO), FRAGMENTO_NUEVO_ALUMNO);
+                transaccion.addToBackStack("asa");
+                break;
+        }
         transaccion.commit();
     }
 
@@ -73,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
                     FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
                     ViewPager viewPager = fragmentoP.getViewPager();
-                    ((GestionFabDesdeFragmento)adaptador.getFragment(viewPager.getCurrentItem())).onFabPressed();
+                    if (adaptador != null && viewPager != null)
+                        ((GestionFabDesdeFragmento)adaptador.getFragment(viewPager.getCurrentItem())).onFabPressed();
                 }
             }
         });
@@ -132,4 +150,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void setFabImage(int id) {
         fab.setImageResource(id);
     }
+
 }

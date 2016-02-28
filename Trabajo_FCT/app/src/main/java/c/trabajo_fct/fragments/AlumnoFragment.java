@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
+import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.AlumnosAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
@@ -28,13 +29,20 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
     private AlumnosAdapter adaptador;
     private DAO gestor;
 
-    public AlumnoFragment() {}
+    public AlumnoFragment() {
+    }
 
     public static AlumnoFragment newInstance() {
         AlumnoFragment fragment = new AlumnoFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -79,7 +87,7 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
 
     @Override
     public void onFabPressed() {
-        Toast.makeText(getContext(), "Bien", Toast.LENGTH_SHORT).show();
+        listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NUEVO_ALUMNO);
     }
 
     @Override

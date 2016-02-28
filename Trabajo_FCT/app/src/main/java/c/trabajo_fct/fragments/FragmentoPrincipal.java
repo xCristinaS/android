@@ -1,6 +1,7 @@
 package c.trabajo_fct.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,12 +29,28 @@ public class FragmentoPrincipal extends Fragment {
 
     public interface Callback_Principal {
         public void setFabImage(int id);
+        public void cargarFragmentoSecundario(String id_fragmento);
     }
 
     private Callback_Principal listener;
-    private TabLayout tabLayout;
     private PaginasAdapter mAdaptador;
     private ViewPager viewPager;
+
+    public static FragmentoPrincipal newInstance() {
+        return new FragmentoPrincipal();
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        setupViewPager();
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -41,21 +58,16 @@ public class FragmentoPrincipal extends Fragment {
         return inflater.inflate(R.layout.fragmento_principal, container, false);
     }
 
-    public static FragmentoPrincipal newInstance(){
-        return new FragmentoPrincipal();
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        tabLayout = (TabLayout) getView().findViewById(R.id.tabL);
         setupViewPager();
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        listener = (Callback_Principal) activity;
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        listener = (Callback_Principal) context;
+        super.onAttach(context);
     }
 
     @Override
@@ -65,13 +77,15 @@ public class FragmentoPrincipal extends Fragment {
     }
 
     private void setupViewPager() {
+        TabLayout tabLayout = (TabLayout) getView().findViewById(R.id.tabL);
         viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
         ArrayList<String> titulosPaginas = new ArrayList<>();
-        titulosPaginas.add("Alumnos"); titulosPaginas.add("Empresas"); titulosPaginas.add("Visitas");
+        titulosPaginas.add("Alumnos");
+        titulosPaginas.add("Empresas");
+        titulosPaginas.add("Visitas");
         mAdaptador = new PaginasAdapter(getActivity().getSupportFragmentManager(), titulosPaginas);
         viewPager.setAdapter(mAdaptador);
         viewPager.setOffscreenPageLimit(2);
-        tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -80,15 +94,19 @@ public class FragmentoPrincipal extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 GestionFabDesdeFragmento fragmento = (GestionFabDesdeFragmento) mAdaptador.getFragment(viewPager.getCurrentItem());
-                if (fragmento.getListener() == null)
-                    fragmento.setListener(listener);
-                fragmento.setFabImage();
+                if (fragmento != null) {
+                    if (fragmento.getListener() == null)
+                        fragmento.setListener(listener);
+
+                    fragmento.setFabImage();
+                }
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
         });
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     public PaginasAdapter getAdaptador() {

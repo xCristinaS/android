@@ -10,4 +10,5 @@
     <string name="no_hay_alumnos">No hay alumnos</string>
     <string name="no_hay_empresas">No hay empresas</string>
     <string name="no_hay_visitas">No hay visitas programadas</string>
+    <string name="foto_alumno">Foto alumno</string>
 </resources>
