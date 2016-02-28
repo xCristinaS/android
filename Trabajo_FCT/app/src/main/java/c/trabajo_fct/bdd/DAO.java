@@ -270,4 +270,19 @@ public class DAO {
         helper.close();
         return result;
     }
+
+    public ArrayList<String> selectAllNombreEmpresas(){
+        ArrayList<String> result = new ArrayList<>();
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        String[] campos ={BddContract.Empresa.NOMBRE};
+        Cursor cursor = bd.query(true, BddContract.Empresa.TABLA, campos, "", null, null, null, BddContract.Empresa.NOMBRE, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast())
+                result.add(cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.NOMBRE)));
+        }
+        cursor.close();
+        helper.close();
+        return result;
+    }
 }
