@@ -53,7 +53,7 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
         lstAlumnos.setAdapter(adaptador);
         lstAlumnos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstAlumnos.setItemAnimator(new DefaultItemAnimator());
-        lstAlumnos.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL_LIST));
+        lstAlumnos.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -84,11 +84,17 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
 
     @Override
     public void setFabImage() {
-        listener.setFabImage(R.drawable.ic_person_add);
+        if (listener != null)
+            listener.setFabImage(R.drawable.ic_person_add);
     }
 
     public void setListener(FragmentoPrincipal.Callback_Principal listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public FragmentoPrincipal.Callback_Principal getListener() {
+        return listener;
     }
 
     @Override

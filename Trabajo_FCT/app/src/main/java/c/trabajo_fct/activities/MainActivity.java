@@ -47,7 +47,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void cargarFragmentoPrincipal(){
         FragmentTransaction transaccion = gestor.beginTransaction();
-        transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
+        if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) == null)
+            transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
+        else
+            transaccion.replace(R.id.flHueco, gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL), FRAGMENTO_PRINCIPAL);
         transaccion.commit();
     }
 

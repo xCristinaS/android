@@ -50,7 +50,6 @@ public class FragmentoPrincipal extends Fragment {
         tabLayout = (TabLayout) getView().findViewById(R.id.tabL);
         setupViewPager();
         super.onActivityCreated(savedInstanceState);
-
     }
 
     @Override
@@ -80,7 +79,10 @@ public class FragmentoPrincipal extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                ((GestionFabDesdeFragmento)mAdaptador.getFragment(viewPager.getCurrentItem())).setFabImage();
+                GestionFabDesdeFragmento fragmento = (GestionFabDesdeFragmento) mAdaptador.getFragment(viewPager.getCurrentItem());
+                if (fragmento.getListener() == null)
+                    fragmento.setListener(listener);
+                fragmento.setFabImage();
             }
 
             @Override

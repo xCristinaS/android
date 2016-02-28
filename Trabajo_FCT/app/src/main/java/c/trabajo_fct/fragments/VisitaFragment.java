@@ -78,11 +78,17 @@ public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento
 
     @Override
     public void setFabImage() {
-        listener.setFabImage(R.drawable.ic_event);
+        if (listener != null)
+            listener.setFabImage(R.drawable.ic_event);
     }
 
     public void setListener(FragmentoPrincipal.Callback_Principal listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public FragmentoPrincipal.Callback_Principal getListener() {
+        return listener;
     }
 
     @Override
