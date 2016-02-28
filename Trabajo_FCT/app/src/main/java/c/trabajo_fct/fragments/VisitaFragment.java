@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -15,21 +16,21 @@ import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.VisitasAdapter;
 import c.trabajo_fct.bdd.DAO;
-import c.trabajo_fct.modelos.Empresa;
+import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.modelos.Visita;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class VisitaFragment extends Fragment {
+public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento {
 
+    private FragmentoPrincipal.Callback_Principal listener;
     private RecyclerView lstVisitas;
     private VisitasAdapter adaptador;
     private DAO gestor;
 
     public VisitaFragment() {}
 
-    // Retorna el fragmento configurado. Recibe el número de página.
     public static VisitaFragment newInstance() {
         VisitaFragment fragment = new VisitaFragment();
         Bundle args = new Bundle();
@@ -66,14 +67,27 @@ public class VisitaFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        // Se almacena el texto mostrado.
-        //outState.putString(STATE_TEXTO, mTexto);
+
     }
 
-    // Cuando se hace click sobre el fab estando en dicho fragmento.
-    public void fabOnClick(View view) {
-        //mTexto = getString(R.string.has_pulsado_sobre_el_fab, lblTexto.getText());
-        //lblTexto.setText(mTexto);
-        //Snackbar.make(view,mTexto, Snackbar.LENGTH_LONG).show();
+
+    @Override
+    public void onFabPressed() {
+        Toast.makeText(getContext(), "desde Visita", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setFabImage() {
+        listener.setFabImage(R.drawable.ic_event);
+    }
+
+    public void setListener(FragmentoPrincipal.Callback_Principal listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onDetach() {
+        listener = null;
+        super.onDetach();
     }
 }

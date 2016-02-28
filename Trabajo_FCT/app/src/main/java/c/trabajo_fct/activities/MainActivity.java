@@ -1,9 +1,8 @@
 package c.trabajo_fct.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -17,56 +16,33 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
 import c.trabajo_fct.R;
-import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
-import c.trabajo_fct.fragments.AlumnoFragment;
-import c.trabajo_fct.fragments.EmpresaFragment;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
-import c.trabajo_fct.fragments.VisitaFragment;
+import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FragmentoPrincipal.Callback_Principal {
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
 
-    private PaginasAdapter mAdaptador;
-    private TabLayout tabLayout;
+    private Toolbar toolbar;
     private FragmentManager gestor;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        gestor = getSupportFragmentManager();
         initViews();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
         cargarFragmentoPrincipal();
     }
 
     private void initViews() {
-        /*tabLayout = (TabLayout) findViewById(R.id.tabL);
-        setupViewPager();
-        */
+        gestor = getSupportFragmentManager();
+        configDrawerLayout();
+        configFab();
     }
 
     private void cargarFragmentoPrincipal(){
@@ -75,44 +51,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaccion.commit();
     }
 
-    private void setupViewPager() {
-        // Se crea y asigna el adaptador de páginas al viewPager.
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ArrayList<String> titulosPaginas = new ArrayList<>();
-        titulosPaginas.add("Alumnos"); titulosPaginas.add("Empresas"); titulosPaginas.add("Visitas");
-        mAdaptador = new PaginasAdapter(getSupportFragmentManager(), titulosPaginas);
-        viewPager.setAdapter(mAdaptador);
-        viewPager.setOffscreenPageLimit(2);
-        // Se configura el tabLayout para que trabaje con el viewPager.
-        tabLayout.setupWithViewPager(viewPager);
-        // Se añade un listener para que al cambiar la página se cambia la
-        // imagen de cabecera.
-        //final ImageView imgCabecera = (ImageView) findViewById(R.id.imgCabecera);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    private void configDrawerLayout() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
-            //final int[] imagenes = {R.drawable.foto0, R.drawable.foto1, R.drawable.foto2};
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+    }
 
+    private void configFab() {
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            public void onClick(View view) {
+                if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) != null){
+                    FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
+                    FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
+                    ViewPager viewPager = fragmentoP.getViewPager();
+                    ((GestionFabDesdeFragmento)adaptador.getFragment(viewPager.getCurrentItem())).onFabPressed();
+                }
             }
-
-            @Override
-            public void onPageSelected(int position) {
-                // Se establece la nueva imagen de cabecera y se fuerza el repintado.
-                //imgCabecera.setImageResource(imagenes[position]);
-                //imgCabecera.invalidate();
-                // Se muestra u oculta el FAB.
-/*                if (position == 1) {
-                    fab.hide();
-                } else {
-                    fab.show();
-                }*/
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-
         });
     }
 
@@ -135,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         if (id == R.id.action_settings)
             return true;
 
@@ -166,37 +125,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public class PaginasAdapter extends CachedFragmentPagerAdapter {
-
-        private final ArrayList<String> mTitulos;
-
-        public PaginasAdapter(FragmentManager fm, ArrayList<String> titulos) {
-            super(fm);
-            this.mTitulos = titulos;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return AlumnoFragment.newInstance();
-                case 1:
-                    return EmpresaFragment.newInstance();
-                case 2:
-                    return VisitaFragment.newInstance();
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return mTitulos.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTitulos.get(position);
-        }
+    @Override
+    public void setFabImage(int id) {
+        fab.setImageResource(id);
     }
 }

@@ -89,18 +89,14 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
         notifyItemChanged(selectedElement);
     }
 
-    // Comprueba si la lista está vacía.
     private void checkIfEmpty() {
         if (emptyView != null) {
-            // Muestra u oculta la empty view dependiendo de si la lista está vacía o no.
             emptyView.setVisibility(getItemCount() > 0 ? View.GONE : View.VISIBLE);
         }
     }
 
-    // Establece la empty view para la lista.
     public void setEmptyView(View emptyView) {
         this.emptyView = emptyView;
-        // Muestra la empty view si  la lista está vacía.
         checkIfEmpty();
     }
 }

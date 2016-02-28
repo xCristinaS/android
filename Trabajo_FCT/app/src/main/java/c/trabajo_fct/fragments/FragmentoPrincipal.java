@@ -1,6 +1,7 @@
 package c.trabajo_fct.fragments;
 
 import android.app.Activity;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
+import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 
 /**
  * Created by Cristina on 27/02/2016.
@@ -25,12 +27,13 @@ import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 public class FragmentoPrincipal extends Fragment {
 
     public interface Callback_Principal {
-
+        public void setFabImage(int id);
     }
 
     private Callback_Principal listener;
     private TabLayout tabLayout;
     private PaginasAdapter mAdaptador;
+    private ViewPager viewPager;
 
     @Nullable
     @Override
@@ -47,6 +50,7 @@ public class FragmentoPrincipal extends Fragment {
         tabLayout = (TabLayout) getView().findViewById(R.id.tabL);
         setupViewPager();
         super.onActivityCreated(savedInstanceState);
+
     }
 
     @Override
@@ -62,44 +66,35 @@ public class FragmentoPrincipal extends Fragment {
     }
 
     private void setupViewPager() {
-        // Se crea y asigna el adaptador de páginas al viewPager.
-        ViewPager viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
+        viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
         ArrayList<String> titulosPaginas = new ArrayList<>();
         titulosPaginas.add("Alumnos"); titulosPaginas.add("Empresas"); titulosPaginas.add("Visitas");
         mAdaptador = new PaginasAdapter(getActivity().getSupportFragmentManager(), titulosPaginas);
         viewPager.setAdapter(mAdaptador);
         viewPager.setOffscreenPageLimit(2);
-        // Se configura el tabLayout para que trabaje con el viewPager.
         tabLayout.setupWithViewPager(viewPager);
-        // Se añade un listener para que al cambiar la página se cambia la
-        // imagen de cabecera.
-        //final ImageView imgCabecera = (ImageView) findViewById(R.id.imgCabecera);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            //final int[] imagenes = {R.drawable.foto0, R.drawable.foto1, R.drawable.foto2};
-
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
-                // Se establece la nueva imagen de cabecera y se fuerza el repintado.
-                //imgCabecera.setImageResource(imagenes[position]);
-                //imgCabecera.invalidate();
-                // Se muestra u oculta el FAB.
-/*                if (position == 1) {
-                    fab.hide();
-                } else {
-                    fab.show();
-                }*/
+                ((GestionFabDesdeFragmento)mAdaptador.getFragment(viewPager.getCurrentItem())).setFabImage();
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
             }
-
         });
+    }
+
+    public PaginasAdapter getAdaptador() {
+        return mAdaptador;
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 
     public class PaginasAdapter extends CachedFragmentPagerAdapter {
@@ -115,11 +110,17 @@ public class FragmentoPrincipal extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return AlumnoFragment.newInstance();
+                    AlumnoFragment a = AlumnoFragment.newInstance();
+                    a.setListener(listener);
+                    return a;
                 case 1:
-                    return EmpresaFragment.newInstance();
+                    EmpresaFragment e = EmpresaFragment.newInstance();
+                    e.setListener(listener);
+                    return e;
                 case 2:
-                    return VisitaFragment.newInstance();
+                    VisitaFragment v = VisitaFragment.newInstance();
+                    v.setListener(listener);
+                    return v;
                 default:
                     return null;
             }
