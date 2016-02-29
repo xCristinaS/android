@@ -284,4 +284,18 @@ public class DAO {
         helper.close();
         return result;
     }
+
+    public int selectIDAlumno(String nombre){
+        int result = -1;
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        String[] campos ={BddContract.Alumno.ID};
+        Cursor cursor = bd.query(true, BddContract.Alumno.TABLA, campos, String.format("%s = '%s'",BddContract.Alumno.NOMBRE, nombre), null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            result = cursor.getInt(cursor.getColumnIndexOrThrow(BddContract.Alumno.ID));
+        }
+        cursor.close();
+        helper.close();
+        return result;
+    }
 }

@@ -2,6 +2,7 @@ package c.trabajo_fct.activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -15,16 +16,26 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Date;
+
 import c.trabajo_fct.R;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
-import c.trabajo_fct.fragments.FragmentoNuevoAlumno;
+import c.trabajo_fct.fragments.Fragmento_Insert_NewVisitaGeneral;
+import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
+import c.trabajo_fct.fragments.Fragmento_Insert_UpdateEmpresa;
+import c.trabajo_fct.fragments_dialogs.SeleccionDirectaDialogFragment;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.interfaces.MyDateTimePickerCallBack;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity, SeleccionDirectaDialogFragment.SeleccionDirectaDialogListener
+        ,MyDateTimePickerCallBack{
+
+    public static final String FRAGMENTO_NUEVO_ALUMNO = "nuevo alumno";
+    public static final String FRAGMENTO_NUEVA_EMPRESA = "nueva empresa";
+    public static final String FRAGMENTO_NEW_VISITA_GENERAL = "nueva visita general";
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
-    public static final String FRAGMENTO_NUEVO_ALUMNO = "nuevo alumno";
 
     private static final String RECUPERAR = "rec";
     private static final int CARGAR_F_NUEVO_ALUMNO = 10;
@@ -66,8 +77,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id_fragmento) {
             case FRAGMENTO_NUEVO_ALUMNO:
                 if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null)
-                    transaccion.replace(R.id.flHueco, FragmentoNuevoAlumno.newInstance(), FRAGMENTO_NUEVO_ALUMNO);
+                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateAlumno.newInstance(), FRAGMENTO_NUEVO_ALUMNO);
                 transaccion.addToBackStack(FRAGMENTO_NUEVO_ALUMNO);
+                break;
+
+            case FRAGMENTO_NUEVA_EMPRESA:
+                if (gestor.findFragmentByTag(FRAGMENTO_NUEVA_EMPRESA) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateEmpresa.newInstance(), FRAGMENTO_NUEVA_EMPRESA);
+                transaccion.addToBackStack(FRAGMENTO_NUEVA_EMPRESA);
+                break;
+
+            case FRAGMENTO_NEW_VISITA_GENERAL:
+                if (gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Insert_NewVisitaGeneral.newInstance(), FRAGMENTO_NEW_VISITA_GENERAL);
+                transaccion.addToBackStack(FRAGMENTO_NEW_VISITA_GENERAL);
                 break;
         }
         transaccion.commit();
@@ -88,7 +111,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null) {
+                if (gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL) != null) {
+                    ((GestionFabDesdeFragmento)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).onFabPressed();
+                } else if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null) {
                     FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
                     FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
                     ViewPager viewPager = fragmentoP.getViewPager();
@@ -159,5 +184,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) != null)
             outState.putInt(RECUPERAR, CARGAR_F_NUEVO_ALUMNO);
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onItemClick(DialogFragment dialog, int which) {
+        ((Fragmento_Insert_NewVisitaGeneral)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).setLblAlumno(which);
+    }
+
+    @Override
+    public void obtenerDate(Date date) {
+        ((Fragmento_Insert_NewVisitaGeneral)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).setLblFecha(date);
     }
 }

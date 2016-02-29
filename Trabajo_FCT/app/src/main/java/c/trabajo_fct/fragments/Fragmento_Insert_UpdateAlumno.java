@@ -1,9 +1,9 @@
 package c.trabajo_fct.fragments;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -24,16 +24,15 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import c.trabajo_fct.R;
-import c.trabajo_fct.bdd.BddContract;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 
 /**
- * Created by Cristina on 28/02/2016.
+ * Created by Cristina on 29/02/2016.
  */
-public class FragmentoNuevoAlumno extends Fragment {
+public class Fragmento_Insert_UpdateAlumno  extends Fragment{
 
     private Callback_MainActivity listener;
     private Toolbar toolbar;
@@ -42,15 +41,15 @@ public class FragmentoNuevoAlumno extends Fragment {
     private Spinner spEmpresas;
     private DAO gestor;
 
-    public static FragmentoNuevoAlumno newInstance() {
-        return new FragmentoNuevoAlumno();
+    public static Fragmento_Insert_UpdateAlumno newInstance() {
+        return new Fragmento_Insert_UpdateAlumno();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
-        return inflater.inflate(R.layout.fragmento_nuevo_alumno, container, false);
+        return inflater.inflate(R.layout.fragmento_insert_update_alumno, container, false);
     }
 
     @Override
@@ -116,7 +115,7 @@ public class FragmentoNuevoAlumno extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_nuevo_alumno, menu);
+        inflater.inflate(R.menu.menu_insert_update, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -124,7 +123,7 @@ public class FragmentoNuevoAlumno extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean r;
         switch (item.getItemId()) {
-            case R.id.editar:
+            case R.id.insertar:
                 insertarAlumno();
                 r = true;
                 break;
@@ -145,7 +144,10 @@ public class FragmentoNuevoAlumno extends Fragment {
             a.setEmpresa(gestor.selectIDEmpresa((String) spEmpresas.getSelectedItem()));
             a.setFoto(getResources().getString(R.string.default_alumno_img));
             gestor.insertAlumno(a);
-        }
+            limpiarCampos();
+            Snackbar.make(getView(), "NUEVO ALUMNO INSERTADO", Snackbar.LENGTH_LONG).show();
+        } else
+            Snackbar.make(getView(), "LOS CAMPOS DEBEN ESTAR RELLENOS", Snackbar.LENGTH_LONG).show();
     }
 
     private boolean camposRellenos() {
@@ -154,5 +156,14 @@ public class FragmentoNuevoAlumno extends Fragment {
                 || TextUtils.isEmpty(txtDireccion.getText()) || spEmpresas.getSelectedItemPosition() == 0)
             r = false;
         return r;
+    }
+
+    private void limpiarCampos() {
+        spEmpresas.setSelection(0);
+        txtCurso.setText("");
+        txtTel.setText("");
+        txtNombre.setText("");
+        txtEdad.setText("");
+        txtDireccion.setText("");
     }
 }

@@ -14,6 +14,7 @@ import java.util.Date;
 
 import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
+import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.VisitasAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
@@ -76,7 +77,7 @@ public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento
     @Override
     public void onFabPressed() {
         if (listener != null)
-            Toast.makeText(getContext(), "desde Visita", Toast.LENGTH_SHORT).show();
+            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL);
         else
             Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }

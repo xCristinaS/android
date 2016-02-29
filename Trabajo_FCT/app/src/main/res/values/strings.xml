@@ -17,4 +17,10 @@
     <string name="edad">Edad:</string>
     <string name="curso">Curso:</string>
     <string name="aceptar">Aceptar</string>
+    <string name="nombre_alumno">Nombre de alumno:</string>
+    <string name="hora_visita">Hora de visita:</string>
+    <string name="fecha">Fecha de visita:</string>
+    <string name="sin_comentario">Sin comentario</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="btn_aceptar">Aceptar</string>
 </resources>

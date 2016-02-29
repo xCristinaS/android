@@ -12,7 +12,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static SQLiteHelper helper;
 
-    private static final String SQL_CREATE_TABLE_ALUMNO = String.format("create table %s (%s integer primary key autoincrement, %s varchar (50) not null, %s varchar (300) not null, %s varchar(9) not null,\n" +
+    private static final String SQL_CREATE_TABLE_ALUMNO = String.format("create table %s (%s integer primary key autoincrement, %s varchar (50) unique not null, %s varchar (300) not null, %s varchar(9) not null,\n" +
             "%s varchar (10), %s integer, %s varchar(200), %s integer, FOREIGN KEY (%s) REFERENCES %s (%s));", BddContract.Alumno.TABLA, BddContract.Alumno.ID, BddContract.Alumno.NOMBRE,
             BddContract.Alumno.DIRECCION, BddContract.Alumno.TELEFONO, BddContract.Alumno.CURSO, BddContract.Alumno.EDAD, BddContract.Alumno.FOTO, BddContract.Alumno.EMPRESA, BddContract.Alumno.EMPRESA,
             BddContract.Empresa.TABLA, BddContract.Empresa.ID);

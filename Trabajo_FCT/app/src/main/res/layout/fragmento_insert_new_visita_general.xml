@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".activities.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_bar_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:id="@+id/imgCabecera"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/foto_alumno"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.3" />
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentTop="true"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="cristina.ejercicio29_collapsingtoolbarparalax.ScrollingActivity"
+        tools:showIn="@layout/fragmento_insert_update_alumno">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/icoPerson"
+                android:layout_width="@dimen/ancho_icono"
+                android:layout_height="@dimen/alto_icono"
+                android:layout_marginLeft="@dimen/margen_izq_icono"
+                android:layout_marginStart="@dimen/margen_izq_icono"
+                android:layout_marginTop="@dimen/margen_sup_icono"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person" />
+
+            <TextView
+                android:id="@+id/txtAlumno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/margen_der_txt"
+                android:layout_marginLeft="@dimen/margen_izq_txt"
+                android:layout_marginRight="@dimen/margen_der_txt"
+                android:layout_marginStart="@dimen/margen_izq_txt"
+                android:layout_marginTop="@dimen/margin_top_lbl_newVisit"
+                android:layout_toEndOf="@id/icoPerson"
+                android:layout_toRightOf="@id/icoPerson"
+                android:hint="@string/nombre_alumno"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:id="@+id/icoFecha"
+                android:layout_width="@dimen/ancho_icono"
+                android:layout_height="@dimen/alto_icono"
+                android:layout_below="@id/icoPerson"
+                android:layout_marginLeft="@dimen/margen_izq_icono"
+                android:layout_marginStart="@dimen/margen_izq_icono"
+                android:layout_marginTop="@dimen/margen_sup_icono"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_today" />
+
+            <TextView
+                android:id="@+id/txtFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/txtAlumno"
+                android:layout_marginEnd="@dimen/margen_der_txt"
+                android:layout_marginLeft="@dimen/margen_izq_txt"
+                android:layout_marginRight="@dimen/margen_der_txt"
+                android:layout_marginStart="@dimen/margen_izq_txt"
+                android:layout_marginTop="@dimen/margin_top_lbl_newVisit"
+                android:layout_toEndOf="@id/icoFecha"
+                android:layout_toRightOf="@id/icoFecha"
+                android:text="@string/fecha"
+                android:textSize="14sp"/>
+
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

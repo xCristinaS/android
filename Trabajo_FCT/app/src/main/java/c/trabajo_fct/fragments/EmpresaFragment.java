@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
+import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
@@ -46,7 +47,7 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         gestor = new DAO(getContext());
-        insertEmpresas();
+        //insertEmpresas();
 
         lstEmpresas = (RecyclerView) getView().findViewById(R.id.lstEmpresas);
         adaptador = new EmpresasAdapter(gestor.selectAllEmpresa());
@@ -72,7 +73,7 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
     @Override
     public void onFabPressed() {
         if (listener != null)
-            Toast.makeText(getContext(), "desde empresa", Toast.LENGTH_SHORT).show();
+            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NUEVA_EMPRESA);
         else
             Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }

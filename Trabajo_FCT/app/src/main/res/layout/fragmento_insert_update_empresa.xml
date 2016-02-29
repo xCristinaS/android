@@ -51,21 +51,21 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="cristina.ejercicio29_collapsingtoolbarparalax.ScrollingActivity"
-        tools:showIn="@layout/fragmento_nuevo_alumno">
+        tools:showIn="@layout/fragmento_insert_update_alumno">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/icoPerson"
+                android:id="@+id/icoNombre"
                 android:layout_width="@dimen/ancho_icono"
                 android:layout_height="@dimen/alto_icono"
                 android:layout_marginLeft="@dimen/margen_izq_icono"
                 android:layout_marginStart="@dimen/margen_izq_icono"
                 android:layout_marginTop="@dimen/margen_sup_icono"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_person" />
+                android:src="@drawable/ic_location_city"/>
 
             <EditText
                 android:id="@+id/txtNombre"
@@ -78,10 +78,10 @@
                 android:layout_marginRight="@dimen/margen_der_txt"
                 android:layout_marginStart="@dimen/margen_izq_txt"
                 android:layout_marginTop="@dimen/margen_top_txt"
-                android:layout_toEndOf="@id/icoPerson"
-                android:layout_toRightOf="@id/icoPerson"
+                android:layout_toEndOf="@id/icoNombre"
+                android:layout_toRightOf="@id/icoNombre"
                 android:hint="@string/nombre"
-                android:inputType="textPersonName">
+                android:inputType="text">
 
                 <requestFocus />
             </EditText>
@@ -90,12 +90,12 @@
                 android:id="@+id/iconoDireccion"
                 android:layout_width="@dimen/ancho_icono"
                 android:layout_height="@dimen/alto_icono"
-                android:layout_below="@id/icoPerson"
+                android:layout_below="@id/icoNombre"
                 android:layout_marginLeft="@dimen/margen_izq_icono"
                 android:layout_marginStart="@dimen/margen_izq_icono"
                 android:layout_marginTop="@dimen/margen_sup_icono"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_home" />
+                android:src="@drawable/ic_room" />
 
             <EditText
                 android:id="@+id/txtDireccion"
@@ -114,125 +114,35 @@
                 android:hint="@string/direccion"
                 android:inputType="text" />
 
-            <LinearLayout
-                android:id="@+id/grupo1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtDireccion"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/icoTelefono"
-                        android:layout_width="@dimen/ancho_icono"
-                        android:layout_height="@dimen/alto_icono"
-                        android:layout_marginLeft="@dimen/margen_izq_icono"
-                        android:layout_marginStart="@dimen/margen_izq_icono"
-                        android:layout_marginTop="@dimen/margen_sup_icono"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_phone" />
-
-                    <EditText
-                        android:id="@+id/txtTel"
-                        android:layout_width="65dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margen_der_txt"
-                        android:layout_marginLeft="@dimen/margen_izq_txt"
-                        android:layout_marginRight="@dimen/margen_der_txt"
-                        android:layout_marginStart="@dimen/margen_izq_txt"
-                        android:layout_marginTop="@dimen/margen_top_txt"
-                        android:layout_weight="3"
-                        android:hint="@string/telefono"
-                        android:inputType="phone"
-                        android:maxLength="9" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/icoEdad"
-                        android:layout_width="@dimen/ancho_icono"
-                        android:layout_height="@dimen/alto_icono"
-                        android:layout_marginTop="@dimen/margen_sup_icono"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_mode_edit" />
-
-                    <EditText
-                        android:id="@+id/txtEdad"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margen_der_txt"
-                        android:layout_marginLeft="@dimen/margen_izq_txt"
-                        android:layout_marginRight="@dimen/margen_der_txt"
-                        android:layout_marginStart="@dimen/margen_izq_txt"
-                        android:layout_marginTop="@dimen/margen_top_txt"
-                        android:layout_weight="1"
-                        android:hint="@string/edad"
-                        android:inputType="number"
-                        android:maxLength="3" />
-                </LinearLayout>
-            </LinearLayout>
 
             <ImageView
-                android:id="@+id/icoCurso"
+                android:layout_below="@id/iconoDireccion"
+                android:id="@+id/icoTelefono"
                 android:layout_width="@dimen/ancho_icono"
                 android:layout_height="@dimen/alto_icono"
                 android:layout_marginLeft="@dimen/margen_izq_icono"
                 android:layout_marginStart="@dimen/margen_izq_icono"
                 android:layout_marginTop="@dimen/margen_sup_icono"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_mode_edit"
-                android:layout_below="@id/grupo1"/>
+                android:src="@drawable/ic_phone" />
 
             <EditText
-                android:id="@+id/txtCurso"
-                android:layout_width="115dp"
+                android:id="@+id/txtTel"
+                android:layout_below="@id/txtDireccion"
+                android:layout_toRightOf="@id/icoTelefono"
+                android:layout_toEndOf="@id/icoTelefono"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margen_der_txt"
                 android:layout_marginLeft="@dimen/margen_izq_txt"
                 android:layout_marginRight="@dimen/margen_der_txt"
                 android:layout_marginStart="@dimen/margen_izq_txt"
                 android:layout_marginTop="@dimen/margen_top_txt"
-                android:layout_toRightOf="@id/icoCurso"
-                android:layout_toEndOf="@id/icoCurso"
-                android:hint="@string/curso"
-                android:layout_below="@id/grupo1"
-                android:inputType="text" />
-
-            <ImageView
-                android:id="@+id/icoEmpresa"
-                android:layout_width="@dimen/ancho_icono"
-                android:layout_height="@dimen/alto_icono"
-                android:layout_marginLeft="@dimen/margen_izq_icono"
-                android:layout_marginStart="@dimen/margen_izq_icono"
-                android:layout_marginTop="@dimen/margen_sup_icono"
-                android:scaleType="centerCrop"
-                android:layout_below="@id/icoCurso"/>
-
-            <Spinner
-                android:id="@+id/spEmpresas"
-                android:layout_width="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_height="20dp"
-                android:layout_below="@id/txtCurso"
-                android:layout_toRightOf="@id/icoEmpresa"
-                android:layout_toEndOf="@id/icoEmpresa"
-                android:layout_marginTop="30dp"
-                android:layout_marginRight="@dimen/margen_der_txt"
-                android:layout_marginEnd="@dimen/margen_der_txt"
-                android:layout_marginLeft="@dimen/margen_izq_txt"
-                android:layout_marginStart="@dimen/margen_izq_txt"/>
+                android:hint="@string/telefono"
+                android:inputType="phone"
+                android:maxLength="9" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
