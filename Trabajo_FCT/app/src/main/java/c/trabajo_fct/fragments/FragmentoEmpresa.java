@@ -48,7 +48,6 @@ public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmen
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         gestor = new DAO(getContext());
-        //insertEmpresas();
 
         lstEmpresas = (RecyclerView) getView().findViewById(R.id.lstEmpresas);
         adaptador = new EmpresasAdapter(gestor.selectAllEmpresa());
@@ -59,11 +58,6 @@ public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmen
         lstEmpresas.setItemAnimator(new DefaultItemAnimator());
         lstEmpresas.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         super.onActivityCreated(savedInstanceState);
-    }
-
-    private void insertEmpresas() {
-        gestor.insertEmpresa(new Empresa("empresa2", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
-        gestor.insertEmpresa(new Empresa("empresa3", "su calle", "98494840", getResources().getString(R.string.default_empresa_img)));
     }
 
     @Override

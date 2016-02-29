@@ -44,8 +44,7 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     private ArrayList<String> nombresEmpresa;
 
     public static Fragmento_Insert_UpdateAlumno newInstance(Alumno a) {
-        if (a != null)
-            alumno = a;
+        alumno = a;
         return new Fragmento_Insert_UpdateAlumno();
     }
 
@@ -171,7 +170,6 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
                 limpiarCampos();
                 Snackbar.make(getView(), "NUEVO ALUMNO INSERTADO", Snackbar.LENGTH_LONG).show();
             } else {
-                //alumno.setId(alumno.getId());
                 gestor.updateAlumno(alumno);
                 Snackbar.make(getView(), "ALUMNO ACTUALIZADO", Snackbar.LENGTH_LONG).show();
             }

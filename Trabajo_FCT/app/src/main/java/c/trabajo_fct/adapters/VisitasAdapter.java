@@ -96,13 +96,16 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
     }
 
     private void checkIfEmpty() {
-        if (emptyView != null) {
+        if (emptyView != null)
             emptyView.setVisibility(getItemCount() > 0 ? View.GONE : View.VISIBLE);
-        }
     }
 
     public void setEmptyView(View emptyView) {
         this.emptyView = emptyView;
         checkIfEmpty();
+    }
+
+    public void setVisitas(ArrayList<Visita> visitas) {
+        this.visitas = visitas;
     }
 }

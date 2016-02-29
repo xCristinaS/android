@@ -22,7 +22,7 @@ import c.trabajo_fct.modelos.Alumno;
 /**
  * Created by Cristina on 29/02/2016.
  */
-public class Fragmento_Alumno_Visita extends Fragment {
+public class Fragmento_Alumno_Visita extends Fragment implements GestionFabDesdeFragmento{
 
     private Callback_MainActivity listener;
     private PaginasAdapter mAdaptador;
@@ -68,8 +68,8 @@ public class Fragmento_Alumno_Visita extends Fragment {
         TabLayout tabLayout = (TabLayout) getView().findViewById(R.id.tabL);
         viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
         ArrayList<String> titulosPaginas = new ArrayList<>();
-        titulosPaginas.add("Alumno");
-        titulosPaginas.add("Visitas");
+        titulosPaginas.add("Detalles Alumno");
+        titulosPaginas.add("Visitas Alumno");
         mAdaptador = new PaginasAdapter(getChildFragmentManager(), titulosPaginas);
         viewPager.setAdapter(mAdaptador);
         viewPager.setOffscreenPageLimit(1);
@@ -102,6 +102,30 @@ public class Fragmento_Alumno_Visita extends Fragment {
 
     public ViewPager getViewPager() {
         return viewPager;
+    }
+
+    @Override
+    public void onFabPressed() {
+        GestionFabDesdeFragmento fragmento = (GestionFabDesdeFragmento) mAdaptador.getFragment(viewPager.getCurrentItem());
+        if (fragmento != null)
+            fragmento.onFabPressed();
+    }
+
+    @Override
+    public void setFabImage() {
+        GestionFabDesdeFragmento fragmento = (GestionFabDesdeFragmento) mAdaptador.getFragment(viewPager.getCurrentItem());
+        if (fragmento != null)
+            fragmento.setFabImage();
+    }
+
+    @Override
+    public void setListener(Callback_MainActivity listener) {
+
+    }
+
+    @Override
+    public Callback_MainActivity getListener() {
+        return null;
     }
 
     public class PaginasAdapter extends CachedFragmentPagerAdapter {

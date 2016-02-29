@@ -37,11 +37,11 @@ import c.trabajo_fct.modelos.Empresa;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity, SeleccionDirectaDialogFragment.SeleccionDirectaDialogListener
         ,MyDateTimePickerCallBack, OnAdapterItemClick{
 
-    public static final String FRAGMENTO_INSERT_UPDATE_ALUMNO = "nuevo alumno";
-    public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva empresa";
-    public static final String FRAGMENTO_NEW_VISITA_GENERAL = "nueva visita general";
-    public static final String FRAGMENTO_DETALLES_EMPRESA = "fragmento detalles empresa";
-    public static final String FRAGMENTO_ALUMNO_VISITAS = "fragmento detalles de alumno y sus visitas";
+    public static final String FRAGMENTO_INSERT_UPDATE_ALUMNO = "nuevo_alumno";
+    public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva_empresa";
+    public static final String FRAGMENTO_NEW_VISITA_GENERAL = "nueva_visita_general";
+    public static final String FRAGMENTO_DETALLES_EMPRESA = "fragmento_detalles_empresa";
+    public static final String FRAGMENTO_ALUMNO_VISITAS = "fragmento_detalles_de_alumno_y_sus_visitas";
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
 
@@ -60,10 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         initViews();
-        if (savedInstanceState != null && savedInstanceState.getInt(RECUPERAR) == CARGAR_F_NUEVO_ALUMNO)
-            cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_ALUMNO, null);
-        else
-            cargarFragmentoPrincipal();
+        cargarFragmentoPrincipal();
     }
 
     private void initViews() {
@@ -132,27 +129,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Fragment fragment = gestor.findFragmentById(R.id.flHueco);
-                if (fragment instanceof FragmentoPrincipal){
-                    FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
-                    FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
-                    ViewPager viewPager = fragmentoP.getViewPager();
-                    if (adaptador != null && viewPager != null) {
-                        Fragment fragmentoInterno = adaptador.getFragment(viewPager.getCurrentItem());
-                        if (fragmentoInterno instanceof  GestionFabDesdeFragmento)
-                            ((GestionFabDesdeFragmento) fragmentoInterno).onFabPressed();
-                    }
-                } else if (fragment instanceof Fragmento_Alumno_Visita){
-                    Fragmento_Alumno_Visita fragmentoP = (Fragmento_Alumno_Visita) gestor.findFragmentByTag(FRAGMENTO_ALUMNO_VISITAS);
-                    Fragmento_Alumno_Visita.PaginasAdapter adaptador = fragmentoP.getAdaptador();
-                    ViewPager viewPager = fragmentoP.getViewPager();
-                    if (adaptador != null && viewPager != null) {
-                        Fragment fragmentoInterno = adaptador.getFragment(viewPager.getCurrentItem());
-                        if (fragmentoInterno instanceof GestionFabDesdeFragmento)
-                            ((GestionFabDesdeFragmento) fragmentoInterno).onFabPressed();
-                    }
-                } else
-                    if (fragment instanceof  GestionFabDesdeFragmento)
-                        ((GestionFabDesdeFragmento)fragment).onFabPressed();
+                if (fragment instanceof  GestionFabDesdeFragmento)
+                    ((GestionFabDesdeFragmento)fragment).onFabPressed();
             }
         });
     }
@@ -162,9 +140,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (gestor.findFragmentById(R.id.flHueco) instanceof Fragmento_Alumno_Visita){
+            gestor.popBackStackImmediate();
         } else {
             super.onBackPressed();
-
         }
     }
 
@@ -210,13 +189,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void setFabImage(int id) {
         fab.setImageResource(id);
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_ALUMNO) != null)
-            outState.putInt(RECUPERAR, CARGAR_F_NUEVO_ALUMNO);
-        super.onSaveInstanceState(outState);
     }
 
     @Override

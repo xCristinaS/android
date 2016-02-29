@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
@@ -21,7 +22,7 @@ import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class FragmentoPrincipal extends Fragment {
+public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragmento{
 
     private Callback_MainActivity listener;
     private PaginasAdapter mAdaptador;
@@ -35,6 +36,12 @@ public class FragmentoPrincipal extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setRetainInstance(true);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        setFabImage();
+        super.onViewStateRestored(savedInstanceState);
     }
 
     @Nullable
@@ -100,6 +107,30 @@ public class FragmentoPrincipal extends Fragment {
 
     public ViewPager getViewPager() {
         return viewPager;
+    }
+
+    @Override
+    public void onFabPressed() {
+        GestionFabDesdeFragmento fragmento = (GestionFabDesdeFragmento) mAdaptador.getFragment(viewPager.getCurrentItem());
+        if (fragmento != null)
+            fragmento.onFabPressed();
+    }
+
+    @Override
+    public void setFabImage() {
+        GestionFabDesdeFragmento fragmento = (GestionFabDesdeFragmento) mAdaptador.getFragment(viewPager.getCurrentItem());
+        if (fragmento != null)
+            fragmento.setFabImage();
+    }
+
+    @Override
+    public void setListener(Callback_MainActivity listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public Callback_MainActivity getListener() {
+        return null;
     }
 
     public class PaginasAdapter extends CachedFragmentPagerAdapter {

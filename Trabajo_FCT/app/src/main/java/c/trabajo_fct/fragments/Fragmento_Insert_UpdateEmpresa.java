@@ -130,7 +130,6 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
                 limpiarCampos();
                 Snackbar.make(getView(), "NUEVA EMPRESA INSERTADA", Snackbar.LENGTH_LONG).show();
             } else {
-                //empresa.setId(empresa.getId());
                 gestor.updateEmpresa(empresa);
                 Snackbar.make(getView(), "EMPRESA ACTUALIZADA", Snackbar.LENGTH_LONG).show();
             }

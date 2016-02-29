@@ -8,9 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.Date;
 
 import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
@@ -20,7 +17,6 @@ import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.modelos.Alumno;
-import c.trabajo_fct.modelos.Visita;
 
 /**
  * Created by Cristina on 27/02/2016.
@@ -33,15 +29,9 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
     private DAO gestor;
     private static Alumno alumno;
 
-    public FragmentoVisita() {
-    }
-
     public static FragmentoVisita newInstance(Alumno a) {
         alumno = a;
-        FragmentoVisita fragment = new FragmentoVisita();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+        return new FragmentoVisita();
     }
 
     @Override
@@ -52,8 +42,6 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         gestor = new DAO(getContext());
-        //insertarVisitas();
-
         lstVisitas = (RecyclerView) getView().findViewById(R.id.lstVisitas);
         if (alumno == null)
             adaptador = new VisitasAdapter(gestor.selectAllVisitas());
@@ -67,30 +55,14 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         super.onActivityCreated(savedInstanceState);
     }
 
-    private void insertarVisitas() {
-        for (int i = 0; i < 10; i++) {
-            gestor.insertVisita(new Visita(1, new Date(1522154 + 55555 * i), ""));
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-    }
-
     @Override
     public void onFabPressed() {
-        if (listener != null)
-            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL, null);
-        else
-            Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
+        listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL, null);
     }
 
     @Override
     public void setFabImage() {
-        if (listener != null)
-            listener.setFabImage(R.drawable.ic_event);
+        listener.setFabImage(R.drawable.ic_event);
     }
 
     public void setListener(Callback_MainActivity listener) {
