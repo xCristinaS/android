@@ -64,7 +64,8 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView lblNombreAlumno, lblFechaVisita;
-        private SimpleDateFormat formato = new SimpleDateFormat("EEEE hh/MM/yyyy HH:mm:ss");
+        SimpleDateFormat formatFecha = new SimpleDateFormat("EEEE dd/MM/yyyy");
+        SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
         private DAO gestor;
 
         public ViewHolder(View itemView) {
@@ -77,7 +78,7 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
 
         public void onBind(final Visita visita){
             lblNombreAlumno.setText(gestor.selectNombreAlumno(visita.getIdAlumno()));
-            lblFechaVisita.setText(formato.format(visita.getFecha()));
+            lblFechaVisita.setText(String.format("%s a las %s", formatFecha.format(visita.getFecha()), formatHora.format(visita.getFecha())));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

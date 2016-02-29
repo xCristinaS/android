@@ -77,7 +77,7 @@ public class VisitaFragment extends Fragment implements GestionFabDesdeFragmento
     @Override
     public void onFabPressed() {
         if (listener != null)
-            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL);
+            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL, null);
         else
             Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }

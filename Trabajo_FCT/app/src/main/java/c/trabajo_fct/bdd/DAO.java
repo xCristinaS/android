@@ -231,7 +231,7 @@ public class DAO {
     }
 
     public Cursor queryAllVisitas(SQLiteDatabase bd) {
-        return  bd.query(BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, null, null, null, null, BddContract.Visitas.FECHA + " Desc");
+        return  bd.query(BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, null, null, null, null, BddContract.Visitas.FECHA);
     }
 
     public ArrayList<Visita> selectAllVisitas() {
@@ -293,6 +293,34 @@ public class DAO {
         if (cursor != null) {
             cursor.moveToFirst();
             result = cursor.getInt(cursor.getColumnIndexOrThrow(BddContract.Alumno.ID));
+        }
+        cursor.close();
+        helper.close();
+        return result;
+    }
+
+    public String selectFotoEmpresa(int id){
+        String result = "";
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        String[] campos ={BddContract.Empresa.FOTO};
+        Cursor cursor = bd.query(true, BddContract.Empresa.TABLA, campos, String.format("%s = '%s'",BddContract.Empresa.ID, id), null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.FOTO));
+        }
+        cursor.close();
+        helper.close();
+        return result;
+    }
+
+    public String selectNombreEmpresa(int id){
+        String result = "";
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        String[] campos ={BddContract.Empresa.NOMBRE};
+        Cursor cursor = bd.query(true, BddContract.Empresa.TABLA, campos, String.format("%s = '%s'",BddContract.Empresa.ID, id), null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.NOMBRE));
         }
         cursor.close();
         helper.close();

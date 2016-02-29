@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.modelos.Empresa;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -19,12 +20,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHolder> {
 
-    public interface OnItemClick{
-        public void onItemClick(int numCancion);
-    }
-
     private ArrayList<Empresa> empresas;
-    private OnItemClick listener;
+    private OnAdapterItemClick listener;
     private View emptyView;
     private int selectedElement = -1;
 
@@ -54,7 +51,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         return empresas.size();
     }
 
-    public void setOnItemClickListener(OnItemClick listener){
+    public void setOnItemClickListener(OnAdapterItemClick listener){
         this.listener = listener;
     }
 
@@ -76,7 +73,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //listener.onItemClick(empresas.indexOf(c));
+                    listener.onItemClick(empresa);
                 }
             });
         }

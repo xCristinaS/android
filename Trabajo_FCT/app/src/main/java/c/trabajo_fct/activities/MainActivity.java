@@ -20,6 +20,7 @@ import java.util.Date;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
+import c.trabajo_fct.fragments.Fragmento_Detalle_Empresa;
 import c.trabajo_fct.fragments.Fragmento_Insert_NewVisitaGeneral;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateEmpresa;
@@ -27,13 +28,17 @@ import c.trabajo_fct.fragments_dialogs.SeleccionDirectaDialogFragment;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.MyDateTimePickerCallBack;
+import c.trabajo_fct.interfaces.OnAdapterItemClick;
+import c.trabajo_fct.modelos.Alumno;
+import c.trabajo_fct.modelos.Empresa;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity, SeleccionDirectaDialogFragment.SeleccionDirectaDialogListener
-        ,MyDateTimePickerCallBack{
+        ,MyDateTimePickerCallBack, OnAdapterItemClick{
 
-    public static final String FRAGMENTO_NUEVO_ALUMNO = "nuevo alumno";
-    public static final String FRAGMENTO_NUEVA_EMPRESA = "nueva empresa";
+    public static final String FRAGMENTO_INSERT_UPDATE_ALUMNO = "nuevo alumno";
+    public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva empresa";
     public static final String FRAGMENTO_NEW_VISITA_GENERAL = "nueva visita general";
+    public static final String FRAGMENTO_DETALLES_EMPRESA = "fragmento detalles empresa";
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
 
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         initViews();
         if (savedInstanceState != null && savedInstanceState.getInt(RECUPERAR) == CARGAR_F_NUEVO_ALUMNO)
-            cargarFragmentoSecundario(FRAGMENTO_NUEVO_ALUMNO);
+            cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_ALUMNO, null);
         else
             cargarFragmentoPrincipal();
     }
@@ -72,25 +77,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void cargarFragmentoSecundario(String id_fragmento) {
+    public void cargarFragmentoSecundario(String id_fragmento, Object o) {
         FragmentTransaction transaccion = gestor.beginTransaction();
         switch (id_fragmento) {
-            case FRAGMENTO_NUEVO_ALUMNO:
-                if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateAlumno.newInstance(), FRAGMENTO_NUEVO_ALUMNO);
-                transaccion.addToBackStack(FRAGMENTO_NUEVO_ALUMNO);
+            case FRAGMENTO_INSERT_UPDATE_ALUMNO:
+                if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_ALUMNO) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateAlumno.newInstance((Alumno)o), FRAGMENTO_INSERT_UPDATE_ALUMNO);
+                transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_ALUMNO);
                 break;
 
-            case FRAGMENTO_NUEVA_EMPRESA:
-                if (gestor.findFragmentByTag(FRAGMENTO_NUEVA_EMPRESA) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateEmpresa.newInstance(), FRAGMENTO_NUEVA_EMPRESA);
-                transaccion.addToBackStack(FRAGMENTO_NUEVA_EMPRESA);
+            case FRAGMENTO_INSERT_UPDATE_EMPRESA:
+                if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_EMPRESA) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateEmpresa.newInstance((Empresa) o), FRAGMENTO_INSERT_UPDATE_EMPRESA);
+                transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_EMPRESA);
                 break;
 
             case FRAGMENTO_NEW_VISITA_GENERAL:
                 if (gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL) == null)
                     transaccion.replace(R.id.flHueco, Fragmento_Insert_NewVisitaGeneral.newInstance(), FRAGMENTO_NEW_VISITA_GENERAL);
                 transaccion.addToBackStack(FRAGMENTO_NEW_VISITA_GENERAL);
+                break;
+
+            case FRAGMENTO_DETALLES_EMPRESA:
+                if (gestor.findFragmentByTag(FRAGMENTO_DETALLES_EMPRESA) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Detalle_Empresa.newInstance((Empresa)o), FRAGMENTO_DETALLES_EMPRESA);
+                transaccion.addToBackStack(FRAGMENTO_DETALLES_EMPRESA);
                 break;
         }
         transaccion.commit();
@@ -113,7 +124,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 if (gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL) != null) {
                     ((GestionFabDesdeFragmento)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).onFabPressed();
-                } else if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) == null) {
+                } else if (gestor.findFragmentByTag(FRAGMENTO_DETALLES_EMPRESA) != null) {
+                    ((GestionFabDesdeFragmento)gestor.findFragmentByTag(FRAGMENTO_DETALLES_EMPRESA)).onFabPressed();
+                } else if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_ALUMNO) == null) {
                     FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
                     FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
                     ViewPager viewPager = fragmentoP.getViewPager();
@@ -181,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (gestor.findFragmentByTag(FRAGMENTO_NUEVO_ALUMNO) != null)
+        if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_ALUMNO) != null)
             outState.putInt(RECUPERAR, CARGAR_F_NUEVO_ALUMNO);
         super.onSaveInstanceState(outState);
     }
@@ -194,5 +207,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void obtenerDate(Date date) {
         ((Fragmento_Insert_NewVisitaGeneral)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).setLblFecha(date);
+    }
+
+    @Override
+    public void onItemClick(Object o) {
+        if (o instanceof Empresa){
+            cargarFragmentoSecundario(FRAGMENTO_DETALLES_EMPRESA, o);
+        }
     }
 }

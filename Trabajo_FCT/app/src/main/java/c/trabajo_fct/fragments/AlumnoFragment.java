@@ -93,7 +93,7 @@ public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento
     @Override
     public void onFabPressed() {
         if (listener != null)
-            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NUEVO_ALUMNO);
+            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_INSERT_UPDATE_ALUMNO, null);
         else
             Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }

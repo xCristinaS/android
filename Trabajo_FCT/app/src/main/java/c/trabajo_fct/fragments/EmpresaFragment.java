@@ -17,6 +17,7 @@ import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.modelos.Empresa;
 
 /**
@@ -52,6 +53,7 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
         lstEmpresas = (RecyclerView) getView().findViewById(R.id.lstEmpresas);
         adaptador = new EmpresasAdapter(gestor.selectAllEmpresa());
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayEmpresas));
+        adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
         lstEmpresas.setAdapter(adaptador);
         lstEmpresas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstEmpresas.setItemAnimator(new DefaultItemAnimator());
@@ -73,7 +75,7 @@ public class EmpresaFragment extends Fragment implements GestionFabDesdeFragment
     @Override
     public void onFabPressed() {
         if (listener != null)
-            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NUEVA_EMPRESA);
+            listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_INSERT_UPDATE_EMPRESA, null);
         else
             Toast.makeText(getContext(), "listener null", Toast.LENGTH_SHORT).show();
     }

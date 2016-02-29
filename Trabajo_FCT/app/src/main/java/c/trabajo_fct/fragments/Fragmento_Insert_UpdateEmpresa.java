@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
@@ -32,8 +34,10 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
     private ImageView imgCabecera;
     private EditText txtNombre, txtTel, txtDireccion;
     private DAO gestor;
+    private static Empresa empresa;
 
-    public static Fragmento_Insert_UpdateEmpresa newInstance() {
+    public static Fragmento_Insert_UpdateEmpresa newInstance(Empresa e) {
+        empresa = e;
         return new Fragmento_Insert_UpdateEmpresa();
     }
 
@@ -47,6 +51,8 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initViews();
+        if (empresa != null)
+            bindEmpresa();
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -57,11 +63,17 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         imgCabecera = (ImageView) getView().findViewById(R.id.imgCabecera);
-        //Picasso.with(getContext()).load(getResources().getString(R.string.default_alumno_img)).into(imgCabecera);
 
         txtNombre = (EditText) getView().findViewById(R.id.txtNombre);
         txtDireccion = (EditText) getView().findViewById(R.id.txtDireccion);
         txtTel = (EditText) getView().findViewById(R.id.txtTel);
+    }
+
+    private void bindEmpresa() {
+        Picasso.with(getContext()).load(empresa.getFoto()).into(imgCabecera);
+        txtNombre.setText(empresa.getNombre());
+        txtDireccion.setText(empresa.getDireccion());
+        txtTel.setText(empresa.getTelefono());
     }
 
     @Override
@@ -93,7 +105,7 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
         boolean r;
         switch (item.getItemId()) {
             case R.id.insertar:
-                insertarEmpresa();
+                insertarActualizarEmpresa();
                 r = true;
                 break;
             default:
@@ -102,16 +114,26 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
         return r;
     }
 
-    private void insertarEmpresa() {
-        Empresa e = new Empresa();
+    private void insertarActualizarEmpresa() {
+        boolean insertar = false;
         if (camposRellenos()) {
-            e.setNombre(txtNombre.getText().toString());
-            e.setDireccion(txtDireccion.getText().toString());
-            e.setTelefono(txtTel.getText().toString());
-            e.setFoto(getResources().getString(R.string.default_empresa_img));
-            gestor.insertEmpresa(e);
-            limpiarCampos();
-            Snackbar.make(getView(), "NUEVA EMPRESA INSERTADA", Snackbar.LENGTH_LONG).show();
+            if (empresa == null) {
+                empresa = new Empresa();
+                insertar = true;
+            }
+            empresa.setNombre(txtNombre.getText().toString());
+            empresa.setDireccion(txtDireccion.getText().toString());
+            empresa.setTelefono(txtTel.getText().toString());
+            empresa.setFoto(getResources().getString(R.string.default_empresa_img));
+            if (insertar) {
+                gestor.insertEmpresa(empresa);
+                limpiarCampos();
+                Snackbar.make(getView(), "NUEVA EMPRESA INSERTADA", Snackbar.LENGTH_LONG).show();
+            } else {
+                empresa.setId(empresa.getId());
+                gestor.updateEmpresa(empresa);
+                Snackbar.make(getView(), "EMPRESA ACTUALIZADA", Snackbar.LENGTH_LONG).show();
+            }
         } else
             Snackbar.make(getView(), "LOS CAMPOS DEBEN ESTAR RELLENOS", Snackbar.LENGTH_LONG).show();
     }

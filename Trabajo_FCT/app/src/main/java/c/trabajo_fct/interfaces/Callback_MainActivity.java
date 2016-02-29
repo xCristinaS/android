@@ -5,5 +5,5 @@ package c.trabajo_fct.interfaces;
  */
 public interface Callback_MainActivity {
     public void setFabImage(int id);
-    public void cargarFragmentoSecundario(String id_fragmento);
+    public void cargarFragmentoSecundario(String id_fragmento, Object o);
 }

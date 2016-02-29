@@ -40,8 +40,12 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     private EditText txtNombre, txtCurso, txtEdad, txtTel, txtDireccion;
     private Spinner spEmpresas;
     private DAO gestor;
+    private static Alumno alumno;
+    private ArrayList<String> nombresEmpresa;
 
-    public static Fragmento_Insert_UpdateAlumno newInstance() {
+    public static Fragmento_Insert_UpdateAlumno newInstance(Alumno a) {
+        if (a != null)
+            alumno = a;
         return new Fragmento_Insert_UpdateAlumno();
     }
 
@@ -55,6 +59,8 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         initViews();
+        if (alumno != null)
+            bindAlumno();
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -78,17 +84,30 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
         txtTel = (EditText) getView().findViewById(R.id.txtTel);
     }
 
+    private void bindAlumno() {
+        Picasso.with(getContext()).load(alumno.getFoto()).into(imgCabecera);
+        String fotoEmpresa = gestor.selectFotoEmpresa(alumno.getEmpresa());
+        Picasso.with(getContext()).load(fotoEmpresa).into(imgCabecera);
+        txtNombre.setText(alumno.getNombre());
+        txtCurso.setText(alumno.getCurso());
+        txtDireccion.setText(alumno.getDireccion());
+        txtEdad.setText(String.valueOf(alumno.getEdad()));
+        txtTel.setText(alumno.getTelefono());
+        String nombreE = gestor.selectNombreEmpresa(alumno.getEmpresa());
+        spEmpresas.setSelection(nombresEmpresa.indexOf(nombreE));
+    }
+
     private void configSpinner() {
         spEmpresas = (Spinner) getView().findViewById(R.id.spEmpresas);
         ArrayList<Empresa> empresas = gestor.selectAllEmpresa();
-        ArrayList<String> nombres = new ArrayList<>();
+        nombresEmpresa = new ArrayList<>();
         String[] defauultSpinner = {"No hay empresas"};
         ArrayAdapter<String> adapter;
         if (empresas.size() > 0) {
-            nombres.add("Sin asignar");
+            nombresEmpresa.add("Sin asignar");
             for (Empresa e : empresas)
-                nombres.add(e.getNombre());
-            adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, nombres);
+                nombresEmpresa.add(e.getNombre());
+            adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, nombresEmpresa);
         } else
             adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, defauultSpinner);
 
