@@ -108,4 +108,9 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
     public void setVisitas(ArrayList<Visita> visitas) {
         this.visitas = visitas;
     }
+
+    public void removeAllItems(){
+        visitas.clear();
+        notifyDataSetChanged();
+    }
 }

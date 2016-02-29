@@ -140,8 +140,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (gestor.findFragmentById(R.id.flHueco) instanceof Fragmento_Alumno_Visita){
-            gestor.popBackStackImmediate();
         } else {
             super.onBackPressed();
         }
