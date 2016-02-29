@@ -71,8 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void cargarFragmentoPrincipal() {
         FragmentTransaction transaccion = gestor.beginTransaction();
-        if (gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL) == null)
-            transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
+        transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
         transaccion.commit();
     }
 
@@ -140,6 +139,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+            // Cuando vuelvo de la vista de detalles del alumno, el viewPager de la ventana principal me carga solo las visitas del alumno del fragmento de detalles.
+            // Para que vuelva a cargar la lista de todas las visitas, tengo que volver a cargar el fragmento principal.
+            // Entonces:
+        } else if (gestor.findFragmentById(R.id.flHueco) instanceof Fragmento_Alumno_Visita) { // si doy al botón de atras desde la vista de detalles y visitas de alumno
+            gestor.popBackStack(); // limpio la pila
+            cargarFragmentoPrincipal(); // cargo el fragmento principal
         } else {
             super.onBackPressed();
         }

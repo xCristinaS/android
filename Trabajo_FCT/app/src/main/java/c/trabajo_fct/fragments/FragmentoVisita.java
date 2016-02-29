@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
 import c.trabajo_fct.activities.MainActivity;
@@ -17,6 +19,7 @@ import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.modelos.Alumno;
+import c.trabajo_fct.modelos.Visita;
 
 /**
  * Created by Cristina on 27/02/2016.
@@ -44,9 +47,9 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         gestor = new DAO(getContext());
         lstVisitas = (RecyclerView) getView().findViewById(R.id.lstVisitas);
         if (alumno == null)
-            adaptador = new VisitasAdapter(gestor.selectAllVisitas());
+            adaptador = new VisitasAdapter((ArrayList<Visita>)gestor.selectAllVisitas().clone());
         else
-            adaptador = new VisitasAdapter(gestor.selectAllVisitasDeAlumno(alumno.getId()));
+            adaptador = new VisitasAdapter((ArrayList<Visita>)gestor.selectAllVisitasDeAlumno(alumno.getId()).clone());
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayVisitas));
         lstVisitas.setAdapter(adaptador);
         lstVisitas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
