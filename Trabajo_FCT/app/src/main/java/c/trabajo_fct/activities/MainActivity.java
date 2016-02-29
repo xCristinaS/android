@@ -196,7 +196,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onItemClick(DialogFragment dialog, int which) {
-        ((Fragmento_Insert_NewVisitaGeneral)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).setLblAlumno(which);
+        Fragment fragment = gestor.findFragmentById(R.id.flHueco);
+        if (fragment instanceof Fragmento_Insert_NewVisitaGeneral)
+            ((Fragmento_Insert_NewVisitaGeneral) fragment).setLblAlumno(which);
+        else if (fragment instanceof Fragmento_Insert_UpdateAlumno)
+            ((Fragmento_Insert_UpdateAlumno) fragment).setLblEmpresa(which);
     }
 
     @Override

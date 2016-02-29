@@ -23,4 +23,5 @@
     <string name="sin_comentario">Sin comentario</string>
     <string name="cancelar">Cancelar</string>
     <string name="btn_aceptar">Aceptar</string>
+    <string name="sin_empresa_asignada">Sin empresa asignada</string>
 </resources>

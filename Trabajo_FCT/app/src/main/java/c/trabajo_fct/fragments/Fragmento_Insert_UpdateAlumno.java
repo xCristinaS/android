@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.fragments_dialogs.SeleccionDirectaDialogFragment;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
@@ -38,10 +40,10 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     private Toolbar toolbar;
     private ImageView imgCabecera, imgEmpresa;
     private EditText txtNombre, txtCurso, txtEdad, txtTel, txtDireccion;
-    private Spinner spEmpresas;
+    private TextView lblEmpresa;
     private DAO gestor;
     private static Alumno alumno;
-    private ArrayList<String> nombresEmpresa;
+    private String[] nombres;
 
     public static Fragmento_Insert_UpdateAlumno newInstance(Alumno a) {
         alumno = a;
@@ -75,12 +77,25 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
         imgEmpresa = (ImageView) getView().findViewById(R.id.icoEmpresa);
         Picasso.with(getContext()).load(getResources().getString(R.string.default_empresa_img)).into(imgEmpresa);
 
-        configSpinner();
         txtNombre = (EditText) getView().findViewById(R.id.txtNombre);
         txtCurso = (EditText) getView().findViewById(R.id.txtCurso);
         txtDireccion = (EditText) getView().findViewById(R.id.txtDireccion);
         txtEdad = (EditText) getView().findViewById(R.id.txtEdad);
         txtTel = (EditText) getView().findViewById(R.id.txtTel);
+        lblEmpresa = (TextView) getView().findViewById(R.id.lblEmpresa);
+
+        lblEmpresa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lanzarDialogFragmentSeleccionEmpresa();
+            }
+        });
+        getView().findViewById(R.id.icoEmpresa).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lanzarDialogFragmentSeleccionEmpresa();
+            }
+        });
     }
 
     private void bindAlumno() {
@@ -92,25 +107,15 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
         txtDireccion.setText(alumno.getDireccion());
         txtEdad.setText(String.valueOf(alumno.getEdad()));
         txtTel.setText(alumno.getTelefono());
-        String nombreE = gestor.selectNombreEmpresa(alumno.getEmpresa());
-        spEmpresas.setSelection(nombresEmpresa.indexOf(nombreE));
+        lblEmpresa.setText(gestor.selectNombreEmpresa(alumno.getEmpresa()));
     }
 
-    private void configSpinner() {
-        spEmpresas = (Spinner) getView().findViewById(R.id.spEmpresas);
+    private void lanzarDialogFragmentSeleccionEmpresa(){
         ArrayList<Empresa> empresas = gestor.selectAllEmpresa();
-        nombresEmpresa = new ArrayList<>();
-        String[] defauultSpinner = {"No hay empresas"};
-        ArrayAdapter<String> adapter;
-        if (empresas.size() > 0) {
-            nombresEmpresa.add("Sin asignar");
-            for (Empresa e : empresas)
-                nombresEmpresa.add(e.getNombre());
-            adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, nombresEmpresa);
-        } else
-            adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, defauultSpinner);
-
-        spEmpresas.setAdapter(adapter);
+        nombres = new String[empresas.size()];
+        for (int i = 0; i < empresas.size(); i++)
+            nombres[i] = empresas.get(i).getNombre();
+        SeleccionDirectaDialogFragment.newInstance("Empresas", nombres).show(getChildFragmentManager(), "fragmentDialogEmpresas");
     }
 
     @Override
@@ -127,7 +132,7 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
 
     @Override
     public void onDestroy() {
-        ((Toolbar) getActivity().findViewById(R.id.toolbar)).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
         super.onDestroy();
     }
 
@@ -163,7 +168,7 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
             alumno.setDireccion(txtDireccion.getText().toString());
             alumno.setTelefono(txtTel.getText().toString());
             alumno.setEdad(Integer.parseInt(txtEdad.getText().toString()));
-            alumno.setEmpresa(gestor.selectIDEmpresa((String) spEmpresas.getSelectedItem()));
+            alumno.setEmpresa(gestor.selectIDEmpresa(lblEmpresa.getText().toString()));
             alumno.setFoto(getResources().getString(R.string.default_alumno_img));
             if (insertar) {
                 gestor.insertAlumno(alumno);
@@ -180,17 +185,21 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     private boolean camposRellenos() {
         boolean r = true;
         if (TextUtils.isEmpty(txtCurso.getText()) || TextUtils.isEmpty(txtTel.getText()) || TextUtils.isEmpty(txtNombre.getText()) || TextUtils.isEmpty(txtEdad.getText())
-                || TextUtils.isEmpty(txtDireccion.getText()) || spEmpresas.getSelectedItemPosition() == 0)
+                || TextUtils.isEmpty(txtDireccion.getText()) || lblEmpresa.getText().equals(getString(R.string.sin_empresa_asignada)))
             r = false;
         return r;
     }
 
     private void limpiarCampos() {
-        spEmpresas.setSelection(0);
+        lblEmpresa.setText(getString(R.string.sin_empresa_asignada));
         txtCurso.setText("");
         txtTel.setText("");
         txtNombre.setText("");
         txtEdad.setText("");
         txtDireccion.setText("");
+    }
+
+    public void setLblEmpresa(int which){
+        lblEmpresa.setText(nombres[which]);
     }
 }

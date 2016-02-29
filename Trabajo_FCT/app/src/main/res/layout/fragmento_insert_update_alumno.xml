@@ -219,8 +219,8 @@
                 android:scaleType="centerCrop"
                 android:layout_below="@id/icoCurso"/>
 
-            <Spinner
-                android:id="@+id/spEmpresas"
+            <TextView
+                android:id="@+id/lblEmpresa"
                 android:layout_width="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
@@ -232,7 +232,9 @@
                 android:layout_marginRight="@dimen/margen_der_txt"
                 android:layout_marginEnd="@dimen/margen_der_txt"
                 android:layout_marginLeft="@dimen/margen_izq_txt"
-                android:layout_marginStart="@dimen/margen_izq_txt"/>
+                android:layout_marginStart="@dimen/margen_izq_txt"
+                android:textSize="14sp"
+                android:text="@string/sin_empresa_asignada"/>
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
