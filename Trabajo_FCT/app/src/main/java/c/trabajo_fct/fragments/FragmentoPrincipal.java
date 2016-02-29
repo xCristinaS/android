@@ -115,15 +115,15 @@ public class FragmentoPrincipal extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    AlumnoFragment a = AlumnoFragment.newInstance();
+                    FragmentoAlumno a = FragmentoAlumno.newInstance();
                     a.setListener(listener);
                     return a;
                 case 1:
-                    EmpresaFragment e = EmpresaFragment.newInstance();
+                    FragmentoEmpresa e = FragmentoEmpresa.newInstance();
                     e.setListener(listener);
                     return e;
                 case 2:
-                    VisitaFragment v = VisitaFragment.newInstance();
+                    FragmentoVisita v = FragmentoVisita.newInstance();
                     v.setListener(listener);
                     return v;
                 default:

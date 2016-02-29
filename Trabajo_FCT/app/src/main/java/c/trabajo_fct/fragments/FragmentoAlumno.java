@@ -23,18 +23,18 @@ import c.trabajo_fct.modelos.Empresa;
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class AlumnoFragment extends Fragment implements GestionFabDesdeFragmento {
+public class FragmentoAlumno extends Fragment implements GestionFabDesdeFragmento {
 
     private Callback_MainActivity listener;
     private RecyclerView lstAlumnos;
     private AlumnosAdapter adaptador;
     private DAO gestor;
 
-    public AlumnoFragment() {
+    public FragmentoAlumno() {
     }
 
-    public static AlumnoFragment newInstance() {
-        AlumnoFragment fragment = new AlumnoFragment();
+    public static FragmentoAlumno newInstance() {
+        FragmentoAlumno fragment = new FragmentoAlumno();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
