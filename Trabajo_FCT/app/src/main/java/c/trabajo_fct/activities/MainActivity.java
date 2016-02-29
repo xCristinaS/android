@@ -3,6 +3,7 @@ package c.trabajo_fct.activities;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -122,17 +123,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL) != null) {
-                    ((GestionFabDesdeFragmento)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).onFabPressed();
-                } else if (gestor.findFragmentByTag(FRAGMENTO_DETALLES_EMPRESA) != null) {
-                    ((GestionFabDesdeFragmento)gestor.findFragmentByTag(FRAGMENTO_DETALLES_EMPRESA)).onFabPressed();
-                } else if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_ALUMNO) == null) {
+                Fragment fragment = gestor.findFragmentById(R.id.flHueco);
+                if (fragment instanceof FragmentoPrincipal){
                     FragmentoPrincipal fragmentoP = (FragmentoPrincipal) gestor.findFragmentByTag(FRAGMENTO_PRINCIPAL);
                     FragmentoPrincipal.PaginasAdapter adaptador = fragmentoP.getAdaptador();
                     ViewPager viewPager = fragmentoP.getViewPager();
-                    if (adaptador != null && viewPager != null)
-                        ((GestionFabDesdeFragmento) adaptador.getFragment(viewPager.getCurrentItem())).onFabPressed();
-                }
+                    if (adaptador != null && viewPager != null) {
+                        Fragment fragmentoInterno = adaptador.getFragment(viewPager.getCurrentItem());
+                        if (fragmentoInterno instanceof  GestionFabDesdeFragmento)
+                            ((GestionFabDesdeFragmento) fragmentoInterno).onFabPressed();
+                    }
+                } else
+                    if (fragment instanceof  GestionFabDesdeFragmento)
+                        ((GestionFabDesdeFragmento)fragment).onFabPressed();
             }
         });
     }
