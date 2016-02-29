@@ -17,18 +17,21 @@ import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.modelos.Alumno;
 
 /**
- * Created by Cristina on 27/02/2016.
+ * Created by Cristina on 29/02/2016.
  */
-public class FragmentoPrincipal extends Fragment {
+public class Fragmento_Alumno_Visita extends Fragment {
 
     private Callback_MainActivity listener;
     private PaginasAdapter mAdaptador;
     private ViewPager viewPager;
+    private static Alumno alumno;
 
-    public static FragmentoPrincipal newInstance() {
-        return new FragmentoPrincipal();
+    public static Fragmento_Alumno_Visita newInstance(Alumno a) {
+        alumno = a;
+        return new Fragmento_Alumno_Visita();
     }
 
     @Override
@@ -40,7 +43,7 @@ public class FragmentoPrincipal extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragmento_principal, container, false);
+        return inflater.inflate(R.layout.fragmento_alumno_visita, container, false);
     }
 
     @Override
@@ -65,12 +68,11 @@ public class FragmentoPrincipal extends Fragment {
         TabLayout tabLayout = (TabLayout) getView().findViewById(R.id.tabL);
         viewPager = (ViewPager) getView().findViewById(R.id.viewPager);
         ArrayList<String> titulosPaginas = new ArrayList<>();
-        titulosPaginas.add("Alumnos");
-        titulosPaginas.add("Empresas");
+        titulosPaginas.add("Alumno");
         titulosPaginas.add("Visitas");
         mAdaptador = new PaginasAdapter(getChildFragmentManager(), titulosPaginas);
         viewPager.setAdapter(mAdaptador);
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -115,15 +117,11 @@ public class FragmentoPrincipal extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    FragmentoAlumno a = FragmentoAlumno.newInstance();
+                    Fragmento_Detalle_Alumno a = Fragmento_Detalle_Alumno.newInstance(alumno);
                     a.setListener(listener);
                     return a;
                 case 1:
-                    FragmentoEmpresa e = FragmentoEmpresa.newInstance();
-                    e.setListener(listener);
-                    return e;
-                case 2:
-                    FragmentoVisita v = FragmentoVisita.newInstance(null);
+                    FragmentoVisita v = FragmentoVisita.newInstance(alumno);
                     v.setListener(listener);
                     return v;
                 default:

@@ -21,6 +21,7 @@ import java.util.Date;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
+import c.trabajo_fct.fragments.Fragmento_Alumno_Visita;
 import c.trabajo_fct.fragments.Fragmento_Detalle_Empresa;
 import c.trabajo_fct.fragments.Fragmento_Insert_NewVisitaGeneral;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva empresa";
     public static final String FRAGMENTO_NEW_VISITA_GENERAL = "nueva visita general";
     public static final String FRAGMENTO_DETALLES_EMPRESA = "fragmento detalles empresa";
+    public static final String FRAGMENTO_ALUMNO_VISITAS = "fragmento detalles de alumno y sus visitas";
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
 
@@ -104,6 +106,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     transaccion.replace(R.id.flHueco, Fragmento_Detalle_Empresa.newInstance((Empresa)o), FRAGMENTO_DETALLES_EMPRESA);
                 transaccion.addToBackStack(FRAGMENTO_DETALLES_EMPRESA);
                 break;
+
+            case FRAGMENTO_ALUMNO_VISITAS:
+                if (gestor.findFragmentByTag(FRAGMENTO_ALUMNO_VISITAS) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Alumno_Visita.newInstance((Alumno) o), FRAGMENTO_ALUMNO_VISITAS);
+                transaccion.addToBackStack(FRAGMENTO_ALUMNO_VISITAS);
+                break;
         }
         transaccion.commit();
     }
@@ -131,6 +139,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     if (adaptador != null && viewPager != null) {
                         Fragment fragmentoInterno = adaptador.getFragment(viewPager.getCurrentItem());
                         if (fragmentoInterno instanceof  GestionFabDesdeFragmento)
+                            ((GestionFabDesdeFragmento) fragmentoInterno).onFabPressed();
+                    }
+                } else if (fragment instanceof Fragmento_Alumno_Visita){
+                    Fragmento_Alumno_Visita fragmentoP = (Fragmento_Alumno_Visita) gestor.findFragmentByTag(FRAGMENTO_ALUMNO_VISITAS);
+                    Fragmento_Alumno_Visita.PaginasAdapter adaptador = fragmentoP.getAdaptador();
+                    ViewPager viewPager = fragmentoP.getViewPager();
+                    if (adaptador != null && viewPager != null) {
+                        Fragment fragmentoInterno = adaptador.getFragment(viewPager.getCurrentItem());
+                        if (fragmentoInterno instanceof GestionFabDesdeFragmento)
                             ((GestionFabDesdeFragmento) fragmentoInterno).onFabPressed();
                     }
                 } else
@@ -214,8 +231,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onItemClick(Object o) {
-        if (o instanceof Empresa){
+        if (o instanceof Empresa)
             cargarFragmentoSecundario(FRAGMENTO_DETALLES_EMPRESA, o);
-        }
+        else if (o instanceof Alumno)
+            cargarFragmentoSecundario(FRAGMENTO_ALUMNO_VISITAS, o);
     }
 }

@@ -17,6 +17,7 @@ import c.trabajo_fct.adapters.AlumnosAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 
@@ -63,6 +64,7 @@ public class FragmentoAlumno extends Fragment implements GestionFabDesdeFragment
 
         lstAlumnos = (RecyclerView) getView().findViewById(R.id.lstAlumnos);
         adaptador = new AlumnosAdapter(gestor.selectAllAlumnos());
+        adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayAlumnos));
         lstAlumnos.setAdapter(adaptador);
         lstAlumnos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));

@@ -19,6 +19,7 @@ import c.trabajo_fct.adapters.VisitasAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Visita;
 
 /**
@@ -30,11 +31,13 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
     private RecyclerView lstVisitas;
     private VisitasAdapter adaptador;
     private DAO gestor;
+    private static Alumno alumno;
 
     public FragmentoVisita() {
     }
 
-    public static FragmentoVisita newInstance() {
+    public static FragmentoVisita newInstance(Alumno a) {
+        alumno = a;
         FragmentoVisita fragment = new FragmentoVisita();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -52,7 +55,10 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         //insertarVisitas();
 
         lstVisitas = (RecyclerView) getView().findViewById(R.id.lstVisitas);
-        adaptador = new VisitasAdapter(gestor.selectAllVisitas());
+        if (alumno == null)
+            adaptador = new VisitasAdapter(gestor.selectAllVisitas());
+        else
+            adaptador = new VisitasAdapter(gestor.selectAllVisitasDeAlumno(alumno.getId()));
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayVisitas));
         lstVisitas.setAdapter(adaptador);
         lstVisitas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -72,7 +78,6 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         super.onSaveInstanceState(outState);
 
     }
-
 
     @Override
     public void onFabPressed() {

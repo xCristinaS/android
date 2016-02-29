@@ -153,18 +153,28 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     }
 
     private void insertarAlumno() {
-        Alumno a = new Alumno();
+        boolean insertar = false;
         if (camposRellenos()) {
-            a.setCurso(txtCurso.getText().toString());
-            a.setNombre(txtNombre.getText().toString());
-            a.setDireccion(txtDireccion.getText().toString());
-            a.setTelefono(txtTel.getText().toString());
-            a.setEdad(Integer.parseInt(txtEdad.getText().toString()));
-            a.setEmpresa(gestor.selectIDEmpresa((String) spEmpresas.getSelectedItem()));
-            a.setFoto(getResources().getString(R.string.default_alumno_img));
-            gestor.insertAlumno(a);
-            limpiarCampos();
-            Snackbar.make(getView(), "NUEVO ALUMNO INSERTADO", Snackbar.LENGTH_LONG).show();
+            if (Fragmento_Insert_UpdateAlumno.alumno == null){
+                Fragmento_Insert_UpdateAlumno.alumno = new Alumno();
+                insertar = true;
+            }
+            alumno.setCurso(txtCurso.getText().toString());
+            alumno.setNombre(txtNombre.getText().toString());
+            alumno.setDireccion(txtDireccion.getText().toString());
+            alumno.setTelefono(txtTel.getText().toString());
+            alumno.setEdad(Integer.parseInt(txtEdad.getText().toString()));
+            alumno.setEmpresa(gestor.selectIDEmpresa((String) spEmpresas.getSelectedItem()));
+            alumno.setFoto(getResources().getString(R.string.default_alumno_img));
+            if (insertar) {
+                gestor.insertAlumno(alumno);
+                limpiarCampos();
+                Snackbar.make(getView(), "NUEVO ALUMNO INSERTADO", Snackbar.LENGTH_LONG).show();
+            } else {
+                //alumno.setId(alumno.getId());
+                gestor.updateAlumno(alumno);
+                Snackbar.make(getView(), "ALUMNO ACTUALIZADO", Snackbar.LENGTH_LONG).show();
+            }
         } else
             Snackbar.make(getView(), "LOS CAMPOS DEBEN ESTAR RELLENOS", Snackbar.LENGTH_LONG).show();
     }

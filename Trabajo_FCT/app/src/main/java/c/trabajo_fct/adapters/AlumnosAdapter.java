@@ -11,6 +11,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.modelos.Alumno;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -19,12 +20,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHolder> {
 
-    public interface OnItemClick{
-        public void onItemClick(int numCancion);
-    }
-
-    private  ArrayList<Alumno> alumnos;
-    private OnItemClick listener;
+    private ArrayList<Alumno> alumnos;
+    private OnAdapterItemClick listener;
     private View emptyView;
     private int selectedElement = -1;
 
@@ -54,7 +51,7 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
         return alumnos.size();
     }
 
-    public void setOnItemClickListener(OnItemClick listener){
+    public void setOnItemClickListener(OnAdapterItemClick listener){
         this.listener = listener;
     }
 
@@ -76,7 +73,7 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //listener.onItemClick(alumnos.indexOf(c));
+                    listener.onItemClick(alumno);
                 }
             });
         }

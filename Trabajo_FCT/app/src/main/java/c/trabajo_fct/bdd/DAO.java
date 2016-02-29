@@ -218,7 +218,7 @@ public class DAO {
 
     public Visita selectVisita(int idAlumno, Date fecha) {
         SQLiteDatabase bd = helper.getWritableDatabase();
-        Cursor cursor = bd.query(true, BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("%s = %d and %s = %d",BddContract.Visitas.ID_ALUMNO,
+        Cursor cursor = bd.query(true, BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("%s = %d and %s = %d", BddContract.Visitas.ID_ALUMNO,
                 idAlumno, BddContract.Visitas.FECHA, fecha.getTime()), null, null, null, null, null);
         Visita visita = null;
         if (cursor != null) {
@@ -325,5 +325,24 @@ public class DAO {
         cursor.close();
         helper.close();
         return result;
+    }
+
+    public Cursor queryAllVisitasDeAlumno(SQLiteDatabase bd, int idAlumno) {
+        return  bd.query(BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("%s = %d", BddContract.Visitas.ID_ALUMNO, idAlumno), null, null, null, BddContract.Visitas.FECHA);
+    }
+
+    public ArrayList<Visita> selectAllVisitasDeAlumno(int idAlumno) {
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        ArrayList<Visita> lista = new ArrayList<>();
+        Cursor cursor = queryAllVisitasDeAlumno(bd, idAlumno);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Visita visita = cursorToVisita(cursor);
+            lista.add(visita);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        helper.close();
+        return lista;
     }
 }

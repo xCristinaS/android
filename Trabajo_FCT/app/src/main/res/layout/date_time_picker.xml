@@ -25,17 +25,18 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/cancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancelar" />
+
+        <Button
             android:id="@+id/date_time_set"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/btn_aceptar" />
 
-        <Button
-            android:id="@+id/cancelar"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/cancelar" />
     </LinearLayout>
 </LinearLayout>
