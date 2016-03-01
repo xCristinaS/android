@@ -25,4 +25,6 @@
     <string name="btn_aceptar">Aceptar</string>
     <string name="sin_empresa_asignada">Sin empresa asignada</string>
     <string name="eliminar">eliminar</string>
+    <string name="comentario">Comentario</string>
+    <string name="visita_no_realizada">La visita aún no se ha realizado</string>
 </resources>

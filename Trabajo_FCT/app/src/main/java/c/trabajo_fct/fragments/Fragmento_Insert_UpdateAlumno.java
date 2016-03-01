@@ -14,10 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
-import c.trabajo_fct.fragments_dialogs.SeleccionDirectaDialogFragment;
+import c.trabajo_fct.dialogs_fragments.SeleccionDirectaDialogFragment;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;

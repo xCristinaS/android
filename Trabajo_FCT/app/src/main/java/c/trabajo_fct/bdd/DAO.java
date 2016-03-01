@@ -363,4 +363,19 @@ public class DAO {
         helper.close();
         return resultado > 0;
     }
+
+    public String selectFotoAlumno(int id){
+        String result = "";
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        String[] campos ={BddContract.Alumno.FOTO};
+        Cursor cursor = bd.query(true, BddContract.Alumno.TABLA, campos, String.format("%s = '%s'",BddContract.Alumno.ID, id), null, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            if (!cursor.isAfterLast())
+                result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Alumno.FOTO));
+        }
+        cursor.close();
+        helper.close();
+        return result;
+    }
 }

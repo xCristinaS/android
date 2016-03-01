@@ -24,7 +24,7 @@ import java.util.GregorianCalendar;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
-import c.trabajo_fct.fragments_dialogs.SeleccionDirectaDialogFragment;
+import c.trabajo_fct.dialogs_fragments.SeleccionDirectaDialogFragment;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.MyDateTimePickerCallBack;

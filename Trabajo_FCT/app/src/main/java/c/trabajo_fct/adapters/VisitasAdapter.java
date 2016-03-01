@@ -6,12 +6,20 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
@@ -104,19 +112,38 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView lblNombreAlumno, lblFechaVisita;
-        SimpleDateFormat formatFecha = new SimpleDateFormat("EEEE dd/MM/yyyy");
-        SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
+        private ImageView imgBarra;
+
+        private SimpleDateFormat formatFecha = new SimpleDateFormat("EEEE dd/MM/yyyy");
+        private SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
 
         public ViewHolder(View itemView) {
             super(itemView);
             gestor = new DAO(itemView.getContext());
             lblNombreAlumno = (TextView) itemView.findViewById(R.id.lblNombreAlumno);
             lblFechaVisita = (TextView) itemView.findViewById(R.id.lblFechaVisita);
+            imgBarra = (ImageView) itemView.findViewById(R.id.imgBarra);
         }
 
         public void onBind(final Visita visita) {
+            Date hoy, fechaManiana, fechaSemanaSiguiente;
             lblNombreAlumno.setText(gestor.selectNombreAlumno(visita.getIdAlumno()));
             lblFechaVisita.setText(String.format("%s a las %s", formatFecha.format(visita.getFecha()), formatHora.format(visita.getFecha())));
+
+            hoy = new Date();
+            fechaManiana = new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(1));
+            fechaSemanaSiguiente = new Date(new Date().getTime() + TimeUnit.DAYS.toMillis(7));
+            // menor que 0 si la primera menor q la segunda, 0 si iguales.
+            if (hoy.compareTo(visita.getFecha()) > 0)
+                Picasso.with(itemView.getContext()).load(R.drawable.barra_roja).into(imgBarra);
+            else {
+                if (fechaManiana.compareTo(visita.getFecha()) > 0)
+                    Picasso.with(itemView.getContext()).load(R.drawable.barra_naranja).into(imgBarra);
+                else if (fechaSemanaSiguiente.compareTo(visita.getFecha()) > 0)
+                    Picasso.with(itemView.getContext()).load(R.drawable.barra_amarilla).into(imgBarra);
+                else
+                    Picasso.with(itemView.getContext()).load(R.drawable.barra_verde).into(imgBarra);
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

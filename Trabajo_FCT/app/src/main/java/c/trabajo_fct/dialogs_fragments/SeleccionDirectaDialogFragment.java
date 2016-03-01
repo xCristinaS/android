@@ -1,4 +1,4 @@
-package c.trabajo_fct.fragments_dialogs;
+package c.trabajo_fct.dialogs_fragments;
 
 import android.app.Activity;
 import android.app.Dialog;

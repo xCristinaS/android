@@ -24,10 +24,11 @@ import c.trabajo_fct.R;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
 import c.trabajo_fct.fragments.Fragmento_Alumno_Visita;
 import c.trabajo_fct.fragments.Fragmento_Detalle_Empresa;
+import c.trabajo_fct.fragments.Fragmento_Detalle_Visita;
 import c.trabajo_fct.fragments.Fragmento_Insert_NewVisitaGeneral;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateEmpresa;
-import c.trabajo_fct.fragments_dialogs.SeleccionDirectaDialogFragment;
+import c.trabajo_fct.dialogs_fragments.SeleccionDirectaDialogFragment;
 import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
@@ -36,6 +37,7 @@ import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
+import c.trabajo_fct.modelos.Visita;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity, SeleccionDirectaDialogFragment.SeleccionDirectaDialogListener
         , MyDateTimePickerCallBack, OnAdapterItemClick, OnAdapterItemLongClick {
@@ -44,10 +46,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva_empresa";
     public static final String FRAGMENTO_NEW_VISITA_GENERAL = "nueva_visita_general";
     public static final String FRAGMENTO_DETALLES_EMPRESA = "fragmento_detalles_empresa";
+    public static final String FRAGMENTO_DETALLE_VISITA = "fragmento_detalle_visita";
+
     public static final String FRAGMENTO_ALUMNO_VISITAS = "fragmento_detalles_de_alumno_y_sus_visitas";
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
-
     private static final String RECUPERAR = "rec";
     private static final int CARGAR_F_NUEVO_ALUMNO = 10;
     public static final String ALUMNO_ELIMINADO_REFRESCAR_VISITAS_ACTION = "c.trabajo_fct.activities.alumno_eliminado_refrescar_visitas_action";
@@ -113,6 +116,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (gestor.findFragmentByTag(FRAGMENTO_ALUMNO_VISITAS) == null)
                     transaccion.replace(R.id.flHueco, Fragmento_Alumno_Visita.newInstance((Alumno) o), FRAGMENTO_ALUMNO_VISITAS);
                 transaccion.addToBackStack(FRAGMENTO_ALUMNO_VISITAS);
+                break;
+
+            case FRAGMENTO_DETALLE_VISITA:
+                if (gestor.findFragmentByTag(FRAGMENTO_DETALLE_VISITA) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Detalle_Visita.newInstance((Visita) o), FRAGMENTO_DETALLE_VISITA);
+                transaccion.addToBackStack(FRAGMENTO_DETALLE_VISITA);
                 break;
         }
         transaccion.commit();
@@ -240,6 +249,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             cargarFragmentoSecundario(FRAGMENTO_DETALLES_EMPRESA, o);
         else if (o instanceof Alumno)
             cargarFragmentoSecundario(FRAGMENTO_ALUMNO_VISITAS, o);
+        else if (o instanceof Visita)
+            cargarFragmentoSecundario(FRAGMENTO_DETALLE_VISITA, o);
     }
 
     @Override
