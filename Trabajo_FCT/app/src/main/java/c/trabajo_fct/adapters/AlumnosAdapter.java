@@ -67,13 +67,16 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
     }
 
     @Override
-    public void removeSelections() {
+    public boolean removeSelections() {
+        boolean resp = true;
         List<Integer> seleccionados = getSelectedItemsPositions();
         Collections.sort(seleccionados, Collections.reverseOrder());
         for (int i = 0; i < seleccionados.size(); i++) {
             int pos = seleccionados.get(i);
-            removeItem(pos);
+            if (removeItem(pos))
+                resp = false;
         }
+        return resp;
     }
 
     public List<Integer> getSelectedItemsPositions() {
@@ -84,11 +87,13 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
         return items;
     }
 
-    private void removeItem(int pos) {
+    private boolean removeItem(int pos) {
+        boolean r = gestor.deleteVisitasDeAlumno(alumnos.get(pos).getId());
         gestor.deleteAlumno(alumnos.get(pos).getId());
         alumnos.remove(pos);
         notifyItemRemoved(pos);
         checkIfEmpty();
+        return r;
     }
 
     @Override

@@ -149,7 +149,8 @@ public class DAO {
         Empresa empresa = null;
         if (cursor != null) {
             cursor.moveToFirst();
-            empresa = cursorToEmpresa(cursor);
+            if (!cursor.isAfterLast())
+                empresa = cursorToEmpresa(cursor);
         }
         cursor.close();
         helper.close();
@@ -306,7 +307,8 @@ public class DAO {
         Cursor cursor = bd.query(true, BddContract.Empresa.TABLA, campos, String.format("%s = '%s'",BddContract.Empresa.ID, id), null, null, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
-            result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.FOTO));
+            if (!cursor.isAfterLast())
+                result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.FOTO));
         }
         cursor.close();
         helper.close();
@@ -344,5 +346,21 @@ public class DAO {
         cursor.close();
         helper.close();
         return lista;
+    }
+
+    public boolean setEmpresaAlumnoNull(int idEmpresa) {
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put(BddContract.Alumno.EMPRESA, "null");
+        long resultado = bd.update(BddContract.Alumno.TABLA, valores, String.format("%s = %d", BddContract.Alumno.EMPRESA, idEmpresa), null);
+        helper.close();
+        return resultado > 0;
+    }
+
+    public boolean deleteVisitasDeAlumno (int idAlumno) {
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        long resultado = bd.delete(BddContract.Visitas.TABLA, String.format("%s = %d", BddContract.Visitas.ID_ALUMNO, idAlumno), null);
+        helper.close();
+        return resultado > 0;
     }
 }

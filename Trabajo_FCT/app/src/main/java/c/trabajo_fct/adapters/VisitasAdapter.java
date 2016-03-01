@@ -1,5 +1,6 @@
 package c.trabajo_fct.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import c.trabajo_fct.modelos.Visita;
 /**
  * Created by Cristina on 28/02/2016.
  */
-public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHolder> implements AdapterAllowMultiDeletion{
+public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHolder> implements AdapterAllowMultiDeletion {
 
     private ArrayList<Visita> visitas;
     private OnAdapterItemClick listenerClick;
@@ -32,7 +33,7 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
     private DAO gestor;
     private boolean modoBorrarActivo = false;
 
-    public VisitasAdapter(ArrayList<Visita> visitas){
+    public VisitasAdapter(ArrayList<Visita> visitas) {
         this.visitas = visitas;
     }
 
@@ -52,7 +53,7 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
         return visitas.size();
     }
 
-    public void setOnItemClickListener(OnAdapterItemClick listener){
+    public void setOnItemClickListener(OnAdapterItemClick listener) {
         this.listenerClick = listener;
     }
 
@@ -66,13 +67,14 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
     }
 
     @Override
-    public void removeSelections() {
+    public boolean removeSelections() {
         List<Integer> seleccionados = getSelectedItemsPositions();
         Collections.sort(seleccionados, Collections.reverseOrder());
         for (int i = 0; i < seleccionados.size(); i++) {
             int pos = seleccionados.get(i);
             removeItem(pos);
         }
+        return true;
     }
 
     public List<Integer> getSelectedItemsPositions() {
@@ -112,7 +114,7 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
             lblFechaVisita = (TextView) itemView.findViewById(R.id.lblFechaVisita);
         }
 
-        public void onBind(final Visita visita){
+        public void onBind(final Visita visita) {
             lblNombreAlumno.setText(gestor.selectNombreAlumno(visita.getIdAlumno()));
             lblFechaVisita.setText(String.format("%s a las %s", formatFecha.format(visita.getFecha()), formatHora.format(visita.getFecha())));
 
@@ -165,8 +167,16 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
         this.visitas = visitas;
     }
 
-    public void removeAllItems(){
+    public void removeAllItems() {
         visitas.clear();
         notifyDataSetChanged();
+    }
+
+    public void reloadData(Context context) {
+        DAO mGestor = new DAO(context);
+        visitas.clear();
+        visitas.addAll(mGestor.selectAllVisitas());
+        notifyDataSetChanged();
+        checkIfEmpty();
     }
 }

@@ -18,6 +18,7 @@ import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
+import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -67,13 +68,14 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     }
 
     @Override
-    public void removeSelections() {
+    public boolean removeSelections() {
         List<Integer> seleccionados = getSelectedItemsPositions();
         Collections.sort(seleccionados, Collections.reverseOrder());
         for (int i = 0; i < seleccionados.size(); i++) {
             int pos = seleccionados.get(i);
             removeItem(pos);
         }
+        return true;
     }
 
     @Override
@@ -133,6 +135,7 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     }
 
     private void removeItem(int pos) {
+        gestor.setEmpresaAlumnoNull(empresas.get(pos).getId());
         gestor.deleteEmpresa(empresas.get(pos).getId());
         empresas.remove(pos);
         notifyItemRemoved(pos);

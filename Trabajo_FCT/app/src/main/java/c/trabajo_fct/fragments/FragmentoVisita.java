@@ -1,7 +1,12 @@
 package c.trabajo_fct.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,6 +37,9 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
     private VisitasAdapter adaptador;
     private DAO gestor;
     private static Alumno alumno;
+    private BroadcastReceiver receptor;
+    private LocalBroadcastManager gestorLocal;
+    private IntentFilter filtro;
 
     public static FragmentoVisita newInstance(Alumno a) {
         alumno = a;
@@ -57,12 +65,35 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         lstVisitas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstVisitas.setItemAnimator(new DefaultItemAnimator());
         lstVisitas.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+
+        receptor = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                adaptador.reloadData(context);
+            }
+        };
+
+        filtro = new IntentFilter(MainActivity.ALUMNO_ELIMINADO_REFRESCAR_VISITAS_ACTION);
+        gestorLocal = LocalBroadcastManager.getInstance(getContext());
         super.onActivityCreated(savedInstanceState);
     }
 
     @Override
     public void onFabPressed() {
         listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL, null);
+    }
+
+
+    @Override
+    public void onResume() {
+        gestorLocal.registerReceiver(receptor, filtro);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        gestorLocal.unregisterReceiver(receptor);
+        super.onPause();
     }
 
     @Override

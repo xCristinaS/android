@@ -105,15 +105,21 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     }
 
     private void bindAlumno() {
+        String fotoEmpresa;
         Picasso.with(getContext()).load(alumno.getFoto()).into(imgCabecera);
-        String fotoEmpresa = gestor.selectFotoEmpresa(alumno.getEmpresa());
+        if (gestor.selectEmpresa(alumno.getEmpresa()) != null) {
+            fotoEmpresa = gestor.selectFotoEmpresa(alumno.getEmpresa());
+            lblEmpresa.setText(gestor.selectNombreEmpresa(alumno.getEmpresa()));
+        } else {
+            fotoEmpresa = getString(R.string.default_empresa_img);
+            lblEmpresa.setText(R.string.sin_empresa_asignada);
+        }
         Picasso.with(getContext()).load(fotoEmpresa).into(imgCabecera);
         txtNombre.setText(alumno.getNombre());
         txtCurso.setText(alumno.getCurso());
         txtDireccion.setText(alumno.getDireccion());
         txtEdad.setText(String.valueOf(alumno.getEdad()));
         txtTel.setText(alumno.getTelefono());
-        lblEmpresa.setText(gestor.selectNombreEmpresa(alumno.getEmpresa()));
     }
 
     private void lanzarDialogFragmentSeleccionEmpresa(){

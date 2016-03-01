@@ -73,16 +73,22 @@ public class Fragmento_Detalle_Alumno extends Fragment implements GestionFabDesd
     }
 
     private void bindAlumno() {
+        String fotoEmpresa;
         Picasso.with(getContext()).load(alumno.getFoto()).into(imgCabecera);
-        String fotoEmpresa = gestor.selectFotoEmpresa(alumno.getEmpresa());
+        int aux = alumno.getEmpresa();
+        if (gestor.selectEmpresa(alumno.getEmpresa()) != null) {
+            fotoEmpresa = gestor.selectFotoEmpresa(alumno.getEmpresa());
+            lblEmpresa.setText(gestor.selectNombreEmpresa(alumno.getEmpresa()));
+        } else {
+            fotoEmpresa = getString(R.string.default_empresa_img);
+            lblEmpresa.setText(R.string.sin_empresa_asignada);
+        }
         Picasso.with(getContext()).load(fotoEmpresa).into(imgCabecera);
         lblNombre.setText(alumno.getNombre());
         lblCurso.setText(alumno.getCurso());
         lblDir.setText(alumno.getDireccion());
         lblEdad.setText(String.valueOf(alumno.getEdad()));
         lblTel.setText(alumno.getTelefono());
-        String nombreE = gestor.selectNombreEmpresa(alumno.getEmpresa());
-        lblEmpresa.setText(gestor.selectNombreEmpresa(alumno.getEmpresa()));
     }
 
     @Override

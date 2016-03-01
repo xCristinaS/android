@@ -5,6 +5,6 @@ package c.trabajo_fct.interfaces;
  */
 public interface AdapterAllowMultiDeletion {
     public void clearAllSelections();
-    public void removeSelections();
+    public boolean removeSelections();
     public void disableMultiDeletionMode();
 }

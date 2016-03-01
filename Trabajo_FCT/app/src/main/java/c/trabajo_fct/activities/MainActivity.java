@@ -1,12 +1,13 @@
 package c.trabajo_fct.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,13 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.Date;
 
 import c.trabajo_fct.R;
-import c.trabajo_fct.adapters.AlumnosAdapter;
-import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
 import c.trabajo_fct.fragments.Fragmento_Alumno_Visita;
 import c.trabajo_fct.fragments.Fragmento_Detalle_Empresa;
@@ -52,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private static final String RECUPERAR = "rec";
     private static final int CARGAR_F_NUEVO_ALUMNO = 10;
+    public static final String ALUMNO_ELIMINADO_REFRESCAR_VISITAS_ACTION = "c.trabajo_fct.activities.alumno_eliminado_refrescar_visitas_action";
 
     private Toolbar toolbar;
     private FragmentManager gestor;
@@ -176,13 +175,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
                 return true;
             case R.id.eliminar:
-                adaptador.removeSelections();
+                if (!adaptador.removeSelections())
+                    enviarBroadcastVisitasAlumnoBorradas();
                 adaptador.clearAllSelections();
                 toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
                 toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void enviarBroadcastVisitasAlumnoBorradas() {
+        Intent intent = new Intent(ALUMNO_ELIMINADO_REFRESCAR_VISITAS_ACTION);
+        LocalBroadcastManager gestor = LocalBroadcastManager.getInstance(this);
+        gestor.sendBroadcast(intent);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
