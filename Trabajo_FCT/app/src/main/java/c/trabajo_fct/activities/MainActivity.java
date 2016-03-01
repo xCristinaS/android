@@ -16,10 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.Date;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
 import c.trabajo_fct.fragments.Fragmento_Alumno_Visita;
 import c.trabajo_fct.fragments.Fragmento_Detalle_Empresa;
@@ -27,15 +29,17 @@ import c.trabajo_fct.fragments.Fragmento_Insert_NewVisitaGeneral;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateEmpresa;
 import c.trabajo_fct.fragments_dialogs.SeleccionDirectaDialogFragment;
+import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.MyDateTimePickerCallBack;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity, SeleccionDirectaDialogFragment.SeleccionDirectaDialogListener
-        ,MyDateTimePickerCallBack, OnAdapterItemClick{
+        ,MyDateTimePickerCallBack, OnAdapterItemClick, OnAdapterItemLongClick{
 
     public static final String FRAGMENTO_INSERT_UPDATE_ALUMNO = "nuevo_alumno";
     public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva_empresa";
@@ -51,6 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar toolbar;
     private FragmentManager gestor;
     private FloatingActionButton fab;
+    private AdapterAllowMultiDeletion adaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -159,9 +164,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings)
-            return true;
-
+        switch (id){
+            case R.id.action_settings:
+                return true;
+            case R.id.limpiar:
+                if (adaptador != null) {
+                    adaptador.clearAllSelections();
+                    adaptador.disableMultiDeletionMode();
+                }
+                toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
+                toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
+                return true;
+            case R.id.eliminar:
+                if (adaptador != null) {
+                    adaptador.removeSelections();
+                    adaptador.clearAllSelections();
+                }
+                toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
+                toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -214,5 +236,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             cargarFragmentoSecundario(FRAGMENTO_DETALLES_EMPRESA, o);
         else if (o instanceof Alumno)
             cargarFragmentoSecundario(FRAGMENTO_ALUMNO_VISITAS, o);
+    }
+
+    @Override
+    public void setAdapterAllowMultiDeletion(AdapterAllowMultiDeletion adaptador) {
+        this.adaptador = adaptador;
+    }
+
+    @Override
+    public void onItemLongClick() {
+        toolbar.getMenu().findItem(R.id.eliminar).setVisible(true);
+        toolbar.getMenu().findItem(R.id.limpiar).setVisible(true);
     }
 }

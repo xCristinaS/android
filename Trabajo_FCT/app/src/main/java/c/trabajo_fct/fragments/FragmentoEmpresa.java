@@ -18,6 +18,7 @@ import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Empresa;
 
 /**
@@ -53,6 +54,8 @@ public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmen
         adaptador = new EmpresasAdapter(gestor.selectAllEmpresa());
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayEmpresas));
         adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
+        adaptador.setListenerLongClick((OnAdapterItemLongClick) getActivity());
+        ((OnAdapterItemLongClick) getActivity()).setAdapterAllowMultiDeletion(adaptador);
         lstEmpresas.setAdapter(adaptador);
         lstEmpresas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstEmpresas.setItemAnimator(new DefaultItemAnimator());

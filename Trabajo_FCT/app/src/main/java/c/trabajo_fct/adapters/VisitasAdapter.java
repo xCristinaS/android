@@ -1,6 +1,7 @@
 package c.trabajo_fct.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
@@ -29,6 +32,7 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
     private ArrayList<Visita> visitas;
     private OnItemClick listener;
     private View emptyView;
+    private final SparseBooleanArray mSelectedItems = new SparseBooleanArray();
     private int selectedElement = -1;
 
     public VisitasAdapter(ArrayList<Visita> visitas){
@@ -50,6 +54,7 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
         }
         */
         holder.onBind(visitas.get(position));
+        holder.itemView.setActivated(mSelectedItems.get(position, false));
     }
 
     @Override
@@ -87,7 +92,57 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
             });
         }
     }
+/*
+    // Elimina los elementos seleccionados.
+    public void removeSelectedItems() {
+        // Se eliminan en orden inverso para que no haya problemas. Al
+        // eliminar se cambia el
+        // estado de selección del elemento.
+        List<Integer> seleccionados = getSelectedItemsPositions();
+        Collections.sort(seleccionados, Collections.reverseOrder());
+        for (int i = 0; i < seleccionados.size(); i++) {
+            int pos = seleccionados.get(i);
+            toggleSelection(pos);
+            removeItem(pos);
+        }
+        // Se comprueba si pasa a estar vacía.
+        checkEmptyStateChanged();
+    }
+*/
+    // Quita la selección de un elemento.
+    public void clearSelection(int position) {
+        if (mSelectedItems.get(position, false)) {
+            mSelectedItems.delete(position);
+        }
+        notifyItemChanged(position);
+    }
 
+    // Quita la selección de todos los elementos seleccionados.
+    public void clearSelections() {
+        if (mSelectedItems.size() > 0) {
+            mSelectedItems.clear();
+            notifyDataSetChanged();
+        }
+    }
+
+    // Retorna un array con las posiciones de los elementos seleccionados.
+    public List<Integer> getSelectedItemsPositions() {
+        List<Integer> items = new ArrayList<>(mSelectedItems.size());
+        for (int i = 0; i < mSelectedItems.size(); i++) {
+            items.add(mSelectedItems.keyAt(i));
+        }
+        return items;
+    }
+/*
+    // Retorna el id de un elemento. Necesario para drag & drop.
+    @Override
+    public long getItemId(int position) {
+        if (position < 0 || position >= mDatos.size()) {
+            return -1;
+        }
+        return mDatos.get(position).getId();
+    }
+   */
     public void setSelectedElement(int selectedElement){
         int aux = this.selectedElement;
         this.selectedElement = selectedElement;

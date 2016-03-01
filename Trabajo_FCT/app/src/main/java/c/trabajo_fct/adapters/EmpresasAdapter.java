@@ -1,6 +1,7 @@
 package c.trabajo_fct.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +10,31 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Empresa;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHolder> {
+public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHolder> implements AdapterAllowMultiDeletion {
 
     private ArrayList<Empresa> empresas;
-    private OnAdapterItemClick listener;
+    private OnAdapterItemClick listenerClick;
+    private OnAdapterItemLongClick listenerLongClick;
     private View emptyView;
-    private int selectedElement = -1;
+    private SparseBooleanArray mSelectedItems = new SparseBooleanArray();
+    private DAO gestor;
+    private boolean modoBorrarActivo = false;
 
-    public EmpresasAdapter(ArrayList<Empresa> empresas){
+    public EmpresasAdapter(ArrayList<Empresa> empresas) {
         this.empresas = empresas;
     }
 
@@ -36,14 +45,8 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*if (selectedElement != -1) {
-            if (position == selectedElement)
-                holder.itemView.setActivated(true);
-            else
-                holder.itemView.setActivated(false);
-        }
-        */
         holder.onBind(empresas.get(position));
+        holder.itemView.setActivated(mSelectedItems.get(position, false));
     }
 
     @Override
@@ -51,9 +54,25 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         return empresas.size();
     }
 
-    public void setOnItemClickListener(OnAdapterItemClick listener){
-        this.listener = listener;
+    public void setOnItemClickListener(OnAdapterItemClick listener) {
+        this.listenerClick = listener;
     }
+
+    @Override
+    public void clearAllSelections() {
+        clearSelections();
+    }
+
+    @Override
+    public void removeSelections() {
+        removeSelectedItems();
+    }
+
+    @Override
+    public void disableMultiDeletionMode() {
+        modoBorrarActivo = false;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -64,26 +83,92 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
             super(itemView);
             lblNombreEmpresa = (TextView) itemView.findViewById(R.id.lblNombreEmpresa);
             imgLogoEmpresa = (CircleImageView) itemView.findViewById(R.id.imgLogoEmpresa);
-            // listener.onItemClick(getAdapterPosition(itemView)); // para hacerlo aqui.
+            gestor = new DAO(itemView.getContext());
         }
 
-        public void onBind(final Empresa empresa){
+        public void onBind(final Empresa empresa) {
             lblNombreEmpresa.setText(empresa.getNombre());
             Picasso.with(imgLogoEmpresa.getContext()).load(empresa.getFoto()).into(imgLogoEmpresa);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(empresa);
+                    if (!modoBorrarActivo)
+                        listenerClick.onItemClick(empresa);
+                    else
+                        if (itemView.isActivated()) {
+                            itemView.setActivated(false);
+                            mSelectedItems.put(empresas.indexOf(empresa), false);
+                        } else {
+                            itemView.setActivated(true);
+                            mSelectedItems.put(empresas.indexOf(empresa), true);
+                        }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listenerLongClick != null) {
+                        if (!modoBorrarActivo){
+                            modoBorrarActivo = true;
+                            mSelectedItems.put(empresas.indexOf(empresa), true);
+                            itemView.setActivated(true);
+                            listenerLongClick.onItemLongClick();
+                        }
+                        return true;
+                    }  else
+                        return false;
                 }
             });
         }
     }
 
-    public void setSelectedElement(int selectedElement){
-        int aux = this.selectedElement;
-        this.selectedElement = selectedElement;
-        notifyItemChanged(aux);
-        notifyItemChanged(selectedElement);
+    // Elimina los elementos seleccionados.
+    public void removeSelectedItems() {
+        // Se eliminan en orden inverso para que no haya problemas. Al
+        // eliminar se cambia el
+        // estado de selección del elemento.
+        List<Integer> seleccionados = getSelectedItemsPositions();
+        Collections.sort(seleccionados, Collections.reverseOrder());
+        for (int i = 0; i < seleccionados.size(); i++) {
+            int pos = seleccionados.get(i);
+            //toggleSelection(pos);
+            removeItem(pos);
+        }
+        //checkIfEmpty();
+    }
+
+    private void removeItem(int pos) {
+        gestor.deleteEmpresa(empresas.get(pos).getId());
+        empresas.remove(pos);
+        notifyItemRemoved(pos);
+        checkIfEmpty();
+    }
+
+    // Quita la selección de un elemento.
+    public void clearSelection(int position) {
+        if (mSelectedItems.get(position, false)) {
+            mSelectedItems.delete(position);
+        }
+        notifyItemChanged(position);
+    }
+
+    // Quita la selección de todos los elementos seleccionados.
+    public void clearSelections() {
+        if (mSelectedItems.size() > 0) {
+            mSelectedItems.clear();
+            notifyDataSetChanged();
+        }
+    }
+
+    // Retorna un array con las posiciones de los elementos seleccionados.
+    public List<Integer> getSelectedItemsPositions() {
+        List<Integer> items = new ArrayList<>(mSelectedItems.size());
+        for (int i = 0; i < mSelectedItems.size(); i++) {
+            items.add(mSelectedItems.keyAt(i));
+        }
+        return items;
     }
 
     private void checkIfEmpty() {
@@ -95,5 +180,9 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
     public void setEmptyView(View emptyView) {
         this.emptyView = emptyView;
         checkIfEmpty();
+    }
+
+    public void setListenerLongClick(OnAdapterItemLongClick listenerLongClick) {
+        this.listenerLongClick = listenerLongClick;
     }
 }

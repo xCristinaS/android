@@ -24,4 +24,5 @@
     <string name="cancelar">Cancelar</string>
     <string name="btn_aceptar">Aceptar</string>
     <string name="sin_empresa_asignada">Sin empresa asignada</string>
+    <string name="eliminar">eliminar</string>
 </resources>

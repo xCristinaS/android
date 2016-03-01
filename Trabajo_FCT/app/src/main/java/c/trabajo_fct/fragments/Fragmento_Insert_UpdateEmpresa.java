@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.modelos.Empresa;
@@ -127,12 +128,12 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
             empresa.setFoto(getResources().getString(R.string.default_empresa_img));
             if (insertar) {
                 gestor.insertEmpresa(empresa);
-                limpiarCampos();
                 Snackbar.make(getView(), "NUEVA EMPRESA INSERTADA", Snackbar.LENGTH_LONG).show();
             } else {
                 gestor.updateEmpresa(empresa);
                 Snackbar.make(getView(), "EMPRESA ACTUALIZADA", Snackbar.LENGTH_LONG).show();
             }
+            limpiarCampos();
         } else
             Snackbar.make(getView(), "LOS CAMPOS DEBEN ESTAR RELLENOS", Snackbar.LENGTH_LONG).show();
     }
