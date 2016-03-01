@@ -17,6 +17,7 @@ import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Alumno;
 
 /**
@@ -86,6 +87,7 @@ public class Fragmento_Alumno_Visita extends Fragment implements GestionFabDesde
                         fragmento.setListener(listener);
 
                     fragmento.setFabImage();
+                    setActivityMultiDeletionAdapter();
                 }
             }
 
@@ -94,6 +96,13 @@ public class Fragmento_Alumno_Visita extends Fragment implements GestionFabDesde
             }
         });
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setActivityMultiDeletionAdapter() {
+        Fragment fragmento = mAdaptador.getFragment(viewPager.getCurrentItem());
+        if (fragmento != null)
+            if (fragmento instanceof  FragmentoVisita)
+                ((OnAdapterItemLongClick)getActivity()).setAdapterAllowMultiDeletion(((FragmentoVisita) fragmento).getAdaptador());
     }
 
     public PaginasAdapter getAdaptador() {
