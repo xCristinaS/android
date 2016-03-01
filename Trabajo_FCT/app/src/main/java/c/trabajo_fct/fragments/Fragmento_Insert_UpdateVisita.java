@@ -59,6 +59,12 @@ public class Fragmento_Insert_UpdateVisita extends Fragment implements GestionFa
         return new Fragmento_Insert_UpdateVisita();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

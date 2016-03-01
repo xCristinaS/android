@@ -42,6 +42,12 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
         return new Fragmento_Insert_UpdateEmpresa();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,8 +97,8 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment {
 
     @Override
     public void onDestroy() {
-        ((Toolbar) getActivity().findViewById(R.id.toolbar)).setVisibility(View.VISIBLE);
         super.onDestroy();
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
     }
 
     @Override

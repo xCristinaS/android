@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Trabajo_FCT</string>
+    <string name="app_name">FCT</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -28,4 +28,5 @@
     <string name="comentario">Comentario</string>
     <string name="visita_no_realizada">La visita aún no se ha realizado</string>
     <string name="agregar_comentario">Agregar comentario</string>
+    <string name="principal">Principal</string>
 </resources>
