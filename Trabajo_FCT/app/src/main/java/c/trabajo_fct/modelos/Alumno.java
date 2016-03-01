@@ -8,12 +8,13 @@ import android.os.Parcelable;
  */
 public class Alumno implements Parcelable {
 
-    private int id, edad, empresa;
+    private int id, edad;
+    private Integer empresa;
     private String nombre, direccion, telefono, curso, foto;
 
     public Alumno(){}
 
-    public Alumno(String nombre, String direccion, String telefono, String curso, int edad, String foto, int empresa){
+    public Alumno(String nombre, String direccion, String telefono, String curso, int edad, String foto, Integer empresa){
         id = -1;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -91,15 +92,13 @@ public class Alumno implements Parcelable {
         this.foto = foto;
     }
 
-
-    public int getEmpresa() {
+    public Integer getEmpresa() {
         return empresa;
     }
 
-    public void setEmpresa(int empresa) {
+    public void setEmpresa(Integer empresa) {
         this.empresa = empresa;
     }
-
 
     @Override
     public int describeContents() {

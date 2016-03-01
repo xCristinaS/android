@@ -180,12 +180,16 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
             alumno.setDireccion(txtDireccion.getText().toString());
             alumno.setTelefono(txtTel.getText().toString());
             alumno.setEdad(Integer.parseInt(txtEdad.getText().toString()));
-            alumno.setEmpresa(gestor.selectIDEmpresa(lblEmpresa.getText().toString()));
+            if (!lblEmpresa.getText().equals(getString(R.string.sin_empresa_asignada)))
+                alumno.setEmpresa(gestor.selectIDEmpresa(lblEmpresa.getText().toString()));
+            else
+                alumno.setEmpresa(null);
             alumno.setFoto(getResources().getString(R.string.default_alumno_img));
             if (insertar) {
                 gestor.insertAlumno(alumno);
-                limpiarCampos();
                 Snackbar.make(getView(), "NUEVO ALUMNO INSERTADO", Snackbar.LENGTH_LONG).show();
+                limpiarCampos();
+                alumno = null;
             } else {
                 gestor.updateAlumno(alumno);
                 Snackbar.make(getView(), "ALUMNO ACTUALIZADO", Snackbar.LENGTH_LONG).show();
@@ -197,7 +201,7 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     private boolean camposRellenos() {
         boolean r = true;
         if (TextUtils.isEmpty(txtCurso.getText()) || TextUtils.isEmpty(txtTel.getText()) || TextUtils.isEmpty(txtNombre.getText()) || TextUtils.isEmpty(txtEdad.getText())
-                || TextUtils.isEmpty(txtDireccion.getText()) || lblEmpresa.getText().equals(getString(R.string.sin_empresa_asignada)))
+                || TextUtils.isEmpty(txtDireccion.getText()))
             r = false;
         return r;
     }

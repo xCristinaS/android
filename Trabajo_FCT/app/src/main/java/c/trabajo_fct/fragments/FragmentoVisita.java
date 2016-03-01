@@ -83,7 +83,6 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL, null);
     }
 
-
     @Override
     public void onResume() {
         gestorLocal.registerReceiver(receptor, filtro);

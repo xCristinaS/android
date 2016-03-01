@@ -175,8 +175,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
                 return true;
             case R.id.eliminar:
-                if (!adaptador.removeSelections())
-                    enviarBroadcastVisitasAlumnoBorradas();
+                if (!adaptador.removeSelections()) // todos los adaptadores devuelven true, excepto el de alumnos q si elimina algún alumno y ese alumno tenía visitas asociadas devuelve false. En ese caso
+                    enviarBroadcastVisitasAlumnoBorradas(); //envío un broadcast para notificar al adaptador de visitas que debe actualizarse.
                 adaptador.clearAllSelections();
                 toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
                 toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
