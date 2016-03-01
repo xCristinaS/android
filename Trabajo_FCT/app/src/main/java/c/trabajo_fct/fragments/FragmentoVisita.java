@@ -18,6 +18,7 @@ import c.trabajo_fct.adapters.VisitasAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Visita;
 
@@ -51,6 +52,7 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         else
             adaptador = new VisitasAdapter((ArrayList<Visita>)gestor.selectAllVisitasDeAlumno(alumno.getId()).clone());
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayVisitas));
+        adaptador.setListenerLongClick((OnAdapterItemLongClick) getActivity());
         lstVisitas.setAdapter(adaptador);
         lstVisitas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstVisitas.setItemAnimator(new DefaultItemAnimator());
@@ -81,5 +83,9 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
     public void onDetach() {
         listener = null;
         super.onDetach();
+    }
+
+    public VisitasAdapter getAdaptador() {
+        return adaptador;
     }
 }

@@ -28,8 +28,8 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
     private ArrayList<Empresa> empresas;
     private OnAdapterItemClick listenerClick;
-    private OnAdapterItemLongClick listenerLongClick;
     private View emptyView;
+    private OnAdapterItemLongClick listenerLongClick;
     private SparseBooleanArray mSelectedItems = new SparseBooleanArray();
     private DAO gestor;
     private boolean modoBorrarActivo = false;
@@ -60,12 +60,20 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
 
     @Override
     public void clearAllSelections() {
-        clearSelections();
+        if (mSelectedItems.size() > 0) {
+            mSelectedItems.clear();
+            notifyDataSetChanged();
+        }
     }
 
     @Override
     public void removeSelections() {
-        removeSelectedItems();
+        List<Integer> seleccionados = getSelectedItemsPositions();
+        Collections.sort(seleccionados, Collections.reverseOrder());
+        for (int i = 0; i < seleccionados.size(); i++) {
+            int pos = seleccionados.get(i);
+            removeItem(pos);
+        }
     }
 
     @Override
@@ -124,42 +132,11 @@ public class EmpresasAdapter extends RecyclerView.Adapter<EmpresasAdapter.ViewHo
         }
     }
 
-    // Elimina los elementos seleccionados.
-    public void removeSelectedItems() {
-        // Se eliminan en orden inverso para que no haya problemas. Al
-        // eliminar se cambia el
-        // estado de selección del elemento.
-        List<Integer> seleccionados = getSelectedItemsPositions();
-        Collections.sort(seleccionados, Collections.reverseOrder());
-        for (int i = 0; i < seleccionados.size(); i++) {
-            int pos = seleccionados.get(i);
-            //toggleSelection(pos);
-            removeItem(pos);
-        }
-        //checkIfEmpty();
-    }
-
     private void removeItem(int pos) {
         gestor.deleteEmpresa(empresas.get(pos).getId());
         empresas.remove(pos);
         notifyItemRemoved(pos);
         checkIfEmpty();
-    }
-
-    // Quita la selección de un elemento.
-    public void clearSelection(int position) {
-        if (mSelectedItems.get(position, false)) {
-            mSelectedItems.delete(position);
-        }
-        notifyItemChanged(position);
-    }
-
-    // Quita la selección de todos los elementos seleccionados.
-    public void clearSelections() {
-        if (mSelectedItems.size() > 0) {
-            mSelectedItems.clear();
-            notifyDataSetChanged();
-        }
     }
 
     // Retorna un array con las posiciones de los elementos seleccionados.

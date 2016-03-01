@@ -18,11 +18,12 @@ import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragmento{
+public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragmento {
 
     private Callback_MainActivity listener;
     private PaginasAdapter mAdaptador;
@@ -41,6 +42,7 @@ public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragm
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         setFabImage();
+        setActivityMultiDeletionAdapter();
         super.onViewStateRestored(savedInstanceState);
     }
 
@@ -91,6 +93,7 @@ public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragm
                         fragmento.setListener(listener);
 
                     fragmento.setFabImage();
+                    setActivityMultiDeletionAdapter();
                 }
             }
 
@@ -99,6 +102,17 @@ public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragm
             }
         });
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void setActivityMultiDeletionAdapter() {
+        Fragment fragmento = mAdaptador.getFragment(viewPager.getCurrentItem());
+        if (fragmento != null)
+            if (fragmento instanceof FragmentoEmpresa)
+                ((OnAdapterItemLongClick)getActivity()).setAdapterAllowMultiDeletion(((FragmentoEmpresa) fragmento).getAdaptador());
+            else if (fragmento instanceof  FragmentoAlumno)
+                ((OnAdapterItemLongClick)getActivity()).setAdapterAllowMultiDeletion(((FragmentoAlumno) fragmento).getAdaptador());
+            else if (fragmento instanceof  FragmentoVisita)
+                ((OnAdapterItemLongClick)getActivity()).setAdapterAllowMultiDeletion(((FragmentoVisita) fragmento).getAdaptador());
     }
 
     public PaginasAdapter getAdaptador() {

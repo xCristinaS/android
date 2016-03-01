@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,24 +14,23 @@ import java.util.List;
 
 import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
-import c.trabajo_fct.modelos.Empresa;
+import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
+import c.trabajo_fct.interfaces.OnAdapterItemClick;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Visita;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Cristina on 28/02/2016.
  */
-public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHolder> {
-
-    public interface OnItemClick{
-        public void onItemClick(int numCancion);
-    }
+public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHolder> implements AdapterAllowMultiDeletion{
 
     private ArrayList<Visita> visitas;
-    private OnItemClick listener;
+    private OnAdapterItemClick listenerClick;
     private View emptyView;
-    private final SparseBooleanArray mSelectedItems = new SparseBooleanArray();
-    private int selectedElement = -1;
+    private OnAdapterItemLongClick listenerLongClick;
+    private SparseBooleanArray mSelectedItems = new SparseBooleanArray();
+    private DAO gestor;
+    private boolean modoBorrarActivo = false;
 
     public VisitasAdapter(ArrayList<Visita> visitas){
         this.visitas = visitas;
@@ -46,13 +43,6 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*if (selectedElement != -1) {
-            if (position == selectedElement)
-                holder.itemView.setActivated(true);
-            else
-                holder.itemView.setActivated(false);
-        }
-        */
         holder.onBind(visitas.get(position));
         holder.itemView.setActivated(mSelectedItems.get(position, false));
     }
@@ -62,70 +52,29 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
         return visitas.size();
     }
 
-    public void setOnItemClickListener(OnItemClick listener){
-        this.listener = listener;
+    public void setOnItemClickListener(OnAdapterItemClick listener){
+        this.listenerClick = listener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView lblNombreAlumno, lblFechaVisita;
-        SimpleDateFormat formatFecha = new SimpleDateFormat("EEEE dd/MM/yyyy");
-        SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
-        private DAO gestor;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            gestor = new DAO(itemView.getContext());
-            lblNombreAlumno = (TextView) itemView.findViewById(R.id.lblNombreAlumno);
-            lblFechaVisita = (TextView) itemView.findViewById(R.id.lblFechaVisita);
-            // listener.onItemClick(getAdapterPosition(itemView)); // para hacerlo aqui.
-        }
-
-        public void onBind(final Visita visita){
-            lblNombreAlumno.setText(gestor.selectNombreAlumno(visita.getIdAlumno()));
-            lblFechaVisita.setText(String.format("%s a las %s", formatFecha.format(visita.getFecha()), formatHora.format(visita.getFecha())));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //listener.onItemClick(visitas.indexOf(c));
-                }
-            });
-        }
-    }
-/*
-    // Elimina los elementos seleccionados.
-    public void removeSelectedItems() {
-        // Se eliminan en orden inverso para que no haya problemas. Al
-        // eliminar se cambia el
-        // estado de selección del elemento.
-        List<Integer> seleccionados = getSelectedItemsPositions();
-        Collections.sort(seleccionados, Collections.reverseOrder());
-        for (int i = 0; i < seleccionados.size(); i++) {
-            int pos = seleccionados.get(i);
-            toggleSelection(pos);
-            removeItem(pos);
-        }
-        // Se comprueba si pasa a estar vacía.
-        checkEmptyStateChanged();
-    }
-*/
-    // Quita la selección de un elemento.
-    public void clearSelection(int position) {
-        if (mSelectedItems.get(position, false)) {
-            mSelectedItems.delete(position);
-        }
-        notifyItemChanged(position);
-    }
-
-    // Quita la selección de todos los elementos seleccionados.
-    public void clearSelections() {
+    @Override
+    public void clearAllSelections() {
         if (mSelectedItems.size() > 0) {
             mSelectedItems.clear();
             notifyDataSetChanged();
         }
     }
 
-    // Retorna un array con las posiciones de los elementos seleccionados.
+    @Override
+    public void removeSelections() {
+        List<Integer> seleccionados = getSelectedItemsPositions();
+        Collections.sort(seleccionados, Collections.reverseOrder());
+        for (int i = 0; i < seleccionados.size(); i++) {
+            int pos = seleccionados.get(i);
+            removeItem(pos);
+        }
+    }
+
     public List<Integer> getSelectedItemsPositions() {
         List<Integer> items = new ArrayList<>(mSelectedItems.size());
         for (int i = 0; i < mSelectedItems.size(); i++) {
@@ -133,21 +82,73 @@ public class VisitasAdapter extends RecyclerView.Adapter<VisitasAdapter.ViewHold
         }
         return items;
     }
-/*
-    // Retorna el id de un elemento. Necesario para drag & drop.
-    @Override
-    public long getItemId(int position) {
-        if (position < 0 || position >= mDatos.size()) {
-            return -1;
-        }
-        return mDatos.get(position).getId();
+
+    private void removeItem(int pos) {
+        gestor.deleteVisita(visitas.get(pos).getIdAlumno(), visitas.get(pos).getFecha());
+        visitas.remove(pos);
+        notifyItemRemoved(pos);
+        checkIfEmpty();
     }
-   */
-    public void setSelectedElement(int selectedElement){
-        int aux = this.selectedElement;
-        this.selectedElement = selectedElement;
-        notifyItemChanged(aux);
-        notifyItemChanged(selectedElement);
+
+    @Override
+    public void disableMultiDeletionMode() {
+        modoBorrarActivo = false;
+    }
+
+    public void setListenerLongClick(OnAdapterItemLongClick listenerLongClick) {
+        this.listenerLongClick = listenerLongClick;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private TextView lblNombreAlumno, lblFechaVisita;
+        SimpleDateFormat formatFecha = new SimpleDateFormat("EEEE dd/MM/yyyy");
+        SimpleDateFormat formatHora = new SimpleDateFormat("HH:mm:ss");
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            gestor = new DAO(itemView.getContext());
+            lblNombreAlumno = (TextView) itemView.findViewById(R.id.lblNombreAlumno);
+            lblFechaVisita = (TextView) itemView.findViewById(R.id.lblFechaVisita);
+        }
+
+        public void onBind(final Visita visita){
+            lblNombreAlumno.setText(gestor.selectNombreAlumno(visita.getIdAlumno()));
+            lblFechaVisita.setText(String.format("%s a las %s", formatFecha.format(visita.getFecha()), formatHora.format(visita.getFecha())));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!modoBorrarActivo)
+                        listenerClick.onItemClick(visita);
+                    else {
+                        if (itemView.isActivated()) {
+                            itemView.setActivated(false);
+                            mSelectedItems.put(visitas.indexOf(visita), false);
+                        } else {
+                            itemView.setActivated(true);
+                            mSelectedItems.put(visitas.indexOf(visita), true);
+                        }
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listenerLongClick != null) {
+                        if (!modoBorrarActivo) {
+                            modoBorrarActivo = true;
+                            mSelectedItems.put(visitas.indexOf(visita), true);
+                            itemView.setActivated(true);
+                            listenerLongClick.onItemLongClick();
+                        }
+                        return true;
+                    } else
+                        return false;
+                }
+            });
+        }
     }
 
     private void checkIfEmpty() {

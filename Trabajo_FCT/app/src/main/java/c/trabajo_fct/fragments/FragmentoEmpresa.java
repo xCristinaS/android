@@ -55,7 +55,6 @@ public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmen
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayEmpresas));
         adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
         adaptador.setListenerLongClick((OnAdapterItemLongClick) getActivity());
-        ((OnAdapterItemLongClick) getActivity()).setAdapterAllowMultiDeletion(adaptador);
         lstEmpresas.setAdapter(adaptador);
         lstEmpresas.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstEmpresas.setItemAnimator(new DefaultItemAnimator());
@@ -96,5 +95,9 @@ public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmen
     public void onDetach() {
         listener = null;
         super.onDetach();
+    }
+
+    public EmpresasAdapter getAdaptador() {
+        return adaptador;
     }
 }

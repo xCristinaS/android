@@ -18,6 +18,7 @@ import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 
@@ -65,6 +66,8 @@ public class FragmentoAlumno extends Fragment implements GestionFabDesdeFragment
         adaptador = new AlumnosAdapter(gestor.selectAllAlumnos());
         adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayAlumnos));
+        adaptador.setListenerLongClick((OnAdapterItemLongClick) getActivity());
+        ((OnAdapterItemLongClick) getActivity()).setAdapterAllowMultiDeletion(this.adaptador);
         lstAlumnos.setAdapter(adaptador);
         lstAlumnos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstAlumnos.setItemAnimator(new DefaultItemAnimator());
@@ -104,5 +107,9 @@ public class FragmentoAlumno extends Fragment implements GestionFabDesdeFragment
     public void onDetach() {
         listener = null;
         super.onDetach();
+    }
+
+    public AlumnosAdapter getAdaptador() {
+        return adaptador;
     }
 }

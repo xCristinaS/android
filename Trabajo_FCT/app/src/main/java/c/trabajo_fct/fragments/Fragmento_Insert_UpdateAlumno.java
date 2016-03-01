@@ -50,6 +50,12 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
         return new Fragmento_Insert_UpdateAlumno();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        setRetainInstance(true);
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

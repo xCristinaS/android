@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.util.Date;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.adapters.AlumnosAdapter;
 import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.fragments.FragmentoPrincipal;
 import c.trabajo_fct.fragments.Fragmento_Alumno_Visita;
@@ -39,7 +40,7 @@ import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, Callback_MainActivity, SeleccionDirectaDialogFragment.SeleccionDirectaDialogListener
-        ,MyDateTimePickerCallBack, OnAdapterItemClick, OnAdapterItemLongClick{
+        , MyDateTimePickerCallBack, OnAdapterItemClick, OnAdapterItemLongClick {
 
     public static final String FRAGMENTO_INSERT_UPDATE_ALUMNO = "nuevo_alumno";
     public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva_empresa";
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setSupportActionBar(toolbar);
 
         initViews();
-        cargarFragmentoPrincipal();
+        if (gestor.findFragmentById(R.id.flHueco) == null)
+            cargarFragmentoPrincipal();
     }
 
     private void initViews() {
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (id_fragmento) {
             case FRAGMENTO_INSERT_UPDATE_ALUMNO:
                 if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_ALUMNO) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateAlumno.newInstance((Alumno)o), FRAGMENTO_INSERT_UPDATE_ALUMNO);
+                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateAlumno.newInstance((Alumno) o), FRAGMENTO_INSERT_UPDATE_ALUMNO);
                 transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_ALUMNO);
                 break;
 
@@ -104,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             case FRAGMENTO_DETALLES_EMPRESA:
                 if (gestor.findFragmentByTag(FRAGMENTO_DETALLES_EMPRESA) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Detalle_Empresa.newInstance((Empresa)o), FRAGMENTO_DETALLES_EMPRESA);
+                    transaccion.replace(R.id.flHueco, Fragmento_Detalle_Empresa.newInstance((Empresa) o), FRAGMENTO_DETALLES_EMPRESA);
                 transaccion.addToBackStack(FRAGMENTO_DETALLES_EMPRESA);
                 break;
 
@@ -133,8 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Fragment fragment = gestor.findFragmentById(R.id.flHueco);
-                if (fragment instanceof  GestionFabDesdeFragmento)
-                    ((GestionFabDesdeFragmento)fragment).onFabPressed();
+                if (fragment instanceof GestionFabDesdeFragmento)
+                    ((GestionFabDesdeFragmento) fragment).onFabPressed();
             }
         });
     }
@@ -164,22 +166,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id){
+        switch (id) {
             case R.id.action_settings:
                 return true;
             case R.id.limpiar:
-                if (adaptador != null) {
-                    adaptador.clearAllSelections();
-                    adaptador.disableMultiDeletionMode();
-                }
+                adaptador.clearAllSelections();
+                adaptador.disableMultiDeletionMode();
                 toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
                 toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
                 return true;
             case R.id.eliminar:
-                if (adaptador != null) {
-                    adaptador.removeSelections();
-                    adaptador.clearAllSelections();
-                }
+                adaptador.removeSelections();
+                adaptador.clearAllSelections();
                 toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
                 toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
                 return true;
@@ -227,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void obtenerDate(Date date) {
-        ((Fragmento_Insert_NewVisitaGeneral)gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).setLblFecha(date);
+        ((Fragmento_Insert_NewVisitaGeneral) gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).setLblFecha(date);
     }
 
     @Override

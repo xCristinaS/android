@@ -1,6 +1,7 @@
 package c.trabajo_fct.adapters;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +10,31 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import c.trabajo_fct.R;
+import c.trabajo_fct.bdd.DAO;
+import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
+import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Alumno;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHolder> {
+public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHolder> implements AdapterAllowMultiDeletion {
 
     private ArrayList<Alumno> alumnos;
-    private OnAdapterItemClick listener;
+    private OnAdapterItemClick listenerClick;
     private View emptyView;
-    private int selectedElement = -1;
+    private OnAdapterItemLongClick listenerLongClick;
+    private SparseBooleanArray mSelectedItems = new SparseBooleanArray();
+    private DAO gestor;
+    private boolean modoBorrarActivo = false;
 
-    public AlumnosAdapter(ArrayList<Alumno> alumnos){
+    public AlumnosAdapter(ArrayList<Alumno> alumnos) {
         this.alumnos = alumnos;
     }
 
@@ -36,14 +45,8 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        /*if (selectedElement != -1) {
-            if (position == selectedElement)
-                holder.itemView.setActivated(true);
-            else
-                holder.itemView.setActivated(false);
-        }
-        */
         holder.onBind(alumnos.get(position));
+        holder.itemView.setActivated(mSelectedItems.get(position, false));
     }
 
     @Override
@@ -51,8 +54,50 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
         return alumnos.size();
     }
 
-    public void setOnItemClickListener(OnAdapterItemClick listener){
-        this.listener = listener;
+    public void setOnItemClickListener(OnAdapterItemClick listener) {
+        this.listenerClick = listener;
+    }
+
+    @Override
+    public void clearAllSelections() {
+        if (mSelectedItems.size() > 0) {
+            mSelectedItems.clear();
+            notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void removeSelections() {
+        List<Integer> seleccionados = getSelectedItemsPositions();
+        Collections.sort(seleccionados, Collections.reverseOrder());
+        for (int i = 0; i < seleccionados.size(); i++) {
+            int pos = seleccionados.get(i);
+            removeItem(pos);
+        }
+    }
+
+    public List<Integer> getSelectedItemsPositions() {
+        List<Integer> items = new ArrayList<>(mSelectedItems.size());
+        for (int i = 0; i < mSelectedItems.size(); i++) {
+            items.add(mSelectedItems.keyAt(i));
+        }
+        return items;
+    }
+
+    private void removeItem(int pos) {
+        gestor.deleteAlumno(alumnos.get(pos).getId());
+        alumnos.remove(pos);
+        notifyItemRemoved(pos);
+        checkIfEmpty();
+    }
+
+    @Override
+    public void disableMultiDeletionMode() {
+        modoBorrarActivo = false;
+    }
+
+    public void setListenerLongClick(OnAdapterItemLongClick listenerLongClick) {
+        this.listenerLongClick = listenerLongClick;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -64,26 +109,46 @@ public class AlumnosAdapter extends RecyclerView.Adapter<AlumnosAdapter.ViewHold
             super(itemView);
             lblNombreAlumno = (TextView) itemView.findViewById(R.id.lblNombreAlumno);
             imgAlumno = (CircleImageView) itemView.findViewById(R.id.imgAlumno);
-            // listener.onItemClick(getAdapterPosition(itemView)); // para hacerlo aqui.
+            gestor = new DAO(itemView.getContext());
         }
 
-        public void onBind(final Alumno alumno){
+        public void onBind(final Alumno alumno) {
             lblNombreAlumno.setText(alumno.getNombre());
             Picasso.with(imgAlumno.getContext()).load(alumno.getFoto()).into(imgAlumno);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(alumno);
+                    if (!modoBorrarActivo)
+                        listenerClick.onItemClick(alumno);
+                    else {
+                        if (itemView.isActivated()) {
+                            itemView.setActivated(false);
+                            mSelectedItems.put(alumnos.indexOf(alumno), false);
+                        } else {
+                            itemView.setActivated(true);
+                            mSelectedItems.put(alumnos.indexOf(alumno), true);
+                        }
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    if (listenerLongClick != null) {
+                        if (!modoBorrarActivo) {
+                            modoBorrarActivo = true;
+                            mSelectedItems.put(alumnos.indexOf(alumno), true);
+                            itemView.setActivated(true);
+                            listenerLongClick.onItemLongClick();
+                        }
+                        return true;
+                    } else
+                        return false;
                 }
             });
         }
-    }
-
-    public void setSelectedElement(int selectedElement){
-        int aux = this.selectedElement;
-        this.selectedElement = selectedElement;
-        notifyItemChanged(aux);
-        notifyItemChanged(selectedElement);
     }
 
     private void checkIfEmpty() {
