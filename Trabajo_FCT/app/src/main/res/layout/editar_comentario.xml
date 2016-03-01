@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/lblComentario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margen_der_txt"
+        android:layout_marginLeft="@dimen/margen_izq_txt"
+        android:layout_marginRight="@dimen/margen_der_txt"
+        android:layout_marginStart="@dimen/margen_izq_txt"
+        android:layout_marginTop="8dp"
+        android:text="@string/comentario"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_weight="1"/>
+
+    <EditText
+        android:id="@+id/txtComentario"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:maxLength="499"
+        android:textSize="14sp"
+        android:inputType="textMultiLine"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancelar" />
+
+        <Button
+            android:id="@+id/aceptar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btn_aceptar" />
+
+    </LinearLayout>
+</LinearLayout>

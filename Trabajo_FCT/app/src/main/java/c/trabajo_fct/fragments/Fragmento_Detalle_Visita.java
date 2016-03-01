@@ -105,7 +105,7 @@ public class Fragmento_Detalle_Visita extends Fragment implements GestionFabDesd
 
     @Override
     public void onFabPressed() {
-        //listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_INSERT_UPDATE_EMPRESA, visita);
+        listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_INSERT_UPDATE_VISITA, visita);
     }
 
     @Override

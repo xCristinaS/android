@@ -27,4 +27,5 @@
     <string name="eliminar">eliminar</string>
     <string name="comentario">Comentario</string>
     <string name="visita_no_realizada">La visita aún no se ha realizado</string>
+    <string name="agregar_comentario">Agregar comentario</string>
 </resources>

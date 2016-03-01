@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import c.trabajo_fct.DividerItemDecoration;
 import c.trabajo_fct.R;
@@ -57,9 +59,9 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
         gestor = new DAO(getContext());
         lstVisitas = (RecyclerView) getView().findViewById(R.id.lstVisitas);
         if (alumno == null)
-            adaptador = new VisitasAdapter((ArrayList<Visita>)gestor.selectAllVisitas().clone());
+            adaptador = new VisitasAdapter((ArrayList<Visita>)gestor.selectProximasVisitasYRealizadasAyer(new Date(new Date().getTime() - TimeUnit.DAYS.toMillis(1)).getTime()));
         else
-            adaptador = new VisitasAdapter((ArrayList<Visita>)gestor.selectAllVisitasDeAlumno(alumno.getId()).clone());
+            adaptador = new VisitasAdapter((ArrayList<Visita>)gestor.selectAllVisitasDeAlumno(alumno.getId()));
         adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayVisitas));
         adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
         adaptador.setListenerLongClick((OnAdapterItemLongClick) getActivity());
@@ -82,7 +84,7 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
 
     @Override
     public void onFabPressed() {
-        listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_NEW_VISITA_GENERAL, null);
+        listener.cargarFragmentoSecundario(MainActivity.FRAGMENTO_INSERT_UPDATE_VISITA, null);
     }
 
     @Override

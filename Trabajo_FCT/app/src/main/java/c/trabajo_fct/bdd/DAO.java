@@ -151,8 +151,8 @@ public class DAO {
             cursor.moveToFirst();
             if (!cursor.isAfterLast())
                 empresa = cursorToEmpresa(cursor);
+            cursor.close();
         }
-        cursor.close();
         helper.close();
         return empresa;
     }
@@ -225,8 +225,8 @@ public class DAO {
         if (cursor != null) {
             cursor.moveToFirst();
             visita = cursorToVisita(cursor);
+            cursor.close();
         }
-        cursor.close();
         helper.close();
         return visita;
     }
@@ -266,8 +266,8 @@ public class DAO {
         if (cursor != null) {
             cursor.moveToFirst();
             result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Alumno.NOMBRE));
+            cursor.close();
         }
-        cursor.close();
         helper.close();
         return result;
     }
@@ -280,8 +280,8 @@ public class DAO {
         if (cursor != null) {
             cursor.moveToFirst();
             result = cursor.getInt(cursor.getColumnIndexOrThrow(BddContract.Empresa.ID));
+            cursor.close();
         }
-        cursor.close();
         helper.close();
         return result;
     }
@@ -294,8 +294,8 @@ public class DAO {
         if (cursor != null) {
             cursor.moveToFirst();
             result = cursor.getInt(cursor.getColumnIndexOrThrow(BddContract.Alumno.ID));
+            cursor.close();
         }
-        cursor.close();
         helper.close();
         return result;
     }
@@ -309,8 +309,8 @@ public class DAO {
             cursor.moveToFirst();
             if (!cursor.isAfterLast())
                 result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.FOTO));
+            cursor.close();
         }
-        cursor.close();
         helper.close();
         return result;
     }
@@ -323,8 +323,8 @@ public class DAO {
         if (cursor != null) {
             cursor.moveToFirst();
             result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Empresa.NOMBRE));
+            cursor.close();
         }
-        cursor.close();
         helper.close();
         return result;
     }
@@ -373,9 +373,28 @@ public class DAO {
             cursor.moveToFirst();
             if (!cursor.isAfterLast())
                 result = cursor.getString(cursor.getColumnIndexOrThrow(BddContract.Alumno.FOTO));
+            cursor.close();
+        }
+        helper.close();
+        return result;
+    }
+
+    public Cursor queryProximasVisitasYRealizadasAyer(SQLiteDatabase bd, long ayer) {
+        return  bd.query(BddContract.Visitas.TABLA, BddContract.Visitas.TODOS, String.format("%s >= %d", BddContract.Visitas.FECHA, ayer), null, null, null, BddContract.Visitas.FECHA);
+    }
+
+    public ArrayList<Visita> selectProximasVisitasYRealizadasAyer(long ayer) {
+        SQLiteDatabase bd = helper.getWritableDatabase();
+        ArrayList<Visita> lista = new ArrayList<>();
+        Cursor cursor = queryProximasVisitasYRealizadasAyer(bd, ayer);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Visita visita = cursorToVisita(cursor);
+            lista.add(visita);
+            cursor.moveToNext();
         }
         cursor.close();
         helper.close();
-        return result;
+        return lista;
     }
 }

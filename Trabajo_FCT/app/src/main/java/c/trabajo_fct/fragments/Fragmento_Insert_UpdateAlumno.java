@@ -169,8 +169,8 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
     private void insertarAlumno() {
         boolean insertar = false;
         if (camposRellenos()) {
-            if (Fragmento_Insert_UpdateAlumno.alumno == null){
-                Fragmento_Insert_UpdateAlumno.alumno = new Alumno();
+            if (alumno == null){
+                alumno = new Alumno();
                 insertar = true;
             }
             alumno.setCurso(txtCurso.getText().toString());

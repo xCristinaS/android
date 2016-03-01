@@ -25,7 +25,7 @@ import c.trabajo_fct.fragments.FragmentoPrincipal;
 import c.trabajo_fct.fragments.Fragmento_Alumno_Visita;
 import c.trabajo_fct.fragments.Fragmento_Detalle_Empresa;
 import c.trabajo_fct.fragments.Fragmento_Detalle_Visita;
-import c.trabajo_fct.fragments.Fragmento_Insert_NewVisitaGeneral;
+import c.trabajo_fct.fragments.Fragmento_Insert_UpdateVisita;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateEmpresa;
 import c.trabajo_fct.dialogs_fragments.SeleccionDirectaDialogFragment;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public static final String FRAGMENTO_INSERT_UPDATE_ALUMNO = "nuevo_alumno";
     public static final String FRAGMENTO_INSERT_UPDATE_EMPRESA = "nueva_empresa";
-    public static final String FRAGMENTO_NEW_VISITA_GENERAL = "nueva_visita_general";
+    public static final String FRAGMENTO_INSERT_UPDATE_VISITA = "fragmento_insert_update_visita";
     public static final String FRAGMENTO_DETALLES_EMPRESA = "fragmento_detalles_empresa";
     public static final String FRAGMENTO_DETALLE_VISITA = "fragmento_detalle_visita";
 
@@ -100,10 +100,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_EMPRESA);
                 break;
 
-            case FRAGMENTO_NEW_VISITA_GENERAL:
-                if (gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Insert_NewVisitaGeneral.newInstance(), FRAGMENTO_NEW_VISITA_GENERAL);
-                transaccion.addToBackStack(FRAGMENTO_NEW_VISITA_GENERAL);
+            case FRAGMENTO_INSERT_UPDATE_VISITA:
+                if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_VISITA) == null)
+                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateVisita.newInstance((Visita) o), FRAGMENTO_INSERT_UPDATE_VISITA);
+                transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_VISITA);
                 break;
 
             case FRAGMENTO_DETALLES_EMPRESA:
@@ -232,15 +232,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onItemClick(DialogFragment dialog, int which) {
         Fragment fragment = gestor.findFragmentById(R.id.flHueco);
-        if (fragment instanceof Fragmento_Insert_NewVisitaGeneral)
-            ((Fragmento_Insert_NewVisitaGeneral) fragment).setLblAlumno(which);
+        if (fragment instanceof Fragmento_Insert_UpdateVisita)
+            ((Fragmento_Insert_UpdateVisita) fragment).setLblAlumno(which);
         else if (fragment instanceof Fragmento_Insert_UpdateAlumno)
             ((Fragmento_Insert_UpdateAlumno) fragment).setLblEmpresa(which);
     }
 
     @Override
     public void obtenerDate(Date date) {
-        ((Fragmento_Insert_NewVisitaGeneral) gestor.findFragmentByTag(FRAGMENTO_NEW_VISITA_GENERAL)).setLblFecha(date);
+        ((Fragmento_Insert_UpdateVisita) gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_VISITA)).setLblFecha(date);
     }
 
     @Override
