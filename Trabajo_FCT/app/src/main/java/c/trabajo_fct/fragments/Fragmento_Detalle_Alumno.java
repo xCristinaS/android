@@ -83,7 +83,7 @@ public class Fragmento_Detalle_Alumno extends Fragment implements GestionFabDesd
             fotoEmpresa = getString(R.string.default_empresa_img);
             lblEmpresa.setText(R.string.sin_empresa_asignada);
         }
-        Picasso.with(getContext()).load(fotoEmpresa).into(imgCabecera);
+        Picasso.with(getContext()).load(fotoEmpresa).into(imgEmpresa);
         lblNombre.setText(alumno.getNombre());
         lblCurso.setText(alumno.getCurso());
         lblDir.setText(alumno.getDireccion());

@@ -114,7 +114,7 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
             fotoEmpresa = getString(R.string.default_empresa_img);
             lblEmpresa.setText(R.string.sin_empresa_asignada);
         }
-        Picasso.with(getContext()).load(fotoEmpresa).into(imgCabecera);
+        Picasso.with(getContext()).load(fotoEmpresa).into(imgEmpresa);
         txtNombre.setText(alumno.getNombre());
         txtCurso.setText(alumno.getCurso());
         txtDireccion.setText(alumno.getDireccion());
