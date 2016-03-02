@@ -61,6 +61,7 @@ public class Fragmento_Insert_UpdateEmpresa extends Fragment implements GestionF
         initViews();
         if (empresa != null)
             bindEmpresa();
+        setFabImage();
         super.onActivityCreated(savedInstanceState);
     }
 

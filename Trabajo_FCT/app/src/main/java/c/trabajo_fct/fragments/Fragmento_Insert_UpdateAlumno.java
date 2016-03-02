@@ -67,6 +67,7 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment implements GestionF
         initViews();
         if (alumno != null)
             bindAlumno();
+        setFabImage();
         super.onActivityCreated(savedInstanceState);
     }
 
