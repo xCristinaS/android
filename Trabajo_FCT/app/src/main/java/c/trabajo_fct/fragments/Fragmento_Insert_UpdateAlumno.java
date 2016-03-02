@@ -26,13 +26,14 @@ import c.trabajo_fct.R;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.dialogs_fragments.SeleccionDirectaDialogFragment;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
+import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.modelos.Alumno;
 import c.trabajo_fct.modelos.Empresa;
 
 /**
  * Created by Cristina on 29/02/2016.
  */
-public class Fragmento_Insert_UpdateAlumno  extends Fragment{
+public class Fragmento_Insert_UpdateAlumno  extends Fragment implements GestionFabDesdeFragmento{
 
     private Callback_MainActivity listener;
     private Toolbar toolbar;
@@ -215,5 +216,25 @@ public class Fragmento_Insert_UpdateAlumno  extends Fragment{
 
     public void setLblEmpresa(int which){
         lblEmpresa.setText(nombres[which]);
+    }
+
+    @Override
+    public void onFabPressed() {
+
+    }
+
+    @Override
+    public void setFabImage() {
+        listener.setFabImage(R.drawable.ic_camera_alt);
+    }
+
+    @Override
+    public void setListener(Callback_MainActivity listener) {
+
+    }
+
+    @Override
+    public Callback_MainActivity getListener() {
+        return null;
     }
 }

@@ -153,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             gestor.popBackStack(); // limpio la pila
             cargarFragmentoPrincipal(); // cargo el fragmento principal
         } else {
-            super.onBackPressed();
+            gestor.popBackStack();
+            //super.onBackPressed();
         }
     }
 
