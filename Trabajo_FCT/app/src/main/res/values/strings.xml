@@ -29,4 +29,9 @@
     <string name="visita_no_realizada">La visita aún no se ha realizado</string>
     <string name="agregar_comentario">Agregar comentario</string>
     <string name="principal">Principal</string>
+    <string name="agregar_alumno">Agregar alumno</string>
+    <string name="agregar_empresa">Agregar empresa</string>
+    <string name="nueva_visita">Programar nueva visita</string>
+    <string name="acerca_de">Acerca de...</string>
+    <string name="configuracion">Configuración</string>
 </resources>

@@ -55,6 +55,7 @@ public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragm
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         setupViewPager();
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
         super.onActivityCreated(savedInstanceState);
     }
 

@@ -91,38 +91,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         FragmentTransaction transaccion = gestor.beginTransaction();
         switch (id_fragmento) {
             case FRAGMENTO_INSERT_UPDATE_ALUMNO:
-                if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_ALUMNO) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateAlumno.newInstance((Alumno) o), FRAGMENTO_INSERT_UPDATE_ALUMNO);
+                transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateAlumno.newInstance((Alumno) o), FRAGMENTO_INSERT_UPDATE_ALUMNO);
                 transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_ALUMNO);
                 break;
 
             case FRAGMENTO_INSERT_UPDATE_EMPRESA:
-                if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_EMPRESA) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateEmpresa.newInstance((Empresa) o), FRAGMENTO_INSERT_UPDATE_EMPRESA);
+                transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateEmpresa.newInstance((Empresa) o), FRAGMENTO_INSERT_UPDATE_EMPRESA);
                 transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_EMPRESA);
                 break;
 
             case FRAGMENTO_INSERT_UPDATE_VISITA:
-                if (gestor.findFragmentByTag(FRAGMENTO_INSERT_UPDATE_VISITA) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateVisita.newInstance((Visita) o), FRAGMENTO_INSERT_UPDATE_VISITA);
+                transaccion.replace(R.id.flHueco, Fragmento_Insert_UpdateVisita.newInstance((Visita) o), FRAGMENTO_INSERT_UPDATE_VISITA);
                 transaccion.addToBackStack(FRAGMENTO_INSERT_UPDATE_VISITA);
                 break;
 
             case FRAGMENTO_DETALLES_EMPRESA:
-                if (gestor.findFragmentByTag(FRAGMENTO_DETALLES_EMPRESA) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Detalle_Empresa.newInstance((Empresa) o), FRAGMENTO_DETALLES_EMPRESA);
+                transaccion.replace(R.id.flHueco, Fragmento_Detalle_Empresa.newInstance((Empresa) o), FRAGMENTO_DETALLES_EMPRESA);
                 transaccion.addToBackStack(FRAGMENTO_DETALLES_EMPRESA);
                 break;
 
             case FRAGMENTO_ALUMNO_VISITAS:
-                if (gestor.findFragmentByTag(FRAGMENTO_ALUMNO_VISITAS) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Alumno_Visita.newInstance((Alumno) o), FRAGMENTO_ALUMNO_VISITAS);
+                transaccion.replace(R.id.flHueco, Fragmento_Alumno_Visita.newInstance((Alumno) o), FRAGMENTO_ALUMNO_VISITAS);
                 transaccion.addToBackStack(FRAGMENTO_ALUMNO_VISITAS);
                 break;
 
             case FRAGMENTO_DETALLE_VISITA:
-                if (gestor.findFragmentByTag(FRAGMENTO_DETALLE_VISITA) == null)
-                    transaccion.replace(R.id.flHueco, Fragmento_Detalle_Visita.newInstance((Visita) o), FRAGMENTO_DETALLE_VISITA);
+                transaccion.replace(R.id.flHueco, Fragmento_Detalle_Visita.newInstance((Visita) o), FRAGMENTO_DETALLE_VISITA);
                 transaccion.addToBackStack(FRAGMENTO_DETALLE_VISITA);
                 break;
         }
@@ -208,24 +202,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        switch (id){
+        switch (id) {
             case R.id.home:
-                Fragment f = gestor.findFragmentById(R.id.flHueco);
-                gestor.popBackStack();
-                if (f instanceof Fragmento_Insert_UpdateAlumno || f instanceof Fragmento_Insert_UpdateEmpresa || f instanceof Fragmento_Insert_UpdateVisita)
-                    gestor.popBackStack();
-
-                if (f instanceof  Fragmento_Alumno_Visita)
-                    cargarFragmentoPrincipal();
-                else {
-                    if (gestor.findFragmentByTag(FRAGMENTO_ALUMNO_VISITAS) != null) {
-                        gestor.popBackStack();
-                        cargarFragmentoPrincipal();
-                    }
-                }
+                for (Fragment f : gestor.getFragments())
+                    gestor.beginTransaction().detach(f).commit();
+                cargarFragmentoPrincipal();
+                break;
+            case R.id.nuevoAlumno:
+                cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_ALUMNO, null);
+                break;
+            case R.id.nuevaEmpresa:
+                cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_EMPRESA, null);
+                break;
+            case R.id.nuevaVisita:
+                cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_VISITA, null);
+                break;
+            case R.id.configuracion:
+                break;
+            case R.id.acercaDe:
                 break;
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
