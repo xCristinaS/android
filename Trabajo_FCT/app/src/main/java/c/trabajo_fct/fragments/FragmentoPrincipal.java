@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,7 @@ import c.trabajo_fct.R;
 import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
+import c.trabajo_fct.interfaces.FragmentAllowMultideletion;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 
@@ -100,6 +102,9 @@ public class FragmentoPrincipal extends Fragment implements GestionFabDesdeFragm
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                FragmentAllowMultideletion fragmento2 = (FragmentAllowMultideletion) mAdaptador.getFragment(viewPager.getCurrentItem());
+                if (fragmento2 != null)
+                    fragmento2.desactivarMultideletion();
             }
         });
         tabLayout.setupWithViewPager(viewPager);

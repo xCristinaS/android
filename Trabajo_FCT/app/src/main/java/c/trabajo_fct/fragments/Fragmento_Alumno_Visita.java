@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import c.trabajo_fct.R;
 import c.trabajo_fct.adapters.CachedFragmentPagerAdapter;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
+import c.trabajo_fct.interfaces.FragmentAllowMultideletion;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
 import c.trabajo_fct.modelos.Alumno;
@@ -23,7 +24,7 @@ import c.trabajo_fct.modelos.Alumno;
 /**
  * Created by Cristina on 29/02/2016.
  */
-public class Fragmento_Alumno_Visita extends Fragment implements GestionFabDesdeFragmento{
+public class Fragmento_Alumno_Visita extends Fragment implements GestionFabDesdeFragmento {
 
     private Callback_MainActivity listener;
     private PaginasAdapter mAdaptador;
@@ -93,6 +94,12 @@ public class Fragmento_Alumno_Visita extends Fragment implements GestionFabDesde
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                FragmentAllowMultideletion fragmento2;
+                if (mAdaptador.getFragment(viewPager.getCurrentItem()) instanceof FragmentAllowMultideletion) {
+                    fragmento2 = (FragmentAllowMultideletion) mAdaptador.getFragment(viewPager.getCurrentItem());
+                    if (fragmento2 != null)
+                        fragmento2.desactivarMultideletion();
+                }
             }
         });
         tabLayout.setupWithViewPager(viewPager);
@@ -101,8 +108,8 @@ public class Fragmento_Alumno_Visita extends Fragment implements GestionFabDesde
     private void setActivityMultiDeletionAdapter() {
         Fragment fragmento = mAdaptador.getFragment(viewPager.getCurrentItem());
         if (fragmento != null)
-            if (fragmento instanceof  FragmentoVisita)
-                ((OnAdapterItemLongClick)getActivity()).setAdapterAllowMultiDeletion(((FragmentoVisita) fragmento).getAdaptador());
+            if (fragmento instanceof FragmentoVisita)
+                ((OnAdapterItemLongClick) getActivity()).setAdapterAllowMultiDeletion(((FragmentoVisita) fragmento).getAdaptador());
     }
 
     public PaginasAdapter getAdaptador() {

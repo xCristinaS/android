@@ -266,4 +266,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar.getMenu().findItem(R.id.eliminar).setVisible(true);
         toolbar.getMenu().findItem(R.id.limpiar).setVisible(true);
     }
+
+    @Override
+    public void desactivarMultiseleccion() {
+        toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
+        toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
+    }
 }

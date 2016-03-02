@@ -6,4 +6,5 @@ package c.trabajo_fct.interfaces;
 public interface OnAdapterItemLongClick {
     public void setAdapterAllowMultiDeletion(AdapterAllowMultiDeletion adaptador);
     public void onItemLongClick();
+    public void desactivarMultiseleccion();
 }

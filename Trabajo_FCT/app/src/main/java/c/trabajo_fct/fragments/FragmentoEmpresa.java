@@ -1,5 +1,6 @@
 package c.trabajo_fct.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,17 +17,18 @@ import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.EmpresasAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
+import c.trabajo_fct.interfaces.FragmentAllowMultideletion;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
-import c.trabajo_fct.modelos.Empresa;
 
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmento {
+public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmento, FragmentAllowMultideletion {
 
     private Callback_MainActivity listener;
+    private OnAdapterItemLongClick listenerLongClick;
     private RecyclerView lstEmpresas;
     private EmpresasAdapter adaptador;
     private DAO gestor;
@@ -92,9 +94,29 @@ public class FragmentoEmpresa extends Fragment implements GestionFabDesdeFragmen
     }
 
     @Override
+    public void onAttach(Context context) {
+        listener = (Callback_MainActivity) context;
+        listenerLongClick = (OnAdapterItemLongClick) context;
+        super.onAttach(context);
+    }
+
+    @Override
     public void onDetach() {
+        disableMultideletion();
+        listenerLongClick = null;
         listener = null;
         super.onDetach();
+    }
+
+    @Override
+    public void desactivarMultideletion() {
+        disableMultideletion();
+    }
+
+    private void disableMultideletion(){
+        listenerLongClick.desactivarMultiseleccion();
+        adaptador.clearAllSelections();
+        adaptador.disableMultiDeletionMode();
     }
 
     public EmpresasAdapter getAdaptador() {

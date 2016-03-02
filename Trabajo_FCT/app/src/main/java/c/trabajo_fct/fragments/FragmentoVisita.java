@@ -24,6 +24,7 @@ import c.trabajo_fct.activities.MainActivity;
 import c.trabajo_fct.adapters.VisitasAdapter;
 import c.trabajo_fct.bdd.DAO;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
+import c.trabajo_fct.interfaces.FragmentAllowMultideletion;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
 import c.trabajo_fct.interfaces.OnAdapterItemClick;
 import c.trabajo_fct.interfaces.OnAdapterItemLongClick;
@@ -33,9 +34,10 @@ import c.trabajo_fct.modelos.Visita;
 /**
  * Created by Cristina on 27/02/2016.
  */
-public class FragmentoVisita extends Fragment implements GestionFabDesdeFragmento {
+public class FragmentoVisita extends Fragment implements GestionFabDesdeFragmento, FragmentAllowMultideletion{
 
     private Callback_MainActivity listener;
+    private OnAdapterItemLongClick listenerLongClick;
     private RecyclerView lstVisitas;
     private VisitasAdapter adaptador;
     private DAO gestor;
@@ -114,12 +116,32 @@ public class FragmentoVisita extends Fragment implements GestionFabDesdeFragment
     }
 
     @Override
+    public void onAttach(Context context) {
+        listener = (Callback_MainActivity) context;
+        listenerLongClick = (OnAdapterItemLongClick) context;
+        super.onAttach(context);
+    }
+
+    @Override
     public void onDetach() {
+        disableMultideletion();
+        listenerLongClick = null;
         listener = null;
         super.onDetach();
     }
 
     public VisitasAdapter getAdaptador() {
         return adaptador;
+    }
+
+    @Override
+    public void desactivarMultideletion() {
+        disableMultideletion();
+    }
+
+    private void disableMultideletion(){
+        listenerLongClick.desactivarMultiseleccion();
+        adaptador.clearAllSelections();
+        adaptador.disableMultiDeletionMode();
     }
 }
