@@ -14,6 +14,7 @@ public class ActividadPreferencias extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_preferencias);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.configuracion_title);
         setSupportActionBar(toolbar);
         getFragmentManager().beginTransaction().replace(R.id.flHuecoPref, Fragmento_Preferencias.newInstance()).commit();
     }

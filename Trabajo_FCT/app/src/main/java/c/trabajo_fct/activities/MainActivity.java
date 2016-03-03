@@ -1,5 +1,6 @@
 package c.trabajo_fct.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.LocalBroadcastManager;
-import android.view.Gravity;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.Date;
 
@@ -33,7 +33,6 @@ import c.trabajo_fct.fragments.Fragmento_Insert_UpdateVisita;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateEmpresa;
 import c.trabajo_fct.dialogs_fragments.SeleccionDirectaDialogFragment;
-import c.trabajo_fct.fragments.Fragmento_Preferencias;
 import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
@@ -60,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final String ALUMNO_ELIMINADO_REFRESCAR_VISITAS_ACTION = "c.trabajo_fct.activities.alumno_eliminado_refrescar_visitas_action";
 
     private Toolbar toolbar;
-    private FragmentManager gestor;
+    private static FragmentManager gestor;
     private FloatingActionButton fab;
     private SharedPreferences preferencias;
     private AdapterAllowMultiDeletion adaptador;
@@ -85,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         configFab();
     }
 
-    public void cargarFragmentoPrincipal() {
+    public static void cargarFragmentoPrincipal() {
         FragmentTransaction transaccion = gestor.beginTransaction();
         transaccion.replace(R.id.flHueco, FragmentoPrincipal.newInstance(), FRAGMENTO_PRINCIPAL);
         transaccion.commit();
@@ -171,8 +170,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_settings:
-                return true;
             case R.id.limpiar:
                 adaptador.clearAllSelections();
                 adaptador.disableMultiDeletionMode();
@@ -213,9 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.home:
-                for (Fragment f : gestor.getFragments())
-                    gestor.beginTransaction().detach(f).commit();
-                cargarFragmentoPrincipal();
+                vaciarPila();
                 break;
             case R.id.nuevoAlumno:
                 cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_ALUMNO, null);
@@ -227,15 +222,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_VISITA, null);
                 break;
             case R.id.configuracion:
+                vaciarPila();
                 cargarFragmentoSecundario(FRAGMENTO_PREFERENCIAS, null);
                 break;
             case R.id.acercaDe:
-
+                mostrarAcercaDe();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void vaciarPila(){
+        if (!(gestor.findFragmentById(R.id.flHueco) instanceof FragmentoPrincipal)) {
+            for (Fragment f : gestor.getFragments())
+                gestor.beginTransaction().detach(f).commit();
+            cargarFragmentoPrincipal();
+        }
     }
 
     @Override
@@ -282,5 +286,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void desactivarMultiseleccion() {
         toolbar.getMenu().findItem(R.id.eliminar).setVisible(false);
         toolbar.getMenu().findItem(R.id.limpiar).setVisible(false);
+    }
+
+    private void mostrarAcercaDe(){
+        new AlertDialog.Builder(this).setTitle(getString(R.string.info)).setMessage(getString(R.string.desarrollado_por))
+                .setPositiveButton(getString(R.string.aceptar_btn_acercade), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 }

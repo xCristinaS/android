@@ -37,6 +37,10 @@
     <string name="descendente">Descendentemente</string>
     <string name="ordenar_visitas">Ordenar visitas</string>
     <string name="orden_de_visitas">Orden de visitas</string>
+    <string name="configuracion_title">Configuración</string>
+    <string name="aceptar_btn_acercade">Aceptar</string>
+    <string name="info">Información</string>
+    <string name="desarrollado_por">"Desarrollado por: Cristina Sola"</string>
 
     <string-array name="opciones_ordenar_visitas">
         <item>@string/descendente</item>
