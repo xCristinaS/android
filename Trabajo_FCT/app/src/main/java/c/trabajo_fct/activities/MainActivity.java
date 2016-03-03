@@ -1,7 +1,9 @@
 package c.trabajo_fct.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -31,6 +33,7 @@ import c.trabajo_fct.fragments.Fragmento_Insert_UpdateVisita;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateAlumno;
 import c.trabajo_fct.fragments.Fragmento_Insert_UpdateEmpresa;
 import c.trabajo_fct.dialogs_fragments.SeleccionDirectaDialogFragment;
+import c.trabajo_fct.fragments.Fragmento_Preferencias;
 import c.trabajo_fct.interfaces.AdapterAllowMultiDeletion;
 import c.trabajo_fct.interfaces.Callback_MainActivity;
 import c.trabajo_fct.interfaces.GestionFabDesdeFragmento;
@@ -53,13 +56,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public static final String FRAGMENTO_ALUMNO_VISITAS = "fragmento_detalles_de_alumno_y_sus_visitas";
 
     private static final String FRAGMENTO_PRINCIPAL = "principal";
-    private static final String RECUPERAR = "rec";
-    private static final int CARGAR_F_NUEVO_ALUMNO = 10;
+    private static final String FRAGMENTO_PREFERENCIAS = "fragmento_preferencias";
     public static final String ALUMNO_ELIMINADO_REFRESCAR_VISITAS_ACTION = "c.trabajo_fct.activities.alumno_eliminado_refrescar_visitas_action";
 
     private Toolbar toolbar;
     private FragmentManager gestor;
     private FloatingActionButton fab;
+    private SharedPreferences preferencias;
     private AdapterAllowMultiDeletion adaptador;
 
     @Override
@@ -72,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initViews();
         if (gestor.findFragmentById(R.id.flHueco) == null)
             cargarFragmentoPrincipal();
+
+        preferencias = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     private void initViews() {
@@ -118,6 +123,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case FRAGMENTO_DETALLE_VISITA:
                 transaccion.replace(R.id.flHueco, Fragmento_Detalle_Visita.newInstance((Visita) o), FRAGMENTO_DETALLE_VISITA);
                 transaccion.addToBackStack(FRAGMENTO_DETALLE_VISITA);
+                break;
+
+            case FRAGMENTO_PREFERENCIAS:
+                startActivity(new Intent(this, ActividadPreferencias.class));
                 break;
         }
         transaccion.commit();
@@ -218,8 +227,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 cargarFragmentoSecundario(FRAGMENTO_INSERT_UPDATE_VISITA, null);
                 break;
             case R.id.configuracion:
+                cargarFragmentoSecundario(FRAGMENTO_PREFERENCIAS, null);
                 break;
             case R.id.acercaDe:
+
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:key="ordenVisitas"
+        android:defaultValue="@string/descendente"
+        android:dialogTitle="@string/ordenar_visitas"
+        android:entries="@array/opciones_ordenar_visitas"
+        android:entryValues="@array/opciones_ordenar_visitas"
+        android:title="@string/orden_de_visitas" />
+</PreferenceScreen>

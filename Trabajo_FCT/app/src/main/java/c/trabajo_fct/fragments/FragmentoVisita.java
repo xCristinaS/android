@@ -36,6 +36,9 @@ import c.trabajo_fct.modelos.Visita;
  */
 public class FragmentoVisita extends Fragment implements GestionFabDesdeFragmento, FragmentAllowMultideletion{
 
+    public final static String ORDEN_ASCENDENTE = "Asc";
+    public final static String ORDEN_DESCENDENTE = "Desc";
+
     private Callback_MainActivity listener;
     private OnAdapterItemLongClick listenerLongClick;
     private RecyclerView lstVisitas;
