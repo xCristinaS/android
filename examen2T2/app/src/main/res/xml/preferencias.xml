@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="prefSonido"
+        android:summaryOff="sonido desactivado"
+        android:summaryOn="sonido activado"
+        android:switchTextOff="@string/switch_text_no"
+        android:switchTextOn="@string/switch_text_si"
+        android:title="Habilitar sonido" />
+
+    <EditTextPreference
+        android:key="prefTextoIdComprado"
+        android:defaultValue="@string/default_asterisco"
+        android:title="@string/title_pref_txt_prod"
+        android:summary="Texto que se agrega a los productos comprados"
+        android:dialogTitle="@string/title_pref_txt_prod" />
+
+</PreferenceScreen>

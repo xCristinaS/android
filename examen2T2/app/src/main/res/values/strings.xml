@@ -9,5 +9,11 @@
     <string name="deshacer">Deshacer</string>
     <string name="no_vacio">El campo no puede estar vacío</string>
     <string name="preferencias">Preferencias</string>
-    <string name="asteriscos">"*** "</string>
+    <string name="title_activity_agregar_prod">Agregar producto</string>
+    <string name="title_main_activity">Carrito de la compra</string>
+    <string name="title_activity_pref">Preferencias</string>
+    <string name="switch_text_no">No</string>
+    <string name="switch_text_si">Si</string>
+    <string name="title_pref_txt_prod">Texto en producto</string>
+    <string name="default_asterisco">"* "</string>
 </resources>

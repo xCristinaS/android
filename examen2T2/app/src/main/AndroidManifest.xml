@@ -27,7 +27,8 @@
         <activity
             android:name=".activities.AgregarActivity"
             android:label="@string/title_activity_agregar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.PreferenciasActivity"></activity>
     </application>
 
 </manifest>

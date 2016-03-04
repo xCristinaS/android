@@ -3,7 +3,9 @@ package c.examen2t.adaptadores;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,10 +25,18 @@ import c.examen2t.modelo.Producto;
  */
 public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.ViewHolder> {
 
-    ArrayList<Producto> productos;
+    public interface ReproducirSonido{
+        public void reproducir();
+    }
+
+    private ArrayList<Producto> productos;
+    private static String texto_comprado;
+    private SharedPreferences preferencias;
+    private ReproducirSonido listener;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        preferencias = PreferenceManager.getDefaultSharedPreferences(parent.getContext());
         return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_producto, parent, false));
     }
 
@@ -67,13 +77,20 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
                 @Override
                 public void onClick(View v) {
                     conmutarComprado(productos.get(getAdapterPosition()), itemView.getContext().getContentResolver());
+                    if (preferencias != null)
+                        if (preferencias.getBoolean("prefSonido", false))
+                            listener.reproducir();
                 }
             });
         }
 
         public void onBind(Producto p) {
+            if (preferencias != null){
+                texto_comprado = preferencias.getString("prefTextoIdComprado", itemView.getContext().getString(R.string.default_asterisco));
+            }
+
             if (p.getComprado() == MainActivity.COMPRADO)
-                lblNombreP.setText(itemView.getContext().getResources().getString(R.string.asteriscos) + p.getNombre());
+                lblNombreP.setText(texto_comprado + p.getNombre());
             else
                 lblNombreP.setText(p.getNombre());
             lblCantidad.setText(String.valueOf(p.getCantidad()));
@@ -91,5 +108,9 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
         ContentValues valores = new ContentValues();
         valores.put(BddContract.Producto.COMPRADO, p.getComprado());
         content.update(uri, valores, null, null);
+    }
+
+    public void setListener(ReproducirSonido listener) {
+        this.listener = listener;
     }
 }

@@ -51,6 +51,7 @@ public class FragmentoLista extends Fragment{
         //adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayEmpresas));
         //adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
         //adaptador.setListenerLongClick((OnAdapterItemLongClick) getActivity());
+        adaptador.setListener((ProductosAdapter.ReproducirSonido) getActivity());
         lstProductos.setAdapter(adaptador);
         lstProductos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         lstProductos.setItemAnimator(new DefaultItemAnimator());
