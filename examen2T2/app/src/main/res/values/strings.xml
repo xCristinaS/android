@@ -7,4 +7,6 @@
     <string name="unidad">Unidad</string>
     <string name="snackbar_message">Se ha eliminado el producto</string>
     <string name="deshacer">Deshacer</string>
+    <string name="no_vacio">El campo no puede estar vacío</string>
+    <string name="preferencias">Preferencias</string>
 </resources>

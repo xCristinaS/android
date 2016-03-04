@@ -2,11 +2,14 @@ package c.examen2t.fragmentos;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ public class FragmentoAgregar extends Fragment implements OnFabPressed {
     }
 
     private EditText txtNombre, txtCantidad, txtUnidad;
+    private TextInputLayout tilNombre, tilCantidad, tilUnidad;
     private ActividadAgregarListener listener;
 
     public static FragmentoAgregar newInstance(){
@@ -67,6 +71,63 @@ public class FragmentoAgregar extends Fragment implements OnFabPressed {
         txtNombre = (EditText)getView().findViewById(R.id.txtNombre);
         txtCantidad = (EditText)getView().findViewById(R.id.txtCantidad);
         txtUnidad = (EditText)getView().findViewById(R.id.txtUnidad);
+        tilCantidad = (TextInputLayout)getView().findViewById(R.id.tilCantidad);
+        tilNombre = (TextInputLayout)getView().findViewById(R.id.tilNombre);
+        tilUnidad = (TextInputLayout)getView().findViewById(R.id.tilUnidad);
+
+        txtNombre.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilNombre.setError("");
+                tilNombre.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txtUnidad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilUnidad.setError("");
+                tilUnidad.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        txtCantidad.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tilCantidad.setError("");
+                tilCantidad.setErrorEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -82,8 +143,23 @@ public class FragmentoAgregar extends Fragment implements OnFabPressed {
 
     private boolean camposRellenos() {
         boolean r = true;
-        if (TextUtils.isEmpty(txtNombre.getText()) || TextUtils.isEmpty(txtCantidad.getText()) || TextUtils.isEmpty(txtUnidad.getText()))
+        if (TextUtils.isEmpty(txtNombre.getText())) {
             r = false;
+            tilNombre.setErrorEnabled(true);
+            tilNombre.setError(getString(R.string.no_vacio));
+        }
+
+        if (TextUtils.isEmpty(txtCantidad.getText())) {
+            r = false;
+            tilCantidad.setErrorEnabled(true);
+            tilCantidad.setError(getString(R.string.no_vacio));
+        }
+
+        if (TextUtils.isEmpty(txtUnidad.getText())) {
+            r = false;
+            tilUnidad.setErrorEnabled(true);
+            tilUnidad.setError(getString(R.string.no_vacio));
+        }
         return r;
     }
 }
