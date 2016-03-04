@@ -75,6 +75,7 @@ public class FragmentoLista extends Fragment{
                                 valores.put(BddContract.Producto.NOMBRE, p.getNombre());
                                 valores.put(BddContract.Producto.CANTIDAD, p.getCantidad());
                                 valores.put(BddContract.Producto.UNIDAD, p.getUnidad());
+                                valores.put(BddContract.Producto.COMPRADO, p.getComprado());
                                 getActivity().getContentResolver().insert(MyContentProvider.CONTENT_URI_PRODUCTOS, valores);
                             }
                         }).show();

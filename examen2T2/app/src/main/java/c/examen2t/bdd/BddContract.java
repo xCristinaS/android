@@ -17,6 +17,7 @@ public class BddContract {
         public static final String NOMBRE = "nombre";
         public static final String CANTIDAD = "cantidad";
         public static final String UNIDAD = "unidad";
-        public static final String[] TODOS = new String[]{ID, NOMBRE, CANTIDAD, UNIDAD};
+        public static final String COMPRADO = "comprado";
+        public static final String[] TODOS = new String[]{ID, NOMBRE, CANTIDAD, UNIDAD, COMPRADO};
     }
 }

@@ -11,8 +11,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static SQLiteHelper helper;
 
-    private static final String SQL_CREATE_TABLE_PRODUCTO = String.format("create table %s (%s integer primary key autoincrement, %s varchar (50) not null, %s float, %s varchar(20));",
-            BddContract.Producto.TABLA, BddContract.Producto.ID, BddContract.Producto.NOMBRE, BddContract.Producto.CANTIDAD, BddContract.Producto.UNIDAD);
+    private static final String SQL_CREATE_TABLE_PRODUCTO = String.format("create table %s (%s integer primary key autoincrement, %s varchar (50) not null, %s float, %s varchar(20), %s integer);",
+            BddContract.Producto.TABLA, BddContract.Producto.ID, BddContract.Producto.NOMBRE, BddContract.Producto.CANTIDAD, BddContract.Producto.UNIDAD, BddContract.Producto.COMPRADO);
 
 
     private SQLiteHelper(Context contexto, String nombreBD, SQLiteDatabase.CursorFactory factory, int versionBD){

@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
 
     private static final int CARGADOR = 1;
     private static final int RC_AGREGAR_PRODUCTO = 5;
+    public static final int NO_COMPRADO = 0;
+    public static final int COMPRADO = 1;
 
     private LoaderManager mLoaderManager;
 
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
                 p.setNombre(data.getString(data.getColumnIndexOrThrow(BddContract.Producto.NOMBRE)));
                 p.setCantidad(data.getFloat(data.getColumnIndexOrThrow(BddContract.Producto.CANTIDAD)));
                 p.setUnidad(data.getString(data.getColumnIndexOrThrow(BddContract.Producto.UNIDAD)));
+                p.setComprado(data.getInt(data.getColumnIndexOrThrow(BddContract.Producto.COMPRADO)));
                 productos.add(p);
                 data.moveToNext();
             }
@@ -120,6 +123,7 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
         valores.put(BddContract.Producto.NOMBRE, p.getNombre());
         valores.put(BddContract.Producto.CANTIDAD, p.getCantidad());
         valores.put(BddContract.Producto.UNIDAD, p.getUnidad());
+        valores.put(BddContract.Producto.COMPRADO, NO_COMPRADO);
         getContentResolver().insert(MyContentProvider.CONTENT_URI_PRODUCTOS, valores);
     }
 }

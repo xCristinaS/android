@@ -11,15 +11,25 @@ public class Producto implements Parcelable {
     private int id;
     private float cantidad;
     private String nombre, unidad;
+    private int comprado;
 
     public Producto() {
     }
 
-    public Producto(int id, float cantidad, String nombre, String unidad) {
+    public Producto(int id, float cantidad, String nombre, String unidad, int comprado) {
         this.id = id;
         this.cantidad = cantidad;
         this.nombre = nombre;
         this.unidad = unidad;
+        this.comprado = comprado;
+    }
+
+    public int getComprado() {
+        return comprado;
+    }
+
+    public void setComprado(int comprado) {
+        this.comprado = comprado;
     }
 
     public int getId() {
@@ -66,6 +76,7 @@ public class Producto implements Parcelable {
         dest.writeFloat(this.cantidad);
         dest.writeString(this.nombre);
         dest.writeString(this.unidad);
+        dest.writeInt(this.comprado);
     }
 
     protected Producto(Parcel in) {
@@ -73,6 +84,7 @@ public class Producto implements Parcelable {
         this.cantidad = in.readFloat();
         this.nombre = in.readString();
         this.unidad = in.readString();
+        this.comprado = in.readInt();
     }
 
     public static final Creator<Producto> CREATOR = new Creator<Producto>() {
