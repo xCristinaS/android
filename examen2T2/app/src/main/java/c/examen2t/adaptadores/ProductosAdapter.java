@@ -33,6 +33,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
     private static String texto_comprado;
     private SharedPreferences preferencias;
     private ReproducirSonido listener;
+    private View emptyView;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -61,6 +62,7 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
     public void setProductos(ArrayList<Producto> productos) {
         this.productos = productos;
         notifyDataSetChanged();
+        checkIfEmpty();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -112,5 +114,16 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
 
     public void setListener(ReproducirSonido listener) {
         this.listener = listener;
+    }
+
+    public void checkIfEmpty() {
+        if (emptyView != null) {
+            emptyView.setVisibility(getItemCount() > 0 ? View.GONE : View.VISIBLE);
+        }
+    }
+
+    public void setEmptyView(View emptyView) {
+        this.emptyView = emptyView;
+        checkIfEmpty();
     }
 }

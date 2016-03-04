@@ -5,4 +5,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="margen_izq_lbl">16dp</dimen>
     <dimen name="margin_top_lbl">8dp</dimen>
+    <dimen name="tamanio_fuente">24sp</dimen>
 </resources>

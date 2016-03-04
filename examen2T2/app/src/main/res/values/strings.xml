@@ -16,4 +16,5 @@
     <string name="switch_text_si">Si</string>
     <string name="title_pref_txt_prod">Texto en producto</string>
     <string name="default_asterisco">"* "</string>
+    <string name="no_productos">No hay productos</string>
 </resources>

@@ -48,9 +48,7 @@ public class FragmentoLista extends Fragment{
     private void initViews(){
         lstProductos = (RecyclerView) getView().findViewById(R.id.lstProductos);
         adaptador = new ProductosAdapter();
-        //adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayEmpresas));
-        //adaptador.setOnItemClickListener((OnAdapterItemClick) getActivity());
-        //adaptador.setListenerLongClick((OnAdapterItemLongClick) getActivity());
+        adaptador.setEmptyView(getView().findViewById(R.id.lblNoHayProductos));
         adaptador.setListener((ProductosAdapter.ReproducirSonido) getActivity());
         lstProductos.setAdapter(adaptador);
         lstProductos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -68,6 +66,7 @@ public class FragmentoLista extends Fragment{
                         final Producto p = adaptador.getProductos().get(viewHolder.getAdapterPosition());
                         final Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_PRODUCTOS  + "/" + p.getId());
                         getActivity().getContentResolver().delete(uri, null, null);
+                        adaptador.checkIfEmpty();
 
                         Snackbar.make(getView(), R.string.snackbar_message, Snackbar.LENGTH_SHORT).setAction(R.string.deshacer, new View.OnClickListener() {
                             @Override
