@@ -1,10 +1,10 @@
 package c.examen2t.activities;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
@@ -18,16 +18,17 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import c.examen2t.R;
-import c.examen2t.adaptadores.ProductosAdapter;
 import c.examen2t.bdd.BddContract;
 import c.examen2t.bdd.MyContentProvider;
-import c.examen2t.bdd.SQLiteHelper;
 import c.examen2t.fragmentos.FragmentoLista;
 import c.examen2t.modelo.Producto;
 
 public class MainActivity extends AppCompatActivity  implements LoaderManager.LoaderCallbacks<Cursor>{
 
+
     private static final int CARGADOR = 1;
+    private static final int RC_AGREGAR_PRODUCTO = 5;
+
     private LoaderManager mLoaderManager;
 
     @Override
@@ -45,12 +46,7 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ContentValues valores = new ContentValues();
-                valores.put(BddContract.Producto.ID, 1);
-                valores.put(BddContract.Producto.NOMBRE, "patatas");
-                valores.put(BddContract.Producto.CANTIDAD, 2);
-                valores.put(BddContract.Producto.UNIDAD, "kg");
-                getContentResolver().insert(MyContentProvider.CONTENT_URI_PRODUCTOS, valores);
+                AgregarActivity.start(MainActivity.this, RC_AGREGAR_PRODUCTO);
             }
         });
 
@@ -84,10 +80,10 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         ArrayList<Producto> productos = new ArrayList<>();
-        Producto p = new Producto();
         if (data != null) {
             data.moveToFirst();
             while (!data.isAfterLast()) {
+                Producto p = new Producto();
                 p.setId(data.getInt(data.getColumnIndexOrThrow(BddContract.Producto.ID)));
                 p.setNombre(data.getString(data.getColumnIndexOrThrow(BddContract.Producto.NOMBRE)));
                 p.setCantidad(data.getFloat(data.getColumnIndexOrThrow(BddContract.Producto.CANTIDAD)));
@@ -106,5 +102,24 @@ public class MainActivity extends AppCompatActivity  implements LoaderManager.Lo
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.flHueco);
         if (f instanceof FragmentoLista)
             ((FragmentoLista) f).getAdaptador().setProductos(null);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RC_AGREGAR_PRODUCTO && resultCode == RESULT_OK)
+            if (data.hasExtra(AgregarActivity.EXTRA_PRODUCTO)) {
+                Producto p = data.getParcelableExtra(AgregarActivity.EXTRA_PRODUCTO);
+                if (p != null)
+                    insertarProducto(p);
+            }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void insertarProducto(Producto p){
+        ContentValues valores = new ContentValues();
+        valores.put(BddContract.Producto.NOMBRE, p.getNombre());
+        valores.put(BddContract.Producto.CANTIDAD, p.getCantidad());
+        valores.put(BddContract.Producto.UNIDAD, p.getUnidad());
+        getContentResolver().insert(MyContentProvider.CONTENT_URI_PRODUCTOS, valores);
     }
 }

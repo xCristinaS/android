@@ -23,6 +23,11 @@
             android:name=".bdd.MyContentProvider"
             android:authorities="c.examen2t.bdd.provider"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.AgregarActivity"
+            android:label="@string/title_activity_agregar"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
