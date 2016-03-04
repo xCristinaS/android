@@ -1,8 +1,10 @@
 package c.examen2t.fragmentos;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +18,9 @@ import c.examen2t.DividerItemDecoration;
 import c.examen2t.R;
 import c.examen2t.activities.MainActivity;
 import c.examen2t.adaptadores.ProductosAdapter;
+import c.examen2t.bdd.BddContract;
 import c.examen2t.bdd.MyContentProvider;
+import c.examen2t.modelo.Producto;
 
 /**
  * Created by Cristina on 04/03/2016.
@@ -60,8 +64,20 @@ public class FragmentoLista extends Fragment{
                     }
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                        Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_PRODUCTOS  + "/" + adaptador.getProductos().get(viewHolder.getAdapterPosition()).getId());
+                        final Producto p = adaptador.getProductos().get(viewHolder.getAdapterPosition());
+                        final Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_PRODUCTOS  + "/" + p.getId());
                         getActivity().getContentResolver().delete(uri, null, null);
+
+                        Snackbar.make(getView(), R.string.snackbar_message, Snackbar.LENGTH_SHORT).setAction(R.string.deshacer, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                ContentValues valores = new ContentValues();
+                                valores.put(BddContract.Producto.NOMBRE, p.getNombre());
+                                valores.put(BddContract.Producto.CANTIDAD, p.getCantidad());
+                                valores.put(BddContract.Producto.UNIDAD, p.getUnidad());
+                                getActivity().getContentResolver().insert(MyContentProvider.CONTENT_URI_PRODUCTOS, valores);
+                            }
+                        }).show();
                     }
         });
         itemTouchHelper.attachToRecyclerView(lstProductos);

@@ -5,4 +5,6 @@
     <string name="nombre_de_producto">Nombre de producto</string>
     <string name="cantidad">Cantidad</string>
     <string name="unidad">Unidad</string>
+    <string name="snackbar_message">Se ha eliminado el producto</string>
+    <string name="deshacer">Deshacer</string>
 </resources>
