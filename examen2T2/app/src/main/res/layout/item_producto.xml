@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/lblNombreP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margen_izq_lbl"/>
+
+    <TextView
+        android:id="@+id/lblCantidad"
+        android:layout_below="@id/lblNombreP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margen_izq_lbl"/>
+
+    <TextView
+        android:id="@+id/lblUnidad"
+        android:layout_below="@id/lblNombreP"
+        android:layout_toRightOf="@id/lblCantidad"
+        android:layout_toEndOf="@id/lblCantidad"
+        android:layout_marginLeft="@dimen/margen_izq_lbl"
+        android:layout_marginStart="@dimen/margen_izq_lbl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margen_izq_lbl"/>
+
+</RelativeLayout>
