@@ -38,6 +38,10 @@ public class ProductosAdapter extends RecyclerView.Adapter<ProductosAdapter.View
             return 0;
     }
 
+    public ArrayList<Producto> getProductos() {
+        return productos;
+    }
+
     public void setProductos(ArrayList<Producto> productos) {
         this.productos = productos;
         notifyDataSetChanged();
